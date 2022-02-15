@@ -1,6 +1,6 @@
 package com.jiri.entities;
 
-public class Player extends Entity {
+public class Player extends Movable {
 
 
 }
