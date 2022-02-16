@@ -4,6 +4,7 @@ package com.jiri.entities;
 import com.jiri.level.Level;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,8 +17,14 @@ public class Entity1D implements IEntity {
     public boolean persistent; // If True object is not passable by Entities
     public Level currentLevel;
     public Entity1D shadow_parent = null;
-    public Set<Point> collisions;
-    public boolean standingOnPersistent = false;
+    public Set<Point> collisionDirections;
+    public boolean falling = true;
+    public boolean facingLeft;
+    public char muzzleChar = 'c';
+    public List<Point> muzzlePoints = new ArrayList<>(2);
+    public float lifeSpan=0;
+    public char representingChar;
+
 
     public char[][] getRepresentMap() {
         return representMap;
@@ -40,7 +47,7 @@ public class Entity1D implements IEntity {
     public Entity1D(Level currentLevel) {
         bodyPositions = new ArrayList<Point>();
         this.currentLevel = currentLevel;
-        this.collisions = new HashSet<Point>();
+        this.collisionDirections = new HashSet<Point>();
     }
 
     public char getChar() {
@@ -55,37 +62,37 @@ public class Entity1D implements IEntity {
                 continue;
             Entity1D scanned = this.currentLevel.map[scannedPt.y][scannedPt.x];
             if (scanned.shadow_parent != this && scanned.persistent)
-                collisions.add(delta);
+                collisionDirections.add(delta);
         }
 
     }
 
     public Set<Point> isColliding() {
-        collisions.clear();
+        collisionDirections.clear();
         if (currentLevel == null)
-            return collisions;
+            return collisionDirections;
         for (Point position : bodyPositions)
             isBodyPartColliding(position);
-        if (collisions.contains(Direction.Bottom.vector))
-            this.standingOnPersistent = true;
+        if (collisionDirections.contains(Direction.Bottom.vector))
+            this.falling = false;
         else
-            this.standingOnPersistent = false;
-        return collisions;
-    }
-
-    public boolean isPersistent() {
-        return persistent;
+            this.falling = true;
+        return collisionDirections;
     }
 
 
     @Override
     public boolean render(Entity1D[][] map, Point cursor) {
+        muzzlePoints.clear();
         bodyPositions.clear();
         for (int map_x = cursor.x, ent_x = 0; ent_x < representMap[0].length; map_x++, ent_x++) {
             for (int map_y = cursor.y, ent_y = 0; ent_y < representMap.length; map_y++, ent_y++) {
-                if (representMap[ent_y][ent_x] == ' ')
+                char currentRenderedChar = representMap[ent_y][ent_x];
+                if (currentRenderedChar == ' ')
                     continue;
-                map[map_y][map_x] = new EntityShadow2D(this.currentLevel, representMap[ent_y][ent_x], this);
+                else if (currentRenderedChar == muzzleChar)
+                    muzzlePoints.add(new Point(map_x, map_y));
+                map[map_y][map_x] = new EntityShadow2D(this.currentLevel, currentRenderedChar, this);
                 bodyPositions.add(new Point(map_x, map_y));
             }
         }
@@ -93,7 +100,39 @@ public class Entity1D implements IEntity {
     }
 
     @Override
-    public void tickEvent(long elapsedMs) {
+    public void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    }
+
+    @Override
+    public boolean applyDamage(float damage) {
+        return false;
+    }
+
+    @Override
+    public boolean applyPhysicsImpulse(float mass) {
+        return false;
+    }
+
+    @Override
+    public float getLifeSpan() {
+        return this.lifeSpan;
+    }
+
+    @Override
+    public void invokeImpactEffect(Point impactLocation) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+
+    }
+
+    public void removeConnections() {
+        this.currentLevel.levelStreamer.removeListener(this);
+    }
+
+    @Override
+    public void erase() {
+        removeConnections();
+        for (Point partPoint : bodyPositions) {
+            this.currentLevel.map[partPoint.y][partPoint.x] = new EmptySpace(this.currentLevel);
+        }
     }
 
     @Override

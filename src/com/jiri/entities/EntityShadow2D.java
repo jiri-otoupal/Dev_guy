@@ -5,7 +5,7 @@ import com.jiri.level.Level;
 import java.awt.Point;
 
 public class EntityShadow2D extends Entity1D {
-    char representingChar;
+
 
     public EntityShadow2D(Level currentLevel, char c, Entity1D entity_ptr) {
         super(currentLevel);

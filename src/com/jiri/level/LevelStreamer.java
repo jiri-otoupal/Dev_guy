@@ -11,6 +11,7 @@ import com.jiri.entities.IEntity;
 
 import java.awt.Point;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.List;
@@ -49,13 +50,27 @@ public class LevelStreamer extends Level {
         listeners.add(toAdd);
     }
 
-    public void broadcastTick(long elapsedMs) {
-        for (IEntity listener : listeners)
-            listener.tickEvent(elapsedMs);
+    public void removeListener(IEntity toRemove) {
+        listeners.remove(toRemove);
     }
 
-    public void assign(int x, int y, Entity1D value) {
-        this.map[y][x] = value;
+    public void broadcastTick(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+        for (IEntity listener : listeners) {
+            if (listener.getLifeSpan() < 0) {
+                listener.erase();//this causes removal during iteration
+                break;
+            }
+            listener.tickEvent(elapsedMs);
+        }
+
+    }
+
+    public void spawnAt(Point coords, Entity1D value) {
+        this.map[coords.y][coords.x] = value;
+    }
+
+    public Entity1D getInstanceAt(Point coords) {
+        return this.map[coords.y][coords.x];
     }
 
     public void loadLevel(Level level) {
@@ -71,15 +86,16 @@ public class LevelStreamer extends Level {
     }
 
 
-    public void render() throws IOException, InterruptedException {
+    public void render() throws IOException, InterruptedException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         long frame_start = System.currentTimeMillis();
         terminal.clearScreen();
         for (int line = 0; line < this.height - 1; line++) {
             for (int column = 0; column < this.width; column++) {
                 Entity1D obj = this.map[line][column];
-                obj.absPosition = new Point(column, line);
                 obj.useLight();
+                obj.absPosition = new Point(column, line);
                 obj.render(this.map, new Point(column, line)); //Makes object translate itself to projection screen before being drawn
+                // Adds rendered body positions
                 terminal.putCharacter(obj.getChar());
             }
             terminal.putCharacter('\n');

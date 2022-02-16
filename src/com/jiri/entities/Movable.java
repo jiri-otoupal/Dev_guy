@@ -3,6 +3,7 @@ package com.jiri.entities;
 import com.jiri.level.Level;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -21,7 +22,7 @@ public class Movable extends Entity1D implements IMovable {
     public Movable(Level currentLevel, boolean enableGravity) {
         super(currentLevel);
         this.enableGravity = enableGravity;
-        if (enableGravity && currentLevel.levelStreamer != null) {
+        if (!persistent && currentLevel.levelStreamer != null) {
             currentLevel.levelStreamer.addListener(this);
         }
         movements = new LinkedList<float[]>();
@@ -51,6 +52,7 @@ public class Movable extends Entity1D implements IMovable {
         Point delta = normalizeAndApplyDelta(deltaX, deltaY);
         this.currentLevel.map[this.absPosition.y][this.absPosition.x] = new EmptySpace(this.currentLevel);
         this.currentLevel.map[this.absPosition.y + delta.y][this.absPosition.x + delta.x] = this;
+        this.absPosition = new Point(this.absPosition.x + delta.x,this.absPosition.y + delta.y);
         return true;
     }
 
@@ -63,7 +65,7 @@ public class Movable extends Entity1D implements IMovable {
     }
 
     @Override
-    public void tickEvent(long elapsedMs) {
+    public void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         if (this.enableGravity)
             applyGravity();
         if (!this.movements.isEmpty()) {

@@ -39,9 +39,9 @@ public class Level {
         Arrays.fill(this.map[height - 2], new Ground(this));
     }
 
-    Object createInstanceOfClass(String className) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public Object createInstanceOfClass(String className,Object... args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Class<?> classTemp = Class.forName(className);
-        return classTemp.getDeclaredConstructor().newInstance();
+        return classTemp.getDeclaredConstructor(Level.class,float.class).newInstance(args);
     }
 
     void compileMap() throws InvalidTemplateMap {
