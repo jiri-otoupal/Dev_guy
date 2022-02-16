@@ -1,4 +1,9 @@
 package com.jiri.entities;
 
-public class Item extends Entity {
+import com.jiri.level.Level;
+
+public class Item extends Entity1D {
+    public Item(Level currentLevel) {
+        super(currentLevel);
+    }
 }

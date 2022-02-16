@@ -1,11 +1,74 @@
 package com.jiri.entities;
 
-public class Movable extends Entity implements IMovable {
+import com.jiri.level.Level;
+
+import java.awt.*;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Movable extends Entity1D implements IMovable {
     public float health;
     public float fireRate;
     public float speed;
+    public boolean enableGravity;
+    public float gravity;
+    protected float nowDeltaX = 0;
+    protected float nowDeltaY = 0;
+    protected Thread moveInterpolateThread;
+    protected Queue<float[]> movements;
 
-    public boolean move() {
-        return false;
+    public Movable(Level currentLevel, boolean enableGravity) {
+        super(currentLevel);
+        this.enableGravity = enableGravity;
+        if (enableGravity && currentLevel.levelStreamer != null) {
+            currentLevel.levelStreamer.addListener(this);
+        }
+        movements = new LinkedList<float[]>();
+    }
+
+    protected Point normalizeAndApplyDelta(float deltaX, float deltaY) {
+        this.nowDeltaX += deltaX;
+        this.nowDeltaY += deltaY;
+        int deltaFlooredX = (int) Math.round(this.nowDeltaX);
+        int deltaFlooredY = (int) Math.round(this.nowDeltaY);
+        this.nowDeltaX -= deltaFlooredX;
+        this.nowDeltaY -= deltaFlooredY;
+        return new Point(deltaFlooredX, deltaFlooredY);
+    }
+
+    protected Point normalizeDelta(float deltaX, float deltaY) {
+        int deltaFlooredX = (int) Math.round(this.nowDeltaX + deltaX);
+        int deltaFlooredY = (int) Math.round(this.nowDeltaY + deltaY);
+        return new Point(deltaFlooredX, deltaFlooredY);
+    }
+
+    public boolean move(float deltaX, float deltaY) {
+        //TODO: move obj in map with abs position
+        Point dl = normalizeDelta(deltaX, deltaY);
+        if (this.isColliding().contains(dl))
+            return false;
+        Point delta = normalizeAndApplyDelta(deltaX, deltaY);
+        this.currentLevel.map[this.absPosition.y][this.absPosition.x] = new EmptySpace(this.currentLevel);
+        this.currentLevel.map[this.absPosition.y + delta.y][this.absPosition.x + delta.x] = this;
+        return true;
+    }
+
+    public void addMovement(float deltaX, float deltaY) {
+        this.movements.add(new float[]{deltaX, deltaY});
+    }
+
+    public void applyGravity() {
+        move(0, this.gravity);
+    }
+
+    @Override
+    public void tickEvent(long elapsedMs) {
+        if (this.enableGravity)
+            applyGravity();
+        if (!this.movements.isEmpty()) {
+            float[] pts = this.movements.remove();
+            move(pts[0], pts[1]);
+        }
     }
 }
