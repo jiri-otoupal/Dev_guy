@@ -5,11 +5,12 @@ import com.jiri.level.Level;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public class AliveEntity extends Movable {
+public class AliveEntity extends Animated {
     protected float jumpHeight;
 
+
     public AliveEntity(Level currentLevel, int health, float speed, float fireRate, float jumpHeight, float gravity) {
-        super(currentLevel, true);
+        super(currentLevel, true,false );
         this.health = health;
         this.speed = speed;
         this.fireRate = fireRate;

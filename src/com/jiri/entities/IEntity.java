@@ -2,6 +2,7 @@ package com.jiri.entities;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Set;
 
 public interface IEntity {
     abstract public void useLight(); // Erase Shadows from movement
@@ -20,4 +21,7 @@ public interface IEntity {
 
     abstract public void invokeImpactEffect(Point impactLocation) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException;
 
+    abstract public Set<Point> isColliding();
+
+    abstract public void removeConnections();
 }

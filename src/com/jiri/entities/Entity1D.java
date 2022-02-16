@@ -22,7 +22,7 @@ public class Entity1D implements IEntity {
     public boolean facingLeft;
     public char muzzleChar = 'c';
     public List<Point> muzzlePoints = new ArrayList<>(2);
-    public float lifeSpan=0;
+    public float lifeSpan = 0;
     public char representingChar;
 
 
@@ -67,6 +67,7 @@ public class Entity1D implements IEntity {
 
     }
 
+    @Override
     public Set<Point> isColliding() {
         collisionDirections.clear();
         if (currentLevel == null)

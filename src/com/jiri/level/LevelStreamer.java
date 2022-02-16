@@ -55,9 +55,10 @@ public class LevelStreamer extends Level {
     }
 
     public void broadcastTick(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-        for (IEntity listener : listeners) {
+        for (int i = 0; i < listeners.size(); i++) { // Needs to be in this for because of removing during iterations
+            IEntity listener = listeners.get(i);
             if (listener.getLifeSpan() < 0) {
-                listener.erase();//this causes removal during iteration
+                listener.erase();
                 break;
             }
             listener.tickEvent(elapsedMs);
