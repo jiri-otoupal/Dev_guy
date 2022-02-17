@@ -6,28 +6,29 @@ import com.jiri.level.Level;
 public class Animated extends Movable {
     protected long elapsedNow = 0;
     protected long elapsedMsToFrame;
-    public char[][][] animationFrames;
+    public char[][][] usedAnimationFrames;
     public int frameCounter;
     public boolean loops;
     protected boolean canGetOlder; // timeSpan is decremented if true
 
     public Animated(Level currentLevel, boolean enableGravity, boolean canGetOlder) {
         super(currentLevel, enableGravity);
-        if (animationFrames == null)
-            animationFrames = new char[][][]{this.representMap};
+        if (usedAnimationFrames == null) {
+            usedAnimationFrames = new char[][][]{this.representMap};
+        } else {
+            representMap = usedAnimationFrames[frameCounter];
+        }
         animationListeners.add(this);
         this.canGetOlder = canGetOlder;
     }
 
     public void updateParticles() {
-        for (int line = 0, index = 0; line < this.representMap.length; line++, index++)
-            for (int column = 0; column < this.representMap[0].length; column++, index++)
-                this.currentLevel.levelStreamer.getInstanceAt(bodyPositions.get(index)).representingChar = this.representMap[line][column];
+        this.currentLevel.levelStreamer.spawnAt(this.absPosition,this);
     }
 
     public void nextFrame() {
-        if (this.frameCounter < this.animationFrames.length) {
-            this.representMap = animationFrames[this.frameCounter];
+        if (this.frameCounter < this.usedAnimationFrames.length) {
+            this.representMap = usedAnimationFrames[this.frameCounter];
             this.frameCounter++;
         } else if (this.loops) {
             this.frameCounter = 0;
@@ -49,7 +50,7 @@ public class Animated extends Movable {
         if (canGetOlder)
             this.lifeSpan -= correctedElapsed;
         // Do next frame only if there is more than 1 frame
-        if (animationFrames.length > 1 && elapsedNow >= elapsedMsToFrame)
+        if (usedAnimationFrames.length > 1 && elapsedNow >= elapsedMsToFrame)
             this.nextFrame();
     }
 

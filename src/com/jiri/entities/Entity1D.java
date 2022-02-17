@@ -48,6 +48,7 @@ public class Entity1D implements IEntity {
         bodyPositions = new ArrayList<Point>();
         this.currentLevel = currentLevel;
         this.collisionDirections = new HashSet<Point>();
+        representMap = new char[][]{{' '}};
     }
 
     public char getChar() {
