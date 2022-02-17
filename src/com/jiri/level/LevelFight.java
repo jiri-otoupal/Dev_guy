@@ -11,7 +11,7 @@ public class LevelFight extends Level {
         this.linker = new HashMap<Character, Entity1D>() {{
             put(' ', new EmptySpace(level));
             put('w', new Wall(level));
-            put('p', new Player(level, 100, 1F, 0.5F));
+            put('p', new Player(level, 100, 1F, 100));
         }};
         this.mapToTranslate = new String[]{
                 "                                                                                ",

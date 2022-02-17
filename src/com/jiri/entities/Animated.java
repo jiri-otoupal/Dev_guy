@@ -2,39 +2,57 @@ package com.jiri.entities;
 
 import com.jiri.level.Level;
 
+import java.awt.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 
 public class Animated extends Movable {
     protected long elapsedNow = 0;
     protected long elapsedMsToFrame;
     public char[][][] usedAnimationFrames;
+    public char[][][][] animationState; // Idle, Move, Shooting, etc...
     public int frameCounter;
     public boolean loops;
+    public int currentAnimationState = 0;
     protected boolean canGetOlder; // timeSpan is decremented if true
 
     public Animated(Level currentLevel, boolean enableGravity, boolean canGetOlder) {
         super(currentLevel, enableGravity);
         if (usedAnimationFrames == null) {
             usedAnimationFrames = new char[][][]{this.representMap};
+            animationState = new char[][][][]{usedAnimationFrames};
         } else {
-            representMap = usedAnimationFrames[frameCounter];
+            representMap = animationState[currentAnimationState][frameCounter];
         }
         animationListeners.add(this);
         this.canGetOlder = canGetOlder;
     }
 
     public void updateParticles() {
-        this.currentLevel.levelStreamer.spawnAt(this.absPosition,this);
+        this.currentLevel.levelStreamer.spawnAt(this.absPosition, this);
     }
 
     public void nextFrame() {
         if (this.frameCounter < this.usedAnimationFrames.length) {
-            this.representMap = usedAnimationFrames[this.frameCounter];
+            this.representMap = animationState[currentAnimationState][frameCounter];
             this.frameCounter++;
         } else if (this.loops) {
             this.frameCounter = 0;
         }
         elapsedNow = 0;
         updateParticles();
+    }
+
+    @Override
+    public void setAnimationState(int state) {
+        if (this.currentAnimationState == state)
+            return;
+        this.currentAnimationState = state;
+        this.usedAnimationFrames = animationState[currentAnimationState];
+        nextFrame();
     }
 
     @Override

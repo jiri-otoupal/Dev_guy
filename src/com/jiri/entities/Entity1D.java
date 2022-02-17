@@ -37,7 +37,7 @@ public class Entity1D implements IEntity {
         Right(1, 0);
 
 
-        private final Point vector;
+        final Point vector;
 
         Direction(int x, int y) {
             vector = new Point(x, y);

@@ -7,10 +7,12 @@ import java.awt.geom.Point2D;
 
 public class AliveEntity extends Animated {
     protected float jumpHeight;
+    protected boolean shooting = false;
 
 
-    public AliveEntity(Level currentLevel, int health, float speed, float fireRate, float jumpHeight, float gravity) {
-        super(currentLevel, true,false );
+
+    public AliveEntity(Level currentLevel, int health, float speed, long fireRate, float jumpHeight, float gravity) {
+        super(currentLevel, true, false);
         this.health = health;
         this.speed = speed;
         this.fireRate = fireRate;
@@ -43,12 +45,18 @@ public class AliveEntity extends Animated {
     }
 
     public void Shoot() {
-        if (this.facingLeft) {
-            Point muzzlePointLeft = this.muzzlePoints.get(0);
-            Projectile mv = new Projectile(this.currentLevel, 5, 1, true, false, new Point(muzzlePointLeft.x - 1, muzzlePointLeft.y), new Point2D.Float(-0.2F, 0F));
+        if (timeToShoot <= 0) {
+            this.shooting = true;
+            this.timeToShoot = fireRate;
+            if (this.facingLeft) {
+                Point muzzlePointLeft = this.muzzlePoints.get(0);
+                Projectile mv = new Projectile(this.currentLevel, 5, 1, true, false, new Point(muzzlePointLeft.x - 1, muzzlePointLeft.y), new Point2D.Float(-0.2F, 0F));
+            } else {
+                Point muzzlePointRight = this.muzzlePoints.get(1);
+                Projectile mv = new Projectile(this.currentLevel, 5, 1, true, false, new Point(muzzlePointRight.x + 1, muzzlePointRight.y), new Point2D.Float(0.2F, 0F));
+            }
         } else {
-            Point muzzlePointRight = this.muzzlePoints.get(1);
-            Projectile mv = new Projectile(this.currentLevel, 5, 1, true, false, new Point(muzzlePointRight.x + 1, muzzlePointRight.y), new Point2D.Float(0.2F, 0F));
+            this.shooting = false;
         }
     }
 }

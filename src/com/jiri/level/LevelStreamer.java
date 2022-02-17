@@ -66,8 +66,12 @@ public class LevelStreamer extends Level {
 
     }
 
-    public void spawnAt(Point coords, Entity1D value) {
-        this.map[coords.y][coords.x] = value;
+    public boolean spawnAt(Point coords, Entity1D value) {
+        if (coords != null && this.map[coords.y][coords.x].getChar() == ' ') {
+            this.map[coords.y][coords.x] = value;
+            return true;
+        }
+        return false;
     }
 
     public Entity1D getInstanceAt(Point coords) {
@@ -94,7 +98,8 @@ public class LevelStreamer extends Level {
             for (int column = 0; column < this.width; column++) {
                 Entity1D obj = this.map[line][column];
                 obj.useLight();
-                obj.absPosition = new Point(column, line);
+                if (obj.absPosition == null)
+                    obj.absPosition = new Point(column, line);
                 obj.render(this.map, new Point(column, line)); //Makes object translate itself to projection screen before being drawn
                 // Adds rendered body positions
                 terminal.putCharacter(obj.getChar());

@@ -4,20 +4,20 @@ import com.jiri.level.Level;
 
 import java.awt.Point;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 public class Movable extends Entity1D implements IMovable, IAnimation {
+    protected long timeToShoot = 0;
     public float health;
-    public float fireRate;
+    public long fireRate;
     public float speed;
     public boolean enableGravity;
     public float gravity;
+    protected boolean moving = false;
     protected float nowDeltaX = 0;
     protected float nowDeltaY = 0;
-    protected Thread moveInterpolateThread;
     protected Queue<float[]> movements;
     protected List<IAnimation> animationListeners;
 
@@ -75,20 +75,34 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
 
     @Override
     public void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-        if (this.enableGravity)
+        this.timeToShoot -= elapsedMs + 1;
+        if (this.enableGravity && !this.persistent)
             applyGravity();
         if (!this.movements.isEmpty()) {
             float[] pts = this.movements.remove();
             move(pts[0], pts[1]);
+            this.moving = true;
+        } else {
+            this.moving = false;
         }
         for (int i = 0; i < animationListeners.size(); i++) { // Needs to be in this for because of removing during iterations
             IAnimation listener = animationListeners.get(i);
             listener.updateAnimation(elapsedMs);
+            listener.setAnimationState(resolveAnimationState());
         }
     }
 
     @Override
     public void updateAnimation(long elapsedMs) {
 
+    }
+
+    @Override
+    public int resolveAnimationState() {
+        return 0;
+    }
+
+    @Override
+    public void setAnimationState(int state) {
     }
 }
