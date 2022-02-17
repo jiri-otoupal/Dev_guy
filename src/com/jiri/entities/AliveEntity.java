@@ -27,7 +27,6 @@ public class AliveEntity extends Animated implements IAliveEntity {
             return;
         for (int i = 0; i < jumpHeight; i++)
             addMovement(x, -1F);
-
     }
 
     public void Crouch() {

@@ -3,7 +3,6 @@ package com.jiri.entities;
 import com.jiri.level.Level;
 
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 
 public class Wall extends Entity1D {
 
@@ -15,7 +14,7 @@ public class Wall extends Entity1D {
     }
 
     public void invokeImpactEffect(Point impactLocation) {
-        this.currentLevel.levelStreamer.spawnAt(impactLocation, new EffectPersistentImpact(this.currentLevel, 100));
+        this.currentLevel.levelStreamer.assignAt(impactLocation, new EffectPersistentImpact(this.currentLevel, 100));
     }
 
     @Override

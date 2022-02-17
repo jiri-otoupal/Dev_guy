@@ -7,7 +7,7 @@ public class Player extends AliveEntity {
     public Player(Level currentLevel, int health, float speed, long fireRateMs) {
         super(currentLevel, health, speed, fireRateMs, 6, 0.2F);
         this.currentLevel.levelStreamer.playerController.controlledPlayer = this;
-        this.elapsedMsToFrame = 50;
+        this.frameDurationMs = 50;
         this.loops = true;
         animationState = new char[][][][]{
                 {//Idle
@@ -69,7 +69,7 @@ public class Player extends AliveEntity {
 
         };
 
-        usedAnimationFrames = animationState[0];
+        selectedAnimationFrames = animationState[0];
 
     }
 

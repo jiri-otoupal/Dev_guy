@@ -2,17 +2,11 @@ package com.jiri.entities;
 
 import com.jiri.level.Level;
 
-import java.awt.*;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 
 public class Animated extends Movable {
     protected long elapsedNow = 0;
-    protected long elapsedMsToFrame;
-    public char[][][] usedAnimationFrames;
+    protected long frameDurationMs;
+    public char[][][] selectedAnimationFrames;
     public char[][][][] animationState; // Idle, Move, Shooting, etc...
     public int frameCounter;
     public boolean loops;
@@ -21,9 +15,9 @@ public class Animated extends Movable {
 
     public Animated(Level currentLevel, boolean enableGravity, boolean canGetOlder) {
         super(currentLevel, enableGravity);
-        if (usedAnimationFrames == null) {
-            this.usedAnimationFrames = new char[][][]{this.representMap};
-            this.animationState = new char[][][][]{usedAnimationFrames};
+        if (selectedAnimationFrames == null) {
+            this.selectedAnimationFrames = new char[][][]{this.representMap};
+            this.animationState = new char[][][][]{selectedAnimationFrames};
         } else {
             this.representMap = animationState[currentAnimationState][frameCounter];
         }
@@ -32,13 +26,13 @@ public class Animated extends Movable {
     }
 
     public void updateParticles() {
-        this.currentLevel.levelStreamer.spawnAt(this.absPosition, this);
+        this.currentLevel.levelStreamer.assignAt(this.absPosition, this);
     }
 
     public void nextFrame() {
-        if (this.frameCounter < this.usedAnimationFrames.length) {
-            this.usedAnimationFrames = animationState[currentAnimationState];
-            this.representMap = this.usedAnimationFrames[frameCounter];
+        if (this.frameCounter < this.selectedAnimationFrames.length) {
+            this.selectedAnimationFrames = animationState[currentAnimationState];
+            this.representMap = this.selectedAnimationFrames[frameCounter];
             this.frameCounter++;
         } else if (this.loops) {
             this.frameCounter = 0;
@@ -52,7 +46,7 @@ public class Animated extends Movable {
         if (this.currentAnimationState == state)
             return;
         this.currentAnimationState = state;
-        this.usedAnimationFrames = animationState[currentAnimationState];
+        this.selectedAnimationFrames = animationState[currentAnimationState];
         nextFrame();
     }
 
@@ -69,7 +63,7 @@ public class Animated extends Movable {
         if (canGetOlder)
             this.lifeSpan -= correctedElapsed;
         // Do next frame only if there is more than 1 frame
-        if (usedAnimationFrames.length > 1 && elapsedNow >= elapsedMsToFrame)
+        if (selectedAnimationFrames.length > 1 && elapsedNow >= frameDurationMs)
             this.nextFrame();
     }
 

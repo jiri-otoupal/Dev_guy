@@ -66,8 +66,8 @@ public class LevelStreamer extends Level {
 
     }
 
-    public boolean spawnAt(Point coords, Entity1D value) {
-        if (coords != null && this.map[coords.y][coords.x].getChar() == ' ') {
+    public boolean assignAt(Point coords, Entity1D value) {
+        if (coords != null) {
             this.map[coords.y][coords.x] = value;
             return true;
         }

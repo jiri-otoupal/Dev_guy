@@ -15,7 +15,7 @@ public class Projectile extends Movable {
     public Projectile(Level currentLevel, float damage, float mass, boolean enableGravity, boolean applyPhysicsImpulse, Point spawnPoint, Point2D.Float vector) {
         super(currentLevel, enableGravity);
         this.absPosition = spawnPoint;
-        currentLevel.levelStreamer.spawnAt(spawnPoint, this);
+        currentLevel.levelStreamer.assignAt(spawnPoint, this);
         representMap = new char[][]{{'-', '-'}};
         this.gravity = 0.003F;
         this.vector = vector;

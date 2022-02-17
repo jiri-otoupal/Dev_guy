@@ -10,7 +10,7 @@ public class Effect extends Animated {
         this.lifeSpan = lifeSpanMs;
         this.loops = true;
         this.frameCounter = 0;
-        this.elapsedMsToFrame = animationRateMs;
+        this.frameDurationMs = animationRateMs;
     }
 
 }
