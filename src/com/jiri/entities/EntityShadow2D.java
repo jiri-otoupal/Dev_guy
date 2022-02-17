@@ -14,6 +14,7 @@ public class EntityShadow2D extends Entity1D {
         this.persistent = entity_ptr.persistent;
     }
 
+
     @Override
     public char getChar() {
         return representingChar;

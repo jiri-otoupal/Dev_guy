@@ -16,7 +16,7 @@ public class Projectile extends Movable {
         super(currentLevel, enableGravity);
         this.absPosition = spawnPoint;
         currentLevel.levelStreamer.assignAt(spawnPoint, this);
-        representMap = new char[][]{{'-', '-'}};
+        representMap = new char[][]{{'-'}};
         this.gravity = 0.003F;
         this.vector = vector;
         this.persistent = false;
