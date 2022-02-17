@@ -2,18 +2,17 @@ package com.jiri.entities;
 
 import com.jiri.level.Level;
 
-public class Player extends AliveEntity {
+public class Skeleton extends AliveEntity {
 
-    public Player(Level currentLevel, int health, float speed, long fireRateMs) {
-        super(currentLevel, health, speed, fireRateMs, 6, 0.2F);
-        this.currentLevel.levelStreamer.playerController.controlledPlayer = this;
+    public Skeleton(Level currentLevel, int health, float speed, long fireRate, float jumpHeight, float gravity) {
+        super(currentLevel, health, speed, fireRate, jumpHeight, gravity);
         this.elapsedMsToFrame = 50;
         this.loops = true;
         animationState = new char[][][][]{
                 {//Idle
                         {
                                 {' ', 'O', ' '},
-                                {'c', '|', 'c'},
+                                {'\\', 'H', '/'},
                                 {' ', '*', ' '},
                                 {'/', ' ', '\\'}
                         },
@@ -70,7 +69,6 @@ public class Player extends AliveEntity {
         };
 
         usedAnimationFrames = animationState[0];
-
     }
 
     @Override
@@ -85,4 +83,5 @@ public class Player extends AliveEntity {
         //Idle State
         return 0;
     }
+
 }

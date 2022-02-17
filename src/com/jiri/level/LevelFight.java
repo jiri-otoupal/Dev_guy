@@ -12,6 +12,7 @@ public class LevelFight extends Level {
             put(' ', new EmptySpace(level));
             put('w', new Wall(level));
             put('p', new Player(level, 100, 1F, 100));
+            put('e', new Skeleton(level, 50, 1F, 100, 1, 0.2F));
         }};
         this.mapToTranslate = new String[]{
                 "                                                                                ",
@@ -23,7 +24,7 @@ public class LevelFight extends Level {
                 "                                                                                ",
                 "                                                                                ",
                 "                                                                                ",
-                "                                                                                ",
+                "                           e                                                    ",
                 "                                                                                ",
                 "                                                                                ",
                 "                                                                                ",

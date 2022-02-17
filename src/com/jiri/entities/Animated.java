@@ -22,12 +22,12 @@ public class Animated extends Movable {
     public Animated(Level currentLevel, boolean enableGravity, boolean canGetOlder) {
         super(currentLevel, enableGravity);
         if (usedAnimationFrames == null) {
-            usedAnimationFrames = new char[][][]{this.representMap};
-            animationState = new char[][][][]{usedAnimationFrames};
+            this.usedAnimationFrames = new char[][][]{this.representMap};
+            this.animationState = new char[][][][]{usedAnimationFrames};
         } else {
-            representMap = animationState[currentAnimationState][frameCounter];
+            this.representMap = animationState[currentAnimationState][frameCounter];
         }
-        animationListeners.add(this);
+        this.animationListeners.add(this);
         this.canGetOlder = canGetOlder;
     }
 
@@ -37,7 +37,8 @@ public class Animated extends Movable {
 
     public void nextFrame() {
         if (this.frameCounter < this.usedAnimationFrames.length) {
-            this.representMap = animationState[currentAnimationState][frameCounter];
+            this.usedAnimationFrames = animationState[currentAnimationState];
+            this.representMap = this.usedAnimationFrames[frameCounter];
             this.frameCounter++;
         } else if (this.loops) {
             this.frameCounter = 0;

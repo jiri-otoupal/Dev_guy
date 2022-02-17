@@ -5,10 +5,9 @@ import com.jiri.level.Level;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public class AliveEntity extends Animated {
+public class AliveEntity extends Animated implements IAliveEntity {
     protected float jumpHeight;
     protected boolean shooting = false;
-
 
 
     public AliveEntity(Level currentLevel, int health, float speed, long fireRate, float jumpHeight, float gravity) {
@@ -45,10 +44,10 @@ public class AliveEntity extends Animated {
     }
 
     public void Shoot() {
-        if (timeToShoot <= 0) {
+        if (timeToShoot <= 0 && this.muzzlePoints.size() > 0) {
             this.shooting = true;
             this.timeToShoot = fireRate;
-            if (this.facingLeft) {
+            if (this.facingLeft) {//TODO: polish
                 Point muzzlePointLeft = this.muzzlePoints.get(0);
                 Projectile mv = new Projectile(this.currentLevel, 5, 1, true, false, new Point(muzzlePointLeft.x - 1, muzzlePointLeft.y), new Point2D.Float(-0.2F, 0F));
             } else {
@@ -56,7 +55,20 @@ public class AliveEntity extends Animated {
                 Projectile mv = new Projectile(this.currentLevel, 5, 1, true, false, new Point(muzzlePointRight.x + 1, muzzlePointRight.y), new Point2D.Float(0.2F, 0F));
             }
         } else {
-            this.shooting = false;
+            this.shooting = false;//fix for right shooting
         }
+    }
+
+
+    @Override
+    public boolean applyDamage(float damage) {
+        this.health -= damage;
+        if (this.health <= 0)
+            die();
+        return true;
+    }
+
+    @Override
+    public void die() {
     }
 }

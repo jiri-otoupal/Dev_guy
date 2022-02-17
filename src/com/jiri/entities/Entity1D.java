@@ -62,7 +62,7 @@ public class Entity1D implements IEntity {
             if (scannedPt.x >= this.currentLevel.width || scannedPt.y >= this.currentLevel.height)
                 continue;
             Entity1D scanned = this.currentLevel.map[scannedPt.y][scannedPt.x];
-            if (scanned.shadow_parent != this && scanned.persistent)
+            if (scanned.shadow_parent != this && scanned.getChar() != ' ')
                 collisionDirections.add(delta);
         }
 
