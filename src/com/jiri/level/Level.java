@@ -1,11 +1,9 @@
 package com.jiri.level;
 
-import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
-import com.jiri.entities.EmptySpace;
+import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.Entity1D;
-import com.jiri.entities.Ground;
+import com.jiri.entities.persistent.Ground;
 
-import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Map;

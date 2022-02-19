@@ -100,4 +100,5 @@ public class AliveEntity extends Animated implements IAliveEntity {
     @Override
     public void die() {
     }
+
 }

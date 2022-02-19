@@ -3,9 +3,8 @@ package com.jiri.level;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
 import com.jiri.control.Controller;
-import com.jiri.entities.EmptySpace;
+import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.IEntity;
 
@@ -36,7 +35,7 @@ public class LevelStreamer extends Level  {
         this.width = terminalSize.getColumns();
         this.height = terminalSize.getRows();
         this.map = new Entity1D[height][width];
-        this.listeners = new ArrayList<IEntity>();
+        this.listeners = new ArrayList<>();
         terminal.setCursorVisible(false);
         this.clear();
         System.out.println(terminalSize);

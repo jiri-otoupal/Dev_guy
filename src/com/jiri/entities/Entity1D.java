@@ -1,6 +1,7 @@
 package com.jiri.entities;
 
 
+import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.level.Level;
 
 import java.awt.*;
@@ -45,9 +46,9 @@ public class Entity1D implements IEntity {
     }
 
     public Entity1D(Level currentLevel) {
-        bodyPositions = new ArrayList<Point>();
+        bodyPositions = new ArrayList<>();
         this.currentLevel = currentLevel;
-        this.collisionDirections = new HashSet<Point>();
+        this.collisionDirections = new HashSet<>();
         representMap = new char[][]{{' '}};
     }
 
@@ -61,8 +62,8 @@ public class Entity1D implements IEntity {
             Point scannedPt = new Point(partPosition.x + delta.x, partPosition.y + delta.y);
             if (scannedPt.x >= this.currentLevel.width || scannedPt.y >= this.currentLevel.height)
                 continue;
-            Entity1D scanned = this.currentLevel.map[scannedPt.y][scannedPt.x];
-            if (scanned.shadow_parent != this && scanned.getChar() != ' ')
+            Entity1D scanned = this.currentLevel.levelStreamer.getInstanceAt(scannedPt);
+            if (scanned.shadow_parent != this && scanned.getChar() != ' ' && (!scanned.shadow_parent.grab((Player) this)))
                 collisionDirections.add(delta);
         }
 
@@ -75,10 +76,7 @@ public class Entity1D implements IEntity {
             return collisionDirections;
         for (Point position : bodyPositions)
             isBodyPartColliding(position);
-        if (collisionDirections.contains(Directions.Bottom.vector))
-            this.falling = false;
-        else
-            this.falling = true;
+        this.falling = !collisionDirections.contains(Directions.Bottom.vector);
         return collisionDirections;
     }
 
@@ -121,12 +119,22 @@ public class Entity1D implements IEntity {
     }
 
     @Override
-    public void invokeImpactEffect(Point impactLocation) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public void invokeImpactEffect(Point impactLocation) {
 
     }
 
     public void removeConnections() {
         this.currentLevel.levelStreamer.removeListener(this);
+    }
+
+    @Override
+    public boolean canGrabItem() {
+        return false;
+    }
+
+    @Override
+    public boolean grab(Player instigator) {
+        return false;
     }
 
     @Override

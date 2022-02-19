@@ -5,23 +5,27 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
 public interface IEntity {
-    abstract public void useLight(); // Erase Shadows from movement
+    void useLight(); // Erase Shadows from movement
 
-    abstract public boolean render(Entity1D[][] map, Point cursor);
+    boolean render(Entity1D[][] map, Point cursor);
 
-    abstract public void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException;
+    void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException;
 
-    abstract public boolean applyDamage(float damage);
+    boolean applyDamage(float damage);
 
-    abstract public boolean applyPhysicsImpulse(float mass);
+    boolean applyPhysicsImpulse(float mass);
 
-    abstract public float getLifeSpan();
+    float getLifeSpan();
 
-    abstract public void erase();
+    void erase();
 
-    abstract public void invokeImpactEffect(Point impactLocation) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException;
+    void invokeImpactEffect(Point impactLocation) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException;
 
-    abstract public Set<Point> isColliding();
+    Set<Point> isColliding();
 
-    abstract public void removeConnections();
+    void removeConnections();
+
+    boolean canGrabItem();
+
+    boolean grab(Player instigator);
 }

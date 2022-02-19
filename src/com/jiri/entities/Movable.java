@@ -1,5 +1,6 @@
 package com.jiri.entities;
 
+import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.level.Level;
 
 import java.awt.Point;
@@ -27,23 +28,23 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         if (!persistent && currentLevel.levelStreamer != null) {
             currentLevel.levelStreamer.addListener(this);
         }
-        movements = new LinkedList<float[]>();
-        animationListeners = new LinkedList<IAnimation>();
+        movements = new LinkedList<>();
+        animationListeners = new LinkedList<>();
     }
 
     protected Point normalizeAndApplyDelta(float deltaX, float deltaY) {
         this.nowDeltaX += deltaX;
         this.nowDeltaY += deltaY;
-        int deltaFlooredX = (int) Math.round(this.nowDeltaX);
-        int deltaFlooredY = (int) Math.round(this.nowDeltaY);
+        int deltaFlooredX = Math.round(this.nowDeltaX);
+        int deltaFlooredY = Math.round(this.nowDeltaY);
         this.nowDeltaX -= deltaFlooredX;
         this.nowDeltaY -= deltaFlooredY;
         return new Point(deltaFlooredX, deltaFlooredY);
     }
 
     protected Point normalizeDelta(float deltaX, float deltaY) {
-        int deltaFlooredX = (int) Math.round(this.nowDeltaX + deltaX);
-        int deltaFlooredY = (int) Math.round(this.nowDeltaY + deltaY);
+        int deltaFlooredX = Math.round(this.nowDeltaX + deltaX);
+        int deltaFlooredY = Math.round(this.nowDeltaY + deltaY);
         return new Point(deltaFlooredX, deltaFlooredY);
     }
 

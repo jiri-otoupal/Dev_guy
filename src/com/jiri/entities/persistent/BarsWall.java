@@ -1,5 +1,6 @@
-package com.jiri.entities;
+package com.jiri.entities.persistent;
 
+import com.jiri.entities.Entity1D;
 import com.jiri.entities.effects.EffectPersistentImpact;
 import com.jiri.level.Level;
 

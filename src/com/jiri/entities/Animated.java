@@ -58,7 +58,8 @@ public class Animated extends Movable {
 
     @Override
     public void updateAnimation(long elapsedMs) {
-        long correctedElapsed = elapsedMs + 1;//+1 in case it takes 0ms to render frame
+        long correctedElapsed = elapsedMs == 0 ? 1 : elapsedMs;//1 in case it takes 0ms to render frame
+
         this.elapsedNow += correctedElapsed;
         if (canGetOlder)
             this.lifeSpan -= correctedElapsed;

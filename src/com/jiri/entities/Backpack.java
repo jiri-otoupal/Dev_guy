@@ -1,5 +1,7 @@
 package com.jiri.entities;
 
+import com.jiri.entities.items.Item;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +11,7 @@ public class Backpack {
 
 
     public Backpack(int backpackSize) {
-        this.items = new HashMap<Item, Integer>();
+        this.items = new HashMap<>();
         this.maxSize = backpackSize;
     }
 
