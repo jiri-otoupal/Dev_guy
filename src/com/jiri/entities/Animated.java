@@ -13,7 +13,7 @@ public class Animated extends Movable {
     public int currentAnimationState = 0;
     protected boolean canGetOlder; // timeSpan is decremented if true
 
-    public Animated(Level currentLevel, boolean enableGravity, boolean canGetOlder) {
+    public Animated(Level currentLevel, boolean enableGravity) {
         super(currentLevel, enableGravity);
         if (selectedAnimationFrames == null) {
             this.selectedAnimationFrames = new char[][][]{this.representMap};
@@ -22,7 +22,20 @@ public class Animated extends Movable {
             this.representMap = animationState[currentAnimationState][frameCounter];
         }
         this.animationListeners.add(this);
-        this.canGetOlder = canGetOlder;
+        this.canGetOlder = false;
+    }
+
+    public Animated(Level currentLevel, boolean enableGravity, float lifeSpan) {
+        super(currentLevel, enableGravity);
+        if (selectedAnimationFrames == null) {
+            this.selectedAnimationFrames = new char[][][]{this.representMap};
+            this.animationState = new char[][][][]{selectedAnimationFrames};
+        } else {
+            this.representMap = animationState[currentAnimationState][frameCounter];
+        }
+        this.animationListeners.add(this);
+        this.lifeSpan = lifeSpan;
+        this.canGetOlder = true;
     }
 
     public void updateParticles() {

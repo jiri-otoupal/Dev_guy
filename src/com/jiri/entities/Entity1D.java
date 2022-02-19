@@ -1,6 +1,7 @@
 package com.jiri.entities;
 
 
+import com.jiri.entities.items.Item;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.level.Level;
 
@@ -63,7 +64,7 @@ public class Entity1D implements IEntity {
             if (scannedPt.x >= this.currentLevel.width || scannedPt.y >= this.currentLevel.height)
                 continue;
             Entity1D scanned = this.currentLevel.levelStreamer.getInstanceAt(scannedPt);
-            if (scanned.shadow_parent != this && scanned.getChar() != ' ' && (!scanned.shadow_parent.grab((Player) this)))
+            if (scanned.shadow_parent != this && scanned.getChar() != ' ' && (!scanned.shadow_parent.grab(this)))
                 collisionDirections.add(delta);
         }
 
@@ -133,7 +134,12 @@ public class Entity1D implements IEntity {
     }
 
     @Override
-    public boolean grab(Player instigator) {
+    public boolean grab(Entity1D instigator) {
+        return false;
+    }
+
+    @Override
+    public boolean insertItemToBackpack(Item item) {
         return false;
     }
 

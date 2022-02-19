@@ -1,6 +1,7 @@
 package com.jiri.entities;
 
 import com.jiri.entities.effects.EffectHitPlayer;
+import com.jiri.entities.items.Item;
 import com.jiri.level.Level;
 
 import java.awt.*;
@@ -107,6 +108,11 @@ public class Player extends AliveEntity {
     }
 
     @Override
+    public boolean insertItemToBackpack(Item item) {
+        return this.backpack.insertItem(item);
+    }
+
+    @Override
     public boolean canGrabItem() {
         return true;
     }
@@ -136,6 +142,7 @@ public class Player extends AliveEntity {
         //Idle State if none of previous
         return 0;
     }
+
     @Override
     public void invokeImpactEffect(Point impactLocation) { //TODO from left and right
         this.currentLevel.levelStreamer.assignAt(impactLocation, new EffectHitPlayer(this.currentLevel, 40));

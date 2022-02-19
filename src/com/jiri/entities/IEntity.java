@@ -1,5 +1,7 @@
 package com.jiri.entities;
 
+import com.jiri.entities.items.Item;
+
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
@@ -27,5 +29,7 @@ public interface IEntity {
 
     boolean canGrabItem();
 
-    boolean grab(Player instigator);
+    boolean grab(Entity1D instigator);
+
+    boolean insertItemToBackpack(Item item);
 }

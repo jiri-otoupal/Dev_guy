@@ -12,7 +12,7 @@ public class AliveEntity extends Animated implements IAliveEntity {
 
 
     public AliveEntity(Level currentLevel, int health, float speed, long fireRate, float jumpHeight, float gravity) {
-        super(currentLevel, true, false);
+        super(currentLevel, true);
         this.health = health;
         this.speed = speed;
         this.fireRate = fireRate;
