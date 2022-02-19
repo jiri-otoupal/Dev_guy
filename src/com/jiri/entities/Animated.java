@@ -77,7 +77,7 @@ public class Animated extends Movable {
         if (canGetOlder)
             this.lifeSpan -= correctedElapsed;
         // Do next frame only if there is more than 1 frame
-        if (selectedAnimationFrames.length > 1 && elapsedNow >= frameDurationMs)
+        if (elapsedNow >= frameDurationMs)
             this.nextFrame();
     }
 

@@ -15,8 +15,8 @@ public class LevelFight extends Level {
         this.linker = new HashMap<>() {{
             put(' ', new EmptySpace(level));
             put('w', new Wall(level));
-            put('p', new Player(level, 100, 1F, 100));
-            put('e', new Skeleton(level, 50, 1F, 100, 6, 0.2F));
+            put('p', new Player(level, 100, 1F, 50));
+            put('e', new Skeleton(level, 200, 1F, 500, 6, 0.2F));
             put('c', new Coffee(level));
             put('i', new InvisibleWall(level));
         }};
@@ -28,7 +28,7 @@ public class LevelFight extends Level {
                 "                                                                                ",
                 "                                                                                ",
                 "                                                                                ",
-                "                                                                                ",
+                "                                                               e                ",
                 "                                                                                ",
                 "                                                                                ",
                 "                                                                                ",

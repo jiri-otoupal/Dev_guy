@@ -1,18 +1,14 @@
 package com.jiri.entities;
 
 import com.jiri.level.Level;
-import com.jiri.level.LevelStreamer;
 import com.jiri.structures.PointExtended;
-
-import java.awt.Point;
-import java.util.*;
 
 public class Enemy extends AliveEntity implements IEnemy {
     AI enemyAI;
 
 
-    public Enemy(Level currentLevel, int health, float speed, long fireRate, float jumpHeight, float gravity, int acceptableRadiusToPlayer) {
-        super(currentLevel, health, speed, fireRate, jumpHeight, gravity);
+    public Enemy(Level currentLevel, int health, float speed, long fireRateMs, float jumpHeight, float gravity, int acceptableRadiusToPlayer) {
+        super(currentLevel, health, speed, fireRateMs, jumpHeight, gravity);
         this.frameDurationMs = 50;
         this.loops = true;
         this.enemyAI = new AI(this, this.currentLevel.levelStreamer.playerController.controlledAliveEntity, acceptableRadiusToPlayer, 200);

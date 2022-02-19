@@ -5,7 +5,7 @@ import com.jiri.entities.items.Item;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.level.Level;
 
-import java.awt.*;
+import java.awt.Point;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,9 +23,12 @@ public class Entity1D implements IEntity {
     public boolean falling = true;
     public boolean facingLeft;
     public char muzzleChar = 'c';
+    public Point textRenderPoint;
     public List<Point> muzzlePoints = new ArrayList<>(2);
     public float lifeSpan = 0;
     public char representingChar;
+    protected char textRenderChar = 'T';
+    public BannerText currentRenderedText;
 
 
     public char[][] getRepresentMap() {
@@ -93,6 +96,10 @@ public class Entity1D implements IEntity {
                     continue;
                 else if (currentRenderedChar == muzzleChar)
                     muzzlePoints.add(new Point(map_x, map_y));
+                else if (currentRenderedChar == textRenderChar) { //assign text render point for character Default character 'T'
+                    this.textRenderPoint = new Point(map_x, map_y);
+                    continue;
+                }
                 map[map_y][map_x] = new EntityShadow2D(this.currentLevel, currentRenderedChar, this);
                 bodyPositions.add(new Point(map_x, map_y));
             }

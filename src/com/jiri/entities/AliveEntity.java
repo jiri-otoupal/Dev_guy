@@ -4,11 +4,13 @@ import com.jiri.level.Level;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.Random;
 
 public class AliveEntity extends Animated implements IAliveEntity {
     protected boolean crouching = false;
     protected float jumpHeight;
     protected boolean shooting = false;
+    protected String[] damageReactions;
 
 
     public AliveEntity(Level currentLevel, int health, float speed, long fireRate, float jumpHeight, float gravity) {
@@ -92,8 +94,17 @@ public class AliveEntity extends Animated implements IAliveEntity {
     @Override
     public boolean applyDamage(float damage) {
         this.health -= damage;
-        if (this.health <= 0)
+        if (this.health <= 0) {
             die();
+        } else {
+            if (damageReactions == null || damageReactions.length == 0)
+                return true;
+            int index = new Random().nextInt(-1, damageReactions.length);
+            if (index == -1)
+                return true;
+            String usedWord = damageReactions[index];
+            new BannerText(currentLevel, usedWord, false, 45, 200, this).spawn(this.textRenderPoint);
+        }
         return true;
     }
 
