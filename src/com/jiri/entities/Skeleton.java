@@ -4,7 +4,7 @@ import com.jiri.level.Level;
 
 public class Skeleton extends Enemy {
     public Skeleton(Level currentLevel, int health, float speed, long fireRate, float jumpHeight, float gravity) {
-        super(currentLevel, health, speed, fireRate, jumpHeight, gravity);
+        super(currentLevel, health, speed, fireRate, jumpHeight, gravity, 30);
         animationState = new char[][][][]{
                 {//Idle
                         {

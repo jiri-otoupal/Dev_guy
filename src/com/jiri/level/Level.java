@@ -1,14 +1,16 @@
 package com.jiri.level;
 
+import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
 import com.jiri.entities.EmptySpace;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.Ground;
 
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Map;
 
-public class Level {
+public class Level  {
     public int width;
     public int height;
     public Entity1D[][] map;
@@ -20,7 +22,7 @@ public class Level {
     public Level(int width, int height, LevelStreamer levelStreamer) {
         this.width = width;
         this.height = height;
-        this.levelStreamer=levelStreamer;
+        this.levelStreamer = levelStreamer;
         this.init();
     }
 
@@ -39,9 +41,9 @@ public class Level {
         Arrays.fill(this.map[height - 2], new Ground(this));
     }
 
-    public Object createInstanceOfClass(String className,Object... args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public Object createInstanceOfClass(String className, Object... args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Class<?> classTemp = Class.forName(className);
-        return classTemp.getDeclaredConstructor(Level.class,float.class).newInstance(args);
+        return classTemp.getDeclaredConstructor(Level.class, float.class).newInstance(args);
     }
 
     void compileMap() throws InvalidTemplateMap {

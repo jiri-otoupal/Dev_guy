@@ -5,7 +5,7 @@ import com.jiri.entities.Player;
 
 public class Controller {
 
-    public Player controlledPlayer;
+    public Player controlledAliveEntity;
 
     public Controller() {
 
@@ -13,15 +13,15 @@ public class Controller {
 
     public void invokeActionFromKey(KeyStroke key) {
         if (key.getCharacter() == 'w') {
-            controlledPlayer.Jump();
+            controlledAliveEntity.Jump();
         } else if (key.getCharacter() == 'a') {
-            controlledPlayer.MoveLeft();
+            controlledAliveEntity.MoveLeft();
         } else if (key.getCharacter() == 's') {
-            controlledPlayer.Crouch();
+            controlledAliveEntity.Crouch();
         } else if (key.getCharacter() == 'd') {
-            controlledPlayer.MoveRight();
+            controlledAliveEntity.MoveRight();
         } else if (key.getCharacter() == ' ') {
-            controlledPlayer.Shoot();
+            controlledAliveEntity.Shoot();
         }
     }
 }

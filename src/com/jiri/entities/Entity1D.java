@@ -30,7 +30,7 @@ public class Entity1D implements IEntity {
         return representMap;
     }
 
-    public enum Direction {
+    public enum Directions {
         Top(0, -1),
         Bottom(0, 1),
         Left(-1, 0),
@@ -39,7 +39,7 @@ public class Entity1D implements IEntity {
 
         final Point vector;
 
-        Direction(int x, int y) {
+        Directions(int x, int y) {
             vector = new Point(x, y);
         }
     }
@@ -56,7 +56,7 @@ public class Entity1D implements IEntity {
     }
 
     protected void isBodyPartColliding(Point partPosition) {
-        Point[] dirScan = new Point[]{Direction.Right.vector, Direction.Left.vector, Direction.Top.vector, Direction.Bottom.vector}; // (Y,X) directions to scan Bottom,Top,Left,Right
+        Point[] dirScan = new Point[]{Directions.Right.vector, Directions.Left.vector, Directions.Top.vector, Directions.Bottom.vector}; // (Y,X) directions to scan Bottom,Top,Left,Right
         for (Point delta : dirScan) {
             Point scannedPt = new Point(partPosition.x + delta.x, partPosition.y + delta.y);
             if (scannedPt.x >= this.currentLevel.width || scannedPt.y >= this.currentLevel.height)
@@ -75,7 +75,7 @@ public class Entity1D implements IEntity {
             return collisionDirections;
         for (Point position : bodyPositions)
             isBodyPartColliding(position);
-        if (collisionDirections.contains(Direction.Bottom.vector))
+        if (collisionDirections.contains(Directions.Bottom.vector))
             this.falling = false;
         else
             this.falling = true;

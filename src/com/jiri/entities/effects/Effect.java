@@ -1,12 +1,17 @@
-package com.jiri.entities;
+package com.jiri.entities.effects;
 
+import com.jiri.entities.Animated;
 import com.jiri.level.Level;
 
-public class EffectPersistentImpact extends Effect {
-    public EffectPersistentImpact(Level currentLevel, float lifeSpanMs) {
-        super(currentLevel, lifeSpanMs, 20);
-        this.animationState = new char[][][][]{{{{'>'}}, {{':'}}}};
-        this.selectedAnimationFrames = this.animationState[this.currentAnimationState];
+public class Effect extends Animated {
+
+    public Effect(Level currentLevel, float lifeSpanMs, long animationRateMs) {
+        super(currentLevel, false, true);
+        this.persistent = false;
+        this.lifeSpan = lifeSpanMs;
+        this.loops = true;
+        this.frameCounter = 0;
+        this.frameDurationMs = animationRateMs;
     }
 
     @Override

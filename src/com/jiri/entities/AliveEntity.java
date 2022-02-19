@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class AliveEntity extends Animated implements IAliveEntity {
+    protected boolean crouching = false;
     protected float jumpHeight;
     protected boolean shooting = false;
 
@@ -19,40 +20,69 @@ public class AliveEntity extends Animated implements IAliveEntity {
         this.jumpHeight = jumpHeight;
     }
 
-    public void Jump() {
-        float x = this.speed / -2;
-        if (!this.facingLeft)
-            x = this.speed / 2;
+    @Override
+    public void JumpVertical() {
+        float x = 0;
         if (this.falling)
             return;
         for (int i = 0; i < jumpHeight; i++)
             addMovement(x, -1F);
     }
 
-    public void Crouch() {
+    @Override
+    public void Jump() {
+        if (this.crouching) {
+            this.crouching = false;
+            return;
+        }
+        float x = 0;
+        if (this.facingLeft && !this.collisionDirections.contains(new Point(-1, 0))) {
+            x = this.speed / -2;
+        } else if (!this.facingLeft && !this.collisionDirections.contains(new Point(1, 0))) {
+            x = this.speed / 2;
+        }
+
+        if (this.falling)
+            return;
+        for (int i = 0; i < jumpHeight; i++)
+            addMovement(x, -1F);
     }
 
+    @Override
+    public void Crouch() {
+        this.crouching = true;
+    }
+
+    @Override
     public void MoveLeft() {
         this.facingLeft = true;
         addMovement(this.speed * -1, 0);
     }
 
+    @Override
     public void MoveRight() {
         this.facingLeft = false;
         addMovement(this.speed, 0);
     }
 
+    @Override
     public void Shoot() {
         if (timeToShoot <= 0 && this.muzzlePoints.size() > 0) {
+            Point muzzlePoint;
+            Point2D.Float vector;
             this.shooting = true;
             this.timeToShoot = fireRate;
-            if (this.facingLeft) {//TODO: polish
+            if (this.facingLeft) {
                 Point muzzlePointLeft = this.muzzlePoints.get(0);
-                Projectile mv = new Projectile(this.currentLevel, 5, 1, true, false, new Point(muzzlePointLeft.x - 1, muzzlePointLeft.y), new Point2D.Float(-0.2F, 0F));
+                muzzlePoint = new Point(muzzlePointLeft.x - 1, muzzlePointLeft.y);
+                vector = new Point2D.Float(-0.2F, 0F);
             } else {
                 Point muzzlePointRight = this.muzzlePoints.get(1);
-                Projectile mv = new Projectile(this.currentLevel, 5, 1, true, false, new Point(muzzlePointRight.x + 1, muzzlePointRight.y), new Point2D.Float(0.2F, 0F));
+                muzzlePoint = new Point(muzzlePointRight.x + 1, muzzlePointRight.y);
+                vector = new Point2D.Float(0.2F, 0F);
             }
+            if (!this.currentLevel.levelStreamer.getInstanceAt(muzzlePoint).persistent)
+                new Projectile(this.currentLevel, 5, 1, true, false, muzzlePoint, vector);
         } else {
             this.shooting = false;//fix for right shooting
         }

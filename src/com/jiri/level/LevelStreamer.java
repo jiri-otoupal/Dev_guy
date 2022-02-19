@@ -3,20 +3,21 @@ package com.jiri.level;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
 import com.jiri.control.Controller;
 import com.jiri.entities.EmptySpace;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.IEntity;
 
 
-import java.awt.Point;
+import java.awt.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.List;
 
-public class LevelStreamer extends Level {
+public class LevelStreamer extends Level  {
     DefaultTerminalFactory defaultTerminalFactory;
     public Terminal terminal;
     public Level loadedLevel = null;
@@ -27,6 +28,7 @@ public class LevelStreamer extends Level {
     public LevelStreamer(Controller controller, int target_fps) throws IOException {
         DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory(System.out, System.in,
                 StandardCharsets.UTF_8);
+        defaultTerminalFactory.setInitialTerminalSize(new TerminalSize(80, 24));
         this.playerController = controller;
         this.target_fps = target_fps;
         terminal = defaultTerminalFactory.createTerminal();
@@ -72,6 +74,10 @@ public class LevelStreamer extends Level {
             return true;
         }
         return false;
+    }
+
+    public boolean isValidLocation(Point location) {
+        return location.x >= 0 && location.x < this.width && location.y >= 0 && location.y < this.height;
     }
 
     public Entity1D getInstanceAt(Point coords) {

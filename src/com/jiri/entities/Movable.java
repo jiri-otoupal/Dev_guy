@@ -53,6 +53,8 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
     }
 
     public boolean move(float deltaX, float deltaY) {
+        if (absPosition == null)
+            return false;
         Point dl = normalizeDelta(deltaX, deltaY);
         if (this.isColliding().contains(dl))
             return false;
@@ -80,8 +82,8 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
             applyGravity();
         if (!this.movements.isEmpty()) {
             float[] pts = this.movements.remove();
-            move(pts[0], pts[1]);
-            this.moving = true;
+            if (move(pts[0], pts[1]))
+                this.moving = true;
         } else {
             this.moving = false;
         }
