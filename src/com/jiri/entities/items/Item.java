@@ -18,18 +18,20 @@ public abstract class Item extends Animated implements IItem {
 
 
     @Override
-    public boolean grab(Entity1D instigator) {
+    public boolean grab(Entity1D instigator) throws Level.InvalidTemplateMap {
 
-        new BannerText(currentLevel, "Got " + name + "+1", false, 45, 200).spawnAtPlayer();
+
         if (instigator.canGrabItem()) {
             if (this.instant) {
                 this.use();
                 this.erase();
+                new BannerText(currentLevel, "Used " + name, false, 45, 200).spawnAtPlayer();
                 return true;
             }
             if (!instigator.insertItemToBackpack(this))
                 return false;
             this.erase();
+            new BannerText(currentLevel, "Got " + name + "+1", false, 45, 200).spawnAtPlayer();
             return true;
         }
         return false;

@@ -7,7 +7,7 @@ public class Coffee extends Item {
         super(currentLevel, false, "Coffee");
         this.animationState = new char[][][][]{{{{'c', '[', '_', ']'}}, {{'c', '[', '▁', ']'}}, {{'c', '[', '▂', ']'}}, {{'c', '[', '▃', ']'}}, {{'c', '[', '▄', ']'}}}};
         this.selectedAnimationFrames = this.animationState[this.currentAnimationState];
-        this.frameDurationMs = 10;
+        this.frameDurationMs = 25;
     }
 
     @Override

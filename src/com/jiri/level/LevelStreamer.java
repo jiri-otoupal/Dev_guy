@@ -9,20 +9,22 @@ import com.jiri.entities.Entity1D;
 import com.jiri.entities.IEntity;
 
 
-import java.awt.*;
+import java.awt.Point;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.List;
 
-public class LevelStreamer extends Level  {
+public class LevelStreamer {
     DefaultTerminalFactory defaultTerminalFactory;
     public Terminal terminal;
     public Level loadedLevel = null;
     public Controller playerController;
     private final List<IEntity> listeners;
     private final int target_fps;
+    public int width;
+    public int height;
+    public Entity1D[][] map;
 
     public LevelStreamer(Controller controller, int target_fps) throws IOException {
         DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory(System.out, System.in,
@@ -43,7 +45,7 @@ public class LevelStreamer extends Level  {
 
     public void clear() {
         for (int line = 0; line < this.height; line++) {
-            Arrays.fill(this.map[line], new EmptySpace(this));
+            Arrays.fill(this.map[line], new EmptySpace(this.loadedLevel));
         }
     }
 
@@ -88,11 +90,19 @@ public class LevelStreamer extends Level  {
             System.out.printf("Inconsistent Level dimensions Width %s!=%s Height %s!=%s%n", level.width, width, level.height, height);
         }
         // Clear Streamer ref from previous level
-        if (this.loadedLevel != null)
+
+        if (this.loadedLevel != null) {
+            this.listeners.clear();
             this.loadedLevel.levelStreamer = null;
+        }
         //Set ref to new level
         this.map = level.map;
         this.loadedLevel = level;
+        try {
+            this.loadedLevel.compileMap();
+        } catch (Level.InvalidTemplateMap e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -118,4 +128,5 @@ public class LevelStreamer extends Level  {
         this.broadcastTick(frame_time);
         Thread.sleep(1000 / (target_fps * (frame_time + 1)));
     }
+
 }

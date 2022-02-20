@@ -35,9 +35,9 @@ public class AI {
 
     protected void periodicalSearch() {
         while (this.owner.health > 0) {
-            //if (player.moving || player.falling || this.owner.moving || this.owner.falling) { // Run path finding only if someone is moving
-            this.pathToPlayer = this.searchForPath(this.owner.currentLevel.levelStreamer);
-            //}
+            if ((!this.pathToPlayer.isEmpty() && !player.absPosition.equals(this.pathToPlayer.get(0)) || player.falling || this.owner.movements.isEmpty() || this.owner.falling) && owner.currentLevel.levelStreamer != null) { // Run path finding only if someone is moving
+                this.pathToPlayer = this.searchForPath(this.owner.currentLevel.levelStreamer);
+            }
             try {
                 Thread.sleep(this.searchFrequency);
             } catch (InterruptedException e) {

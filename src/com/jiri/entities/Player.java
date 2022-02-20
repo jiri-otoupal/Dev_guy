@@ -140,6 +140,7 @@ public class Player extends AliveEntity {
 
     @Override
     public int resolveAnimationState() {
+
         if (falling) {
             return 1;
         } else if (moving && !crouching) {

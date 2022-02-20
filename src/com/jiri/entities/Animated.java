@@ -1,6 +1,9 @@
 package com.jiri.entities;
 
+import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.level.Level;
+
+import java.awt.*;
 
 
 public class Animated extends Movable {
@@ -69,6 +72,7 @@ public class Animated extends Movable {
         this.animationListeners.remove(this);
     }
 
+
     @Override
     public void updateAnimation(long elapsedMs) {
         long correctedElapsed = elapsedMs == 0 ? 1 : elapsedMs;//1 in case it takes 0ms to render frame
@@ -76,7 +80,6 @@ public class Animated extends Movable {
         this.elapsedNow += correctedElapsed;
         if (canGetOlder)
             this.lifeSpan -= correctedElapsed;
-        // Do next frame only if there is more than 1 frame
         if (elapsedNow >= frameDurationMs)
             this.nextFrame();
     }

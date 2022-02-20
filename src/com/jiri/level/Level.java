@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Map;
 
-public class Level  {
+public abstract class Level implements ILevel {
     public int width;
     public int height;
     public Entity1D[][] map;
@@ -44,7 +44,9 @@ public class Level  {
         return classTemp.getDeclaredConstructor(Level.class, float.class).newInstance(args);
     }
 
+
     void compileMap() throws InvalidTemplateMap {
+        initializeLinker();
         if (this.map.length != this.mapToTranslate.length || this.map[0].length != this.mapToTranslate[0].toCharArray().length)
             throw new InvalidTemplateMap("Dimensions of Translate Map are different from Object map");
         for (int y = 0; y < this.map.length; y++) {

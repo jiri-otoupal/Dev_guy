@@ -66,9 +66,15 @@ public class Entity1D implements IEntity {
             Point scannedPt = new Point(partPosition.x + delta.x, partPosition.y + delta.y);
             if (scannedPt.x >= this.currentLevel.width || scannedPt.y >= this.currentLevel.height)
                 continue;
+            if (this.currentLevel.levelStreamer == null)
+                return;
             Entity1D scanned = this.currentLevel.levelStreamer.getInstanceAt(scannedPt);
-            if (scanned.shadow_parent != this && scanned.getChar() != ' ' && (!scanned.shadow_parent.grab(this)))
-                collisionDirections.add(delta);
+            try {
+                if (scanned.shadow_parent != this && scanned.getChar() != ' ' && (!scanned.shadow_parent.grab(this)))
+                    collisionDirections.add(delta);
+            } catch (Level.InvalidTemplateMap e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -141,7 +147,7 @@ public class Entity1D implements IEntity {
     }
 
     @Override
-    public boolean grab(Entity1D instigator) {
+    public boolean grab(Entity1D instigator) throws Level.InvalidTemplateMap {
         return false;
     }
 

@@ -41,6 +41,8 @@ public class Projectile extends Movable {
 
     @Override
     public void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+        if (currentLevel.levelStreamer == null)
+            this.erase();
         if (this.enableGravity)
             applyGravity();
         applyProjectileMovement();

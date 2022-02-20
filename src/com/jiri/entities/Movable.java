@@ -79,6 +79,8 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
     @Override
     public void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         this.timeToShoot -= elapsedMs + 1;
+        if (currentLevel.levelStreamer == null)
+            this.erase();
         if (this.enableGravity && !this.persistent)
             applyGravity();
         if (!this.movements.isEmpty()) {

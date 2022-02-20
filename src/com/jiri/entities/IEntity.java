@@ -1,6 +1,7 @@
 package com.jiri.entities;
 
 import com.jiri.entities.items.Item;
+import com.jiri.level.Level;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
@@ -29,7 +30,7 @@ public interface IEntity {
 
     boolean canGrabItem();
 
-    boolean grab(Entity1D instigator);
+    boolean grab(Entity1D instigator) throws Level.InvalidTemplateMap;
 
     boolean insertItemToBackpack(Item item);
 }

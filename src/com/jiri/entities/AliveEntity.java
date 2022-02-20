@@ -11,6 +11,7 @@ public class AliveEntity extends Animated implements IAliveEntity {
     protected float jumpHeight;
     protected boolean shooting = false;
     protected String[] damageReactions;
+    public boolean dead = false;
 
 
     public AliveEntity(Level currentLevel, int health, float speed, long fireRate, float jumpHeight, float gravity) {
@@ -72,7 +73,7 @@ public class AliveEntity extends Animated implements IAliveEntity {
         if (timeToShoot <= 0 && this.muzzlePoints.size() > 0) {
             Point muzzlePoint;
             Point2D.Float vector;
-            this.shooting = true;
+            //this.shooting = true;
             this.timeToShoot = fireRate;
             if (this.facingLeft) {
                 Point muzzlePointLeft = this.muzzlePoints.get(0);
@@ -85,8 +86,6 @@ public class AliveEntity extends Animated implements IAliveEntity {
             }
             if (!this.currentLevel.levelStreamer.getInstanceAt(muzzlePoint).persistent)
                 new Projectile(this.currentLevel, 5, 1, true, false, muzzlePoint, vector);
-        } else {
-            this.shooting = false;//fix for right shooting
         }
     }
 
@@ -94,9 +93,10 @@ public class AliveEntity extends Animated implements IAliveEntity {
     @Override
     public boolean applyDamage(float damage) {
         this.health -= damage;
-        if (this.health <= 0) {
+        if (this.health <= 0 && !dead) {
+            this.dead = true;
             die();
-        } else {
+        } else if (!dead) {
             if (damageReactions == null || damageReactions.length == 0)
                 return true;
             int index = new Random().nextInt(-1, damageReactions.length);
