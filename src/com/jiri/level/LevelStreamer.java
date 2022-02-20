@@ -90,7 +90,6 @@ public class LevelStreamer {
             System.out.printf("Inconsistent Level dimensions Width %s!=%s Height %s!=%s%n", level.width, width, level.height, height);
         }
         // Clear Streamer ref from previous level
-
         if (this.loadedLevel != null) {
             this.listeners.clear();
             this.loadedLevel.levelStreamer = null;
@@ -103,6 +102,7 @@ public class LevelStreamer {
         } catch (Level.InvalidTemplateMap e) {
             e.printStackTrace();
         }
+        System.gc();
     }
 
 
