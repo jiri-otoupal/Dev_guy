@@ -1,9 +1,12 @@
 package com.jiri.entities.items;
 
 import com.jiri.entities.Animated;
-import com.jiri.entities.BannerText;
+import com.jiri.entities.textrender.BannerText;
+import com.jiri.entities.textrender.DialogText;
 import com.jiri.entities.Entity1D;
 import com.jiri.level.Level;
+
+import java.awt.*;
 
 public abstract class Item extends Animated implements IItem {
     boolean instant; //Cannot be grabbed, its used immediately
@@ -19,19 +22,17 @@ public abstract class Item extends Animated implements IItem {
 
     @Override
     public boolean grab(Entity1D instigator) throws Level.InvalidTemplateMap {
-
-
         if (instigator.canGrabItem()) {
             if (this.instant) {
                 this.use();
                 this.erase();
-                new BannerText(currentLevel, "Used " + name, false, 45, 200).spawnAtPlayer();
+                new DialogText(currentLevel, "Used " + name, false, 45, 200).spawnAtPlayer();
                 return true;
             }
             if (!instigator.insertItemToBackpack(this))
                 return false;
             this.erase();
-            new BannerText(currentLevel, "Got " + name + "+1", false, 45, 200).spawnAtPlayer();
+            new DialogText(currentLevel, "Got " + name + "+1", false, 45, 200).spawnAtPlayer();
             return true;
         }
         return false;

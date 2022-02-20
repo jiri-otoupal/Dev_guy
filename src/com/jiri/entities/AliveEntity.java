@@ -1,5 +1,6 @@
 package com.jiri.entities;
 
+import com.jiri.entities.textrender.DialogText;
 import com.jiri.level.Level;
 
 import java.awt.*;
@@ -103,7 +104,7 @@ public class AliveEntity extends Animated implements IAliveEntity {
             if (index == -1)
                 return true;
             String usedWord = damageReactions[index];
-            new BannerText(currentLevel, usedWord, false, 45, 200, this).spawn(this.textRenderPoint);
+            new DialogText(currentLevel, usedWord, false, 45, 200, this).spawn(this.textRenderPoint);
         }
         return true;
     }

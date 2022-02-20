@@ -62,7 +62,7 @@ public class LevelStreamer {
             IEntity listener = listeners.get(i);
             if (listener.getLifeSpan() < 0) {
                 listener.erase();
-                break;
+                continue;
             }
             listener.tickEvent(elapsedMs);
         }

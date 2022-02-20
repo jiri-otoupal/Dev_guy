@@ -3,6 +3,8 @@ package com.jiri.entities;
 
 import com.jiri.entities.items.Item;
 import com.jiri.entities.persistent.EmptySpace;
+import com.jiri.entities.textrender.DialogText;
+import com.jiri.entities.textrender.Text;
 import com.jiri.level.Level;
 
 import java.awt.Point;
@@ -14,7 +16,7 @@ import java.util.Set;
 
 public class Entity1D implements IEntity {
     protected char[][] representMap; // Characters representing entity on rendered map
-    protected List<Point> bodyPositions; //Positions in map for collisions
+    protected Set<Point> bodyPositions; //Positions in map for collisions
     public Point absPosition; // Absolute position on map before render
     public boolean persistent; // If True object is not passable by Entities
     public Level currentLevel;
@@ -28,7 +30,8 @@ public class Entity1D implements IEntity {
     public float lifeSpan = 0;
     public char representingChar;
     protected char textRenderChar = 'T';
-    public BannerText currentRenderedText;
+    public Text currentRenderedText;
+    public boolean markedForErase = false;
 
 
     public char[][] getRepresentMap() {
@@ -50,7 +53,7 @@ public class Entity1D implements IEntity {
     }
 
     public Entity1D(Level currentLevel) {
-        bodyPositions = new ArrayList<>();
+        bodyPositions = new HashSet<>();
         this.currentLevel = currentLevel;
         this.collisionDirections = new HashSet<>();
         representMap = new char[][]{{' '}};
@@ -93,6 +96,8 @@ public class Entity1D implements IEntity {
 
     @Override
     public boolean render(Entity1D[][] map, Point cursor) {
+        if (markedForErase)
+            return false;
         muzzlePoints.clear();
         bodyPositions.clear();
         for (int map_x = cursor.x, ent_x = 0; ent_x < representMap[0].length; map_x++, ent_x++) {
@@ -158,6 +163,7 @@ public class Entity1D implements IEntity {
 
     @Override
     public void erase() {
+        markedForErase = true;
         removeConnections();
         for (Point partPoint : bodyPositions) {
             this.currentLevel.map[partPoint.y][partPoint.x] = new EmptySpace(this.currentLevel);
