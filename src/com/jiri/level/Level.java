@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 public abstract class Level implements ILevel {
+    public String name;
     public int width;
     public int height;
     public Entity1D[][] map;
@@ -17,16 +18,14 @@ public abstract class Level implements ILevel {
     protected Map<Character, Entity1D> linker;
 
 
-    public Level(int width, int height, LevelStreamer levelStreamer) {
+    public Level(String name, int width, int height, LevelStreamer levelStreamer) {
+        this.name = name;
         this.width = width;
         this.height = height;
         this.levelStreamer = levelStreamer;
         this.init();
     }
 
-    public Level() {
-
-    }
 
     public void init() {
         this.map = new Entity1D[this.height][this.width];

@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class LevelJungle extends Level {
     public LevelJungle(int width, int height, LevelStreamer levelStreamer) throws InvalidTemplateMap {
-        super(width, height, levelStreamer);
+        super("Jungle", width, height, levelStreamer);
         this.mapToTranslate = new String[]{
                 "                                                                                ",
                 "                                                                                ",

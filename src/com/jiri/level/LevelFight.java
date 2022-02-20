@@ -7,12 +7,13 @@ import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.persistent.InvisibleWall;
 import com.jiri.entities.persistent.Wall;
 import com.jiri.entities.portals.PortalJungle;
+import com.jiri.volumes.SpawnVolume;
 
 import java.util.HashMap;
 
 public class LevelFight extends Level {
     public LevelFight(int width, int height, LevelStreamer levelStreamer) throws InvalidTemplateMap {
-        super(width, height, levelStreamer);
+        super("Test Level", width, height, levelStreamer);
         this.mapToTranslate = new String[]{
                 "                                                                                ",
                 "                                                                                ",
@@ -31,7 +32,7 @@ public class LevelFight extends Level {
                 "                                                                      l         ",
                 "i                                                                              i",
                 "i                                                                              i",
-                "i                                                                              i",
+                "iv                                                                             i",
                 "i                                                                              i",
                 "i                                             w                                i",
                 "i                                             w                                i",
@@ -52,6 +53,7 @@ public class LevelFight extends Level {
             put('c', new Coffee(level));
             put('l', new PortalJungle(level, false, "Portal"));
             put('i', new InvisibleWall(level));
+            put('v', new SpawnVolume(level, 30, 5, "Spawn"));
         }};
     }
 }

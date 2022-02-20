@@ -1,12 +1,10 @@
 package com.jiri.entities.items;
 
 import com.jiri.entities.Animated;
-import com.jiri.entities.textrender.BannerText;
 import com.jiri.entities.textrender.DialogText;
 import com.jiri.entities.Entity1D;
 import com.jiri.level.Level;
 
-import java.awt.*;
 
 public abstract class Item extends Animated implements IItem {
     boolean instant; //Cannot be grabbed, its used immediately

@@ -3,7 +3,6 @@ package com.jiri.entities;
 
 import com.jiri.entities.items.Item;
 import com.jiri.entities.persistent.EmptySpace;
-import com.jiri.entities.textrender.DialogText;
 import com.jiri.entities.textrender.Text;
 import com.jiri.level.Level;
 
@@ -102,20 +101,25 @@ public class Entity1D implements IEntity {
         bodyPositions.clear();
         for (int map_x = cursor.x, ent_x = 0; ent_x < representMap[0].length; map_x++, ent_x++) {
             for (int map_y = cursor.y, ent_y = 0; ent_y < representMap.length; map_y++, ent_y++) {
-                char currentRenderedChar = representMap[ent_y][ent_x];
-                if (currentRenderedChar == ' ')
-                    continue;
-                else if (currentRenderedChar == muzzleChar)
-                    muzzlePoints.add(new Point(map_x, map_y));
-                else if (currentRenderedChar == textRenderChar) { //assign text render point for character Default character 'T'
-                    this.textRenderPoint = new Point(map_x, map_y);
-                    continue;
-                }
-                map[map_y][map_x] = new EntityShadow2D(this.currentLevel, currentRenderedChar, this);
-                bodyPositions.add(new Point(map_x, map_y));
+                iterationRenderFunction(map, cursor, map_x, map_y, ent_x, ent_y);
             }
         }
         return true;
+    }
+
+    @Override
+    public void iterationRenderFunction(Entity1D[][] map, Point cursor, int map_x, int map_y, int ent_x, int ent_y) {
+        char currentRenderedChar = representMap[ent_y][ent_x];
+        if (currentRenderedChar == ' ')
+            return;
+        else if (currentRenderedChar == muzzleChar)
+            muzzlePoints.add(new Point(map_x, map_y));
+        else if (currentRenderedChar == textRenderChar) { //assign text render point for character Default character 'T'
+            this.textRenderPoint = new Point(map_x, map_y);
+            return;
+        }
+        map[map_y][map_x] = new EntityShadow2D(this.currentLevel, currentRenderedChar, this);
+        bodyPositions.add(new Point(map_x, map_y));
     }
 
     @Override

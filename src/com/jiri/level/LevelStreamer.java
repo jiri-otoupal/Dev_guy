@@ -7,6 +7,7 @@ import com.jiri.control.Controller;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.IEntity;
+import com.jiri.entities.textrender.BannerText;
 
 
 import java.awt.Point;
@@ -16,7 +17,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class LevelStreamer {
-    DefaultTerminalFactory defaultTerminalFactory;
     public Terminal terminal;
     public Level loadedLevel = null;
     public Controller playerController;
@@ -70,10 +70,12 @@ public class LevelStreamer {
     }
 
     public boolean assignAt(Point coords, Entity1D value) {
-        if (coords != null) {
+        if (coords != null && isValidLocation(coords)) {
             this.map[coords.y][coords.x] = value;
             return true;
         }
+        if (coords != null)
+            System.out.println("Could not Assign to " + coords);
         return false;
     }
 
@@ -102,6 +104,7 @@ public class LevelStreamer {
         } catch (Level.InvalidTemplateMap e) {
             e.printStackTrace();
         }
+
         System.gc();
     }
 
@@ -109,14 +112,16 @@ public class LevelStreamer {
     public void render() throws IOException, InterruptedException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         long frame_start = System.currentTimeMillis();
         terminal.clearScreen();
+
         for (int line = 0; line < this.height - 1; line++) { //-1 because of ground
             for (int column = 0; column < this.width; column++) {
                 Entity1D obj = this.map[line][column];
                 obj.useLight();
+                Point position = new Point(column, line);
                 if (obj.absPosition == null)
-                    obj.absPosition = new Point(column, line);
-                obj.render(this.map, new Point(column, line));
-                //Makes object translate itself to projection screen before being drawn
+                    obj.absPosition = position;
+                obj.render(this.map, position);
+                // Makes object translate itself to projection screen before being drawn
                 // Adds rendered body positions
                 terminal.putCharacter(this.map[line][column].getChar());
 

@@ -12,6 +12,8 @@ public interface IEntity {
 
     boolean render(Entity1D[][] map, Point cursor);
 
+    void iterationRenderFunction(Entity1D[][] map, Point cursor, int map_x, int map_y, int ent_x, int ent_y);
+
     void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException;
 
     boolean applyDamage(float damage);

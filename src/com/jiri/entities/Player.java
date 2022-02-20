@@ -2,6 +2,7 @@ package com.jiri.entities;
 
 import com.jiri.entities.effects.EffectHitPlayer;
 import com.jiri.entities.items.Item;
+import com.jiri.entities.textrender.BannerText;
 import com.jiri.level.Level;
 
 import java.awt.*;
@@ -112,11 +113,8 @@ public class Player extends AliveEntity {
                                 {'(', ' ', ')'}
                         }
                 },
-
         };
-
         selectedAnimationFrames = animationState[0];
-
     }
 
     @Override
@@ -140,7 +138,6 @@ public class Player extends AliveEntity {
 
     @Override
     public int resolveAnimationState() {
-
         if (falling) {
             return 1;
         } else if (moving && !crouching) {
