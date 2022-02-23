@@ -68,9 +68,9 @@ public class Entity1D implements IEntity {
             Point scannedPt = new Point(partPosition.x + delta.x, partPosition.y + delta.y);
             if (scannedPt.x >= this.currentLevel.width || scannedPt.y >= this.currentLevel.height)
                 continue;
-            if (this.currentLevel.levelStreamer == null)
+            if (this.currentLevel.streamer == null)
                 return;
-            Entity1D scanned = this.currentLevel.levelStreamer.getInstanceAt(scannedPt);
+            Entity1D scanned = this.currentLevel.streamer.getInstanceAt(scannedPt);
             try {
                 if (scanned.shadow_parent != this && scanned.getChar() != ' ' && (!scanned.shadow_parent.grab(this)))
                     collisionDirections.add(delta);
@@ -147,7 +147,7 @@ public class Entity1D implements IEntity {
     }
 
     public void removeConnections() {
-        this.currentLevel.levelStreamer.removeListener(this);
+        this.currentLevel.streamer.removeListener(this);
     }
 
     @Override

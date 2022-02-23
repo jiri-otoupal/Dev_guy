@@ -11,7 +11,7 @@ public class Enemy extends AliveEntity implements IEnemy {
         super(currentLevel, health, speed, fireRateMs, jumpHeight, gravity);
         this.frameDurationMs = 50;
         this.loops = true;
-        this.enemyAI = new AI(this, this.currentLevel.levelStreamer.playerController.controlledAliveEntity, acceptableRadiusToPlayer, 300);
+        this.enemyAI = new AI(this, this.currentLevel.streamer.controller.controlledAliveEntity, acceptableRadiusToPlayer, 300);
     }
 
 

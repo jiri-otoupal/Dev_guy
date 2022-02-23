@@ -13,16 +13,17 @@ public abstract class Level implements ILevel {
     public int width;
     public int height;
     public Entity1D[][] map;
-    public LevelStreamer levelStreamer;
+    public Streamer streamer;
     protected String[] mapToTranslate;
     protected Map<Character, Entity1D> linker;
+    protected boolean doGroundFilling = true;
 
 
-    public Level(String name, int width, int height, LevelStreamer levelStreamer) {
+    public Level(String name, int width, int height, Streamer streamer) {
         this.name = name;
         this.width = width;
         this.height = height;
-        this.levelStreamer = levelStreamer;
+        this.streamer = streamer;
         this.init();
     }
 
@@ -54,7 +55,8 @@ public abstract class Level implements ILevel {
                 this.map[y][x] = obj;
             }
         }
-        fillGround();
+        if (doGroundFilling)
+            fillGround();
     }
 
     public static class InvalidTemplateMap extends Exception {

@@ -20,22 +20,22 @@ public abstract class Text extends Animated implements IText {
     }
 
     public void spawnAtPlayer() {
-        Player player = currentLevel.levelStreamer.playerController.controlledAliveEntity;
+        Player player = currentLevel.streamer.controller.controlledAliveEntity;
         Point renderPoint = player.textRenderPoint;
-        if (currentLevel.levelStreamer.getInstanceAt(renderPoint).lifeSpan <= 0)
-            currentLevel.levelStreamer.assignAt(new Point(renderPoint.x, renderPoint.y - 1), this);
+        if (currentLevel.streamer.getInstanceAt(renderPoint).lifeSpan <= 0)
+            currentLevel.streamer.assignAt(new Point(renderPoint.x, renderPoint.y - 1), this);
         owner = player;
         owner.currentRenderedText = this;
     }
 
     public void spawn(Point location) {
-        if (owner == null && currentLevel.levelStreamer.getInstanceAt(location).lifeSpan <= 0)
-            currentLevel.levelStreamer.assignAt(new Point(location.x, location.y - 1), this);
+        if (owner == null && currentLevel.streamer.getInstanceAt(location).lifeSpan <= 0)
+            currentLevel.streamer.assignAt(new Point(location.x, location.y - 1), this);
         else if (owner != null && owner.currentRenderedText != null && owner.currentRenderedText.lifeSpan <= 0) {
-            currentLevel.levelStreamer.assignAt(new Point(location.x, location.y - 1), this);
+            currentLevel.streamer.assignAt(new Point(location.x, location.y - 1), this);
             owner.currentRenderedText = this;
         } else if (owner != null && owner.currentRenderedText == null) {
-            currentLevel.levelStreamer.assignAt(new Point(location.x, location.y - 1), this);
+            currentLevel.streamer.assignAt(new Point(location.x, location.y - 1), this);
             owner.currentRenderedText = this;
         }
     }

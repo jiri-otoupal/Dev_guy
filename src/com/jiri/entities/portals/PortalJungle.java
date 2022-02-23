@@ -2,8 +2,8 @@ package com.jiri.entities.portals;
 
 import com.jiri.entities.items.Portal;
 import com.jiri.level.Level;
-import com.jiri.level.LevelJungle;
-import com.jiri.level.LevelStreamer;
+import com.jiri.level.Jungle;
+import com.jiri.level.Streamer;
 
 public class PortalJungle extends Portal {
 
@@ -149,9 +149,9 @@ public class PortalJungle extends Portal {
 
     @Override
     public boolean use() throws Level.InvalidTemplateMap {
-        LevelStreamer levelStreamer = currentLevel.levelStreamer;
-        LevelJungle levelJungle = new LevelJungle(levelStreamer.width, levelStreamer.height, levelStreamer);
-        levelStreamer.loadLevel(levelJungle);
+        Streamer streamer = currentLevel.streamer;
+        Jungle jungle = new Jungle(streamer.width, streamer.height, streamer);
+        streamer.loadLevel(jungle);
         return true;
     }
 }

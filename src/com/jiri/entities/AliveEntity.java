@@ -85,7 +85,7 @@ public class AliveEntity extends Animated implements IAliveEntity {
                 muzzlePoint = new Point(muzzlePointRight.x + 1, muzzlePointRight.y);
                 vector = new Point2D.Float(0.2F, 0F);
             }
-            if (!this.currentLevel.levelStreamer.getInstanceAt(muzzlePoint).persistent)
+            if (!this.currentLevel.streamer.getInstanceAt(muzzlePoint).persistent)
                 new Projectile(this.currentLevel, 5, 1, true, false, muzzlePoint, vector);
         }
     }

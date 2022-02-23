@@ -7,7 +7,7 @@ import com.jiri.control.Controller;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.IEntity;
-import com.jiri.entities.textrender.BannerText;
+import org.jetbrains.annotations.NotNull;
 
 
 import java.awt.Point;
@@ -16,21 +16,21 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class LevelStreamer {
+public class Streamer {
     public Terminal terminal;
     public Level loadedLevel = null;
-    public Controller playerController;
+    public Controller controller;
     private final List<IEntity> listeners;
     private final int target_fps;
     public int width;
     public int height;
     public Entity1D[][] map;
 
-    public LevelStreamer(Controller controller, int target_fps) throws IOException {
+    public Streamer(Controller controller, int target_fps) throws IOException {
         DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory(System.out, System.in,
                 StandardCharsets.UTF_8);
         defaultTerminalFactory.setInitialTerminalSize(new TerminalSize(80, 24));
-        this.playerController = controller;
+        this.controller = controller;
         this.target_fps = target_fps;
         terminal = defaultTerminalFactory.createTerminal();
         TerminalSize terminalSize = terminal.getTerminalSize();
@@ -80,21 +80,21 @@ public class LevelStreamer {
     }
 
     public boolean isValidLocation(Point location) {
-        return location.x >= 0 && location.x < this.width && location.y >= 0 && location.y < this.height;
+        return location != null && location.x >= 0 && location.x < this.width && location.y >= 0 && location.y < this.height;
     }
 
-    public Entity1D getInstanceAt(Point coords) {
+    public Entity1D getInstanceAt(@NotNull Point coords) {
         return this.map[coords.y][coords.x];
     }
 
-    public void loadLevel(Level level) {
+    public void loadLevel(@NotNull Level level) {
         if (level.width != width || level.height != height) {
             System.out.printf("Inconsistent Level dimensions Width %s!=%s Height %s!=%s%n", level.width, width, level.height, height);
         }
         // Clear Streamer ref from previous level
         if (this.loadedLevel != null) {
             this.listeners.clear();
-            this.loadedLevel.levelStreamer = null;
+            this.loadedLevel.streamer = null;
         }
         //Set ref to new level
         this.map = level.map;
@@ -113,7 +113,7 @@ public class LevelStreamer {
         long frame_start = System.currentTimeMillis();
         terminal.clearScreen();
 
-        for (int line = 0; line < this.height - 1; line++) { //-1 because of ground
+        for (int line = 0; line < this.height; line++) { //-1 because of ground
             for (int column = 0; column < this.width; column++) {
                 Entity1D obj = this.map[line][column];
                 obj.useLight();

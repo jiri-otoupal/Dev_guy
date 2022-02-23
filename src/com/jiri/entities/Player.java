@@ -2,7 +2,6 @@ package com.jiri.entities;
 
 import com.jiri.entities.effects.EffectHitPlayer;
 import com.jiri.entities.items.Item;
-import com.jiri.entities.textrender.BannerText;
 import com.jiri.level.Level;
 
 import java.awt.*;
@@ -13,7 +12,7 @@ public class Player extends AliveEntity {
     public Player(Level currentLevel, int health, float speed, long fireRateMs) {
         super(currentLevel, health, speed, fireRateMs, 6, 0.15F);
         this.backpack = new Backpack(10);
-        this.currentLevel.levelStreamer.playerController.controlledAliveEntity = this;
+        this.currentLevel.streamer.controller.controlledAliveEntity = this;
         this.frameDurationMs = 50;
         this.loops = true;
         animationState = new char[][][][]{
@@ -155,6 +154,6 @@ public class Player extends AliveEntity {
 
     @Override
     public void invokeImpactEffect(Point impactLocation) { //TODO from left and right
-        this.currentLevel.levelStreamer.assignAt(impactLocation, new EffectHitPlayer(this.currentLevel, 40));
+        this.currentLevel.streamer.assignAt(impactLocation, new EffectHitPlayer(this.currentLevel, 40));
     }
 }

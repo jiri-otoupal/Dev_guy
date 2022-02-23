@@ -1,6 +1,6 @@
 package com.jiri.entities;
 
-import com.jiri.level.LevelStreamer;
+import com.jiri.level.Streamer;
 import com.jiri.structures.PointExtended;
 
 import java.awt.*;
@@ -35,8 +35,8 @@ public class AI {
 
     protected void periodicalSearch() {
         while (this.owner.health > 0) {
-            if ((!this.pathToPlayer.isEmpty() && !player.absPosition.equals(this.pathToPlayer.get(0)) || player.falling || this.owner.movements.isEmpty() || this.owner.falling) && owner.currentLevel.levelStreamer != null) { // Run path finding only if someone is moving
-                this.pathToPlayer = this.searchForPath(this.owner.currentLevel.levelStreamer);
+            if ((!this.pathToPlayer.isEmpty() && !player.absPosition.equals(this.pathToPlayer.get(0)) || player.falling || this.owner.movements.isEmpty() || this.owner.falling) && owner.currentLevel.streamer != null) { // Run path finding only if someone is moving
+                this.pathToPlayer = this.searchForPath(this.owner.currentLevel.streamer);
             }
             try {
                 Thread.sleep(this.searchFrequency);
@@ -52,7 +52,7 @@ public class AI {
     }
 
 
-    public java.util.List<PointExtended> searchForPath(LevelStreamer levelStreamer) {
+    public java.util.List<PointExtended> searchForPath(Streamer streamer) {
         if (this.owner.absPosition == null)
             return Collections.emptyList();
         this.visitedPoints.clear();
@@ -63,11 +63,11 @@ public class AI {
         while (!nextToVisit.isEmpty()) {
             PointExtended location = nextToVisit.remove();
 
-            if (!levelStreamer.isValidLocation(location.point) || visitedPoints.contains(location.point)) {
+            if (!streamer.isValidLocation(location.point) || visitedPoints.contains(location.point)) {
                 continue;
             }
 
-            if (levelStreamer.getInstanceAt(location.point).persistent) {
+            if (streamer.getInstanceAt(location.point).persistent) {
                 visitedPoints.add(location.point);
                 continue;
             }

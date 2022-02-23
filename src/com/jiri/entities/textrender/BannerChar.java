@@ -10,7 +10,7 @@ public class BannerChar extends Entity1D {
         super(currentLevel);
         this.representMap = fontLetter;
         this.lifeSpan = lifeSpan;
-        this.currentLevel.levelStreamer.addListener(this);
+        this.currentLevel.streamer.addListener(this);
         spawn(location);
     }
 
@@ -26,7 +26,7 @@ public class BannerChar extends Entity1D {
     }
 
     public void spawn(Point location) {
-        currentLevel.levelStreamer.assignAt(location, this);
+        currentLevel.streamer.assignAt(location, this);
     }
 }
 

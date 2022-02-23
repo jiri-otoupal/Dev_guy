@@ -25,8 +25,8 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
     public Movable(Level currentLevel, boolean enableGravity) {
         super(currentLevel);
         this.enableGravity = enableGravity;
-        if (!persistent && currentLevel.levelStreamer != null) {
-            currentLevel.levelStreamer.addListener(this);
+        if (!persistent && currentLevel.streamer != null) {
+            currentLevel.streamer.addListener(this);
         }
         movements = new LinkedList<>();
         animationListeners = new LinkedList<>();
@@ -79,7 +79,7 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
     @Override
     public void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         this.timeToShoot -= elapsedMs + 1;
-        if (currentLevel.levelStreamer == null) {
+        if (currentLevel.streamer == null) {
             this.erase();
             return;
         }

@@ -3,7 +3,7 @@ package com.jiri.entities.textrender;
 import com.jiri.fonts.BloodFont;
 import com.jiri.level.Level;
 
-import java.awt.*;
+import java.awt.Point;
 import java.util.ArrayList;
 
 public class BannerText extends Text {
@@ -12,6 +12,9 @@ public class BannerText extends Text {
 
     public BannerText(Level currentLevel, String textToDisplay, long lifeSpan, Point location) {
         super(currentLevel, false, lifeSpan);
+        if (lifeSpan == 0)
+            this.canGetOlder = false;
+
         init(textToDisplay.toLowerCase());
         bannerChars = new ArrayList<>();
         int cursor = 0;

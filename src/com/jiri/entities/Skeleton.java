@@ -191,6 +191,6 @@ public class Skeleton extends Enemy {
 
     @Override
     public void invokeImpactEffect(Point impactLocation) {
-        this.currentLevel.levelStreamer.assignAt(impactLocation, new EffectHitPlayer(this.currentLevel, 40));
+        this.currentLevel.streamer.assignAt(impactLocation, new EffectHitPlayer(this.currentLevel, 40));
     }
 }

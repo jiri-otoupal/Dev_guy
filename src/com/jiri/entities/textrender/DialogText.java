@@ -5,7 +5,7 @@ import com.jiri.level.Level;
 
 import java.util.ArrayList;
 
-public class DialogText extends Text implements IText {
+public class DialogText extends Text {
 
 
     public DialogText(Level currentLevel, String textToDisplay, boolean loops, long wordIntervalMs, long lifeSpan) {

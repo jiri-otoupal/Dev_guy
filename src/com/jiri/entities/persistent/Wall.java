@@ -16,7 +16,7 @@ public class Wall extends Entity1D {
     }
 
     public void invokeImpactEffect(Point impactLocation) { //TODO from left and right
-        this.currentLevel.levelStreamer.assignAt(impactLocation, new EffectPersistentImpact(this.currentLevel, 50));
+        this.currentLevel.streamer.assignAt(impactLocation, new EffectPersistentImpact(this.currentLevel, 50));
     }
 
     @Override

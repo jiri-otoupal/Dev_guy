@@ -1,9 +1,6 @@
 package com.jiri.entities;
 
-import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.level.Level;
-
-import java.awt.*;
 
 
 public class Animated extends Movable {
@@ -38,21 +35,22 @@ public class Animated extends Movable {
         }
         this.animationListeners.add(this);
         this.lifeSpan = lifeSpan;
-        this.canGetOlder = true;
+        this.canGetOlder = this.lifeSpan != 0;
     }
 
     public void updateParticles() {
-        this.currentLevel.levelStreamer.assignAt(this.absPosition, this);
+        if (this.currentLevel.streamer != null)
+            this.currentLevel.streamer.assignAt(this.absPosition, this);
     }
 
     public void nextFrame() {
-        if (this.frameCounter < this.selectedAnimationFrames.length) {
-            this.selectedAnimationFrames = animationState[currentAnimationState];
-            this.representMap = this.selectedAnimationFrames[frameCounter];
+        if (this.frameCounter < this.selectedAnimationFrames.length - 1) { // frame counter is in the index, because of that needs to be decremented
             this.frameCounter++;
         } else if (this.loops) {
             this.frameCounter = 0;
         }
+        this.selectedAnimationFrames = animationState[currentAnimationState];
+        this.representMap = this.selectedAnimationFrames[frameCounter];
         elapsedNow = 0;
         updateParticles();
     }
@@ -68,7 +66,7 @@ public class Animated extends Movable {
 
     @Override
     public void removeConnections() {
-        this.currentLevel.levelStreamer.removeListener(this);
+        this.currentLevel.streamer.removeListener(this);
         this.animationListeners.remove(this);
     }
 

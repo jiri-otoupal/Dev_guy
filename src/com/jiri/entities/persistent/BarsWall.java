@@ -15,7 +15,7 @@ public class BarsWall extends Entity1D {
     }
 
     public void invokeImpactEffect(Point impactLocation) {
-        this.currentLevel.levelStreamer.assignAt(impactLocation, new EffectPersistentImpact(this.currentLevel, 50));
+        this.currentLevel.streamer.assignAt(impactLocation, new EffectPersistentImpact(this.currentLevel, 50));
     }
 
     @Override

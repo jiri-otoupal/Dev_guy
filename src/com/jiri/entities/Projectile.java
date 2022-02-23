@@ -15,7 +15,7 @@ public class Projectile extends Movable {
     public Projectile(Level currentLevel, float damage, float mass, boolean enableGravity, boolean applyPhysicsImpulse, Point spawnPoint, Point2D.Float vector) {
         super(currentLevel, enableGravity);
         this.absPosition = spawnPoint;
-        currentLevel.levelStreamer.assignAt(spawnPoint, this);
+        currentLevel.streamer.assignAt(spawnPoint, this);
         representMap = new char[][]{{'-'}};
         this.gravity = 0.003F;
         this.vector = vector;
@@ -30,7 +30,7 @@ public class Projectile extends Movable {
             erase(); // Destroy Instance
             for (Point collidingDelta : this.collisionDirections) {
                 Point absCollisionPos = new Point(this.absPosition.x + (collidingDelta.x) * representMap[0].length, this.absPosition.y + collidingDelta.y);
-                Entity1D usedInstance = this.currentLevel.levelStreamer.getInstanceAt(absCollisionPos).shadow_parent;
+                Entity1D usedInstance = this.currentLevel.streamer.getInstanceAt(absCollisionPos).shadow_parent;
                 if (this.appliesPhysicsImpulse)
                     usedInstance.applyPhysicsImpulse(this.mass);
                 usedInstance.applyDamage(this.damage);
@@ -41,7 +41,7 @@ public class Projectile extends Movable {
 
     @Override
     public void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-        if (currentLevel.levelStreamer == null) {
+        if (currentLevel.streamer == null) {
             this.erase();
             return;
         }

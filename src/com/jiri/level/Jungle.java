@@ -1,8 +1,8 @@
 package com.jiri.level;
 
-import com.jiri.entities.*;
+import com.jiri.entities.Player;
+import com.jiri.entities.Skeleton;
 import com.jiri.entities.items.Coffee;
-import com.jiri.entities.items.Portal;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.persistent.InvisibleWall;
 import com.jiri.entities.persistent.Wall;
@@ -11,9 +11,9 @@ import com.jiri.volumes.SpawnVolume;
 
 import java.util.HashMap;
 
-public class LevelFight extends Level {
-    public LevelFight(int width, int height, LevelStreamer levelStreamer) throws InvalidTemplateMap {
-        super("Test Level", width, height, levelStreamer);
+public class Jungle extends Level {
+    public Jungle(int width, int height, Streamer streamer) throws InvalidTemplateMap {
+        super("Jungle", width, height, streamer);
         this.mapToTranslate = new String[]{
                 "                                                                                ",
                 "                                                                                ",
@@ -29,14 +29,14 @@ public class LevelFight extends Level {
                 "                                                                                ",
                 "                                                                                ",
                 "                                                                                ",
-                "                                                                      l         ",
+                "                                                                                ",
+                "i  v                                                                           i",
                 "i                                                                              i",
                 "i                                                                              i",
-                "iv                                                                             i",
                 "i                                                                              i",
                 "i                                             w                                i",
+                "i                              c              w                                i",
                 "i                                             w                                i",
-                "i                            c                w                                i",
                 "i                                             w                                i",
                 "                                                                                ",
         };
