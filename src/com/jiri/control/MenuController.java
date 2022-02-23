@@ -1,6 +1,7 @@
 package com.jiri.control;
 
 import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import com.jiri.menus.Menu;
 
 public class MenuController extends Controller {
@@ -12,11 +13,11 @@ public class MenuController extends Controller {
 
     @Override
     public void invokeActionFromKey(KeyStroke key) {
-        if (key.getCharacter() == 'w') {
+        if (key.getKeyType() == KeyType.ArrowUp || (key.getCharacter() != null && key.getCharacter() == 'w')) {
             menu.selectUp();
-        } else if (key.getCharacter() == 's') {
+        } else if (key.getKeyType() == KeyType.ArrowDown || (key.getCharacter() != null && key.getCharacter() == 's')) {
             menu.selectDown();
-        } else if (key.getCharacter() == '\n') {
+        } else if (key.getCharacter() != null && key.getCharacter() == '\n') {
             menu.choose();
         }
     }

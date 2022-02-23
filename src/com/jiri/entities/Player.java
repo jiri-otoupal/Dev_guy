@@ -3,6 +3,7 @@ package com.jiri.entities;
 import com.jiri.entities.effects.EffectHitPlayer;
 import com.jiri.entities.items.Item;
 import com.jiri.level.Level;
+import com.jiri.saves.SaveOperator;
 
 import java.awt.*;
 
@@ -114,6 +115,7 @@ public class Player extends AliveEntity {
                 },
         };
         selectedAnimationFrames = animationState[0];
+
     }
 
     @Override

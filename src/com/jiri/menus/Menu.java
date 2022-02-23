@@ -1,28 +1,33 @@
 package com.jiri.menus;
 
-import com.jiri.entities.Entity1D;
 import com.jiri.entities.textrender.MenuItemText;
 import com.jiri.level.Level;
 
 import java.util.List;
 
-public abstract class Menu extends Entity1D implements IMenu {
-    public List<MenuItemText> menuItems;
+public abstract class Menu implements IMenu {
+    protected final Level level;
+    private List<MenuItemText> menuItems;
     public int cursor;
 
-    public Menu(Level currentLevel, List<MenuItemText> menuItems) {
-        super(currentLevel);
-        this.menuItems = menuItems;
+    public Menu(Level currentLevel) {
+        this.level = currentLevel;
         this.cursor = 0;
-        select();
+    }
+
+    public String getSelectedValue() {
+        return this.menuItems.get(this.cursor).value;
     }
 
     public void clearSelection() {
-        for (MenuItemText item : menuItems)
-            item.selected = false;
+        if (this.menuItems != null && !this.menuItems.isEmpty())
+            for (MenuItemText item : menuItems)
+                item.selected = false;
     }
 
-    public void select() {
+    public void selectAtCursor() {
+        if (menuItems == null)
+            return;
         clearSelection();
         this.menuItems.get(this.cursor).selected = true;
     }
@@ -30,16 +35,20 @@ public abstract class Menu extends Entity1D implements IMenu {
     public void selectDown() {
         if (cursor < this.menuItems.size() - 1) {
             this.cursor++;
-            select();
+            selectAtCursor();
         }
     }
 
     public void selectUp() {
         if (cursor > 0) {
             this.cursor--;
-            select();
+            selectAtCursor();
         }
     }
 
 
+    public void setMenuItems(List<MenuItemText> menuItems) {
+        this.menuItems = menuItems;
+        selectAtCursor();
+    }
 }

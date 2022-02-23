@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Backpack {
-    int maxSize;
-    Map<Item, Integer> items;
+    public int maxSize;
+    public Map<Item, Integer> items;
 
 
     public Backpack(int backpackSize) {

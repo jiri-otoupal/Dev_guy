@@ -8,7 +8,7 @@ import com.jiri.level.Level;
 
 public abstract class Item extends Animated implements IItem {
     boolean instant; //Cannot be grabbed, its used immediately
-    String name;
+    public String name;
 
     public Item(Level currentLevel, boolean instant, String name) {
         super(currentLevel, false);

@@ -6,6 +6,7 @@ import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.persistent.InvisibleWall;
 import com.jiri.entities.persistent.Wall;
 import com.jiri.entities.portals.PortalJungle;
+import com.jiri.saves.SaveOperator;
 import com.jiri.volumes.SpawnVolume;
 
 import java.util.HashMap;
@@ -54,5 +55,6 @@ public class Fight extends Level {
             put('i', new InvisibleWall(level));
             put('v', new SpawnVolume(level, 30, 5, "Spawn"));
         }};
+
     }
 }

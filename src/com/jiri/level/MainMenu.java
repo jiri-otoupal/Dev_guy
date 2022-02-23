@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class MainMenu extends Level {
-    protected List<MenuItemText> menuItemList;
     public Menu menu;
 
     public MainMenu(int width, int height, Streamer streamer) throws Level.InvalidTemplateMap {
@@ -49,10 +48,8 @@ public class MainMenu extends Level {
     @Override
     public void initializeLinker() {
         Level level = this;
-        menuItemList = new ArrayList<>();
-        menuItemList.add(new MenuItemText(level, "Start Game", "start"));
-        menuItemList.add(new MenuItemText(level, "Load Game", "load"));
-        menuItemList.add(new MenuItemText(level, "Exit", "exit"));
+        menu = new StartMenu(level);
+        List<MenuItemText> menuItemList = menu.getMenuItems();
 
         this.linker = new HashMap<>() {{
             put(' ', new EmptySpace(level));
@@ -61,7 +58,6 @@ public class MainMenu extends Level {
             put('l', menuItemList.get(1));
             put('e', menuItemList.get(2));
         }};
-        menu = new StartMenu(level, menuItemList);
         this.streamer.controller = new MenuController(menu);
     }
 }
