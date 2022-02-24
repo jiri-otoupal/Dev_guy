@@ -19,7 +19,7 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
     protected boolean moving = false;
     protected float nowDeltaX = 0;
     protected float nowDeltaY = 0;
-    protected Queue<float[]> movements;
+    public Queue<float[]> movements;
     protected List<IAnimation> animationListeners;
 
     public Movable(Level currentLevel, boolean enableGravity) {

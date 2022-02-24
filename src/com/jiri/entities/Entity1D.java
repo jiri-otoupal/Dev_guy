@@ -31,7 +31,7 @@ public class Entity1D implements IEntity {
     public char representingChar;
     protected char textRenderChar = 'T';
     public Text currentRenderedText;
-    public boolean markedForErase = false;
+    protected boolean markedForErase = false;
 
 
     public char[][] getRepresentMap() {
@@ -45,7 +45,7 @@ public class Entity1D implements IEntity {
         Right(1, 0);
 
 
-        final Point vector;
+        public final Point vector;
 
         Directions(int x, int y) {
             vector = new Point(x, y);

@@ -1,4 +1,4 @@
-package com.jiri.entities;
+package com.jiri.entities.enemies;
 
 public interface IEnemy {
 

@@ -1,6 +1,6 @@
 package com.jiri.entities.textrender;
 
-import com.jiri.fonts.BloodFont;
+import com.jiri.fonts.RegularFont;
 import com.jiri.level.Level;
 
 import java.awt.Point;
@@ -25,7 +25,7 @@ public class BannerText extends Text {
     }
 
     public void init(String textToDisplay) {
-        BloodFont usedFont = new BloodFont();
+        RegularFont usedFont = new RegularFont();
         letters = new ArrayList<>();
         int i = 0;
         String[] words = textToDisplay.split(" ");

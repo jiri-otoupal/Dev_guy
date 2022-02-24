@@ -17,6 +17,10 @@ public abstract class Item extends Animated implements IItem {
         this.name = name;
     }
 
+    @Override
+    public boolean canCollide() {
+        return false;
+    }
 
     @Override
     public boolean grab(Entity1D instigator) throws Level.InvalidTemplateMap {

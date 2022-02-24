@@ -1,17 +1,17 @@
 package com.jiri.fonts;
 
-public class BloodFont extends Font {
-    public BloodFont() {
-        this.letters = new char[][][]{
-                {
-                        {' ', ' ', ' ', ' '},
-                        {' ', '/', '\\', ' '},
-                        {'/', '~', '~', '\\'},
-                        {' ', ' ', ' ', ' '},
-                },
-                {
-                        {' ', '_', '_', ' '},
-                        {'|', '_', '_', ')'},
+public class RegularFont extends Font {
+        public RegularFont() {
+                this.letters = new char[][][]{
+                        {
+                                {' ', ' ', ' ', ' '},
+                                {' ', '/', '\\', ' '},
+                                {'/', '~', '~', '\\'},
+                                {' ', ' ', ' ', ' '},
+                        },
+                        {
+                                {' ', '_', '_', ' '},
+                                {'|', '_', '_', ')'},
                         {'|', '_', '_', ')'},
                         {' ', ' ', ' ', ' '},
                 },

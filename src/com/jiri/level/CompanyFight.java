@@ -1,6 +1,7 @@
 package com.jiri.level;
 
 import com.jiri.entities.*;
+import com.jiri.entities.enemies.Skeleton;
 import com.jiri.entities.items.Coffee;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.persistent.InvisibleWall;

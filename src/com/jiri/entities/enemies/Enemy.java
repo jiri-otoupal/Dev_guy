@@ -1,5 +1,6 @@
-package com.jiri.entities;
+package com.jiri.entities.enemies;
 
+import com.jiri.entities.AliveEntity;
 import com.jiri.level.Level;
 import com.jiri.structures.PointExtended;
 

@@ -2,6 +2,8 @@ package com.jiri.entities;
 
 import com.jiri.entities.effects.EffectHitPlayer;
 import com.jiri.entities.items.Item;
+import com.jiri.entities.textrender.DialogText;
+import com.jiri.entities.textrender.StaticText;
 import com.jiri.level.DeadMenuLevel;
 import com.jiri.level.Level;
 import com.jiri.level.Streamer;
@@ -10,6 +12,7 @@ import java.awt.*;
 
 public class Player extends AliveEntity {
     public Backpack backpack;
+    protected StaticText displayedHealth;
 
     public Player(Level currentLevel, int health, float speed, long fireRateMs) {
         super(currentLevel, health, speed, fireRateMs, 6, 0.15F);
@@ -142,8 +145,14 @@ public class Player extends AliveEntity {
     @Override
     public boolean applyDamage(float damage) {
         this.health -= damage;
-        if (this.health > 0)
+        if (this.health > 0) {
+            if (displayedHealth != null)
+                displayedHealth.erase();
+
+            displayedHealth = new StaticText(this.currentLevel, "Health " + this.health);
+            displayedHealth.spawn(new Point(2, 2));
             return true;
+        }
         die();
         return false;
     }

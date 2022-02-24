@@ -1,4 +1,4 @@
-package com.jiri.entities;
+package com.jiri.entities.enemies;
 
 import com.jiri.entities.effects.EffectHitPlayer;
 import com.jiri.level.Level;
@@ -182,8 +182,9 @@ public class Skeleton extends Enemy {
 
     @Override
     public void die() {
+        this.frameDurationMs = 20;
         this.loops = false;
-        lifeSpan = 1000;
+        lifeSpan = 200;
         canGetOlder = true;
         if (currentRenderedText != null)
             currentRenderedText.erase();
