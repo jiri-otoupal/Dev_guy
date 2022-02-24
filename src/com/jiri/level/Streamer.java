@@ -7,6 +7,8 @@ import com.jiri.control.Controller;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.IEntity;
+import com.jiri.entities.props.background.BackgroundProp;
+import com.jiri.saves.SaveOperator;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -18,7 +20,7 @@ import java.util.*;
 
 public class Streamer {
     public Terminal terminal;
-    public Level loadedLevel = null;
+    private Level loadedLevel = null;
     public Controller controller;
     private final List<IEntity> listeners;
     private final int target_fps;
@@ -87,10 +89,17 @@ public class Streamer {
         return this.map[coords.y][coords.x];
     }
 
+    /**
+     * @param level Level to load
+     *              <p>
+     *              This method sets pointer of current level to streamer to NULL !
+     */
     public void loadLevel(@NotNull Level level) {
         if (level.width != width || level.height != height) {
             System.out.printf("Inconsistent Level dimensions Width %s!=%s Height %s!=%s%n", level.width, width, level.height, height);
         }
+        if (level.player != null)
+            SaveOperator.saveGame("save.xml", level.player);
         // Clear Streamer ref from previous level
         if (this.loadedLevel != null) {
             this.listeners.clear();
@@ -116,6 +125,8 @@ public class Streamer {
         for (int line = 0; line < this.height; line++) { //-1 because of ground
             for (int column = 0; column < this.width; column++) {
                 Entity1D obj = this.map[line][column];
+                if (obj == null)
+                    continue;
                 obj.useLight();
                 Point position = new Point(column, line);
                 if (obj.absPosition == null)
@@ -128,6 +139,13 @@ public class Streamer {
             }
             terminal.putCharacter('\n');
         }
+
+        // Background Props need to be rendered again to compensate overwrites
+        for (BackgroundProp prop : this.loadedLevel.backgroundProps)
+            if (prop.absPosition != null)
+                prop.render(this.map, prop.absPosition);
+
+
         terminal.flush();
         long frame_time = System.currentTimeMillis() - frame_start;
         this.broadcastTick(frame_time);

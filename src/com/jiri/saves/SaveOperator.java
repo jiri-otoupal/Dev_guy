@@ -8,38 +8,66 @@ import javax.xml.transform.stream.*;
 
 import com.jiri.entities.Player;
 import com.jiri.entities.items.Item;
+import com.jiri.level.CompanyFight;
+import com.jiri.level.Level;
+import com.jiri.level.Streamer;
+import com.jiri.level.StreetFight;
 import org.xml.sax.*;
 import org.w3c.dom.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+
 public class SaveOperator {
-    public Player readXML(String fileName) {
-        Document dom;
-        // Make an  instance of the DocumentBuilderFactory
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    public static Level getLevelFromName(String levelName, Streamer streamer) {
+        Level level = null;
         try {
-            // use the factory to take an instance of the document builder
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            // parse using the builder to get the DOM mapping of the
-            // XML file
-            dom = db.parse(fileName);
-
-            Element doc = dom.getDocumentElement();
-
-            return true;
-
-        } catch (ParserConfigurationException | SAXException pce) {
-            System.out.println(pce.getMessage());
-        } catch (IOException ioe) {
-            System.err.println(ioe.getMessage());
+            switch (levelName) {
+                case "Escape" -> level = new CompanyFight(streamer.width, streamer.height, streamer);
+                case "Street Fight" -> level = new StreetFight(streamer.width, streamer.height, streamer);
+            }
+        } catch (Level.InvalidTemplateMap e) {
+            e.printStackTrace();
         }
-
-        return false;
+        return level;
     }
 
-    public static void saveToXML(String fileName, Player player) {
+    public static Player loadSave(String fileName, Streamer streamer) {
+        File fXmlFile = new File(fileName);
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = null;
+        try {
+            dBuilder = dbFactory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+        Document doc = null;
+        try {
+            doc = dBuilder.parse(fXmlFile);
+        } catch (SAXException | IOException e) {
+            //e.printStackTrace();
+            return null;
+        }
+        doc.getDocumentElement().normalize();
+
+        float health = Float.parseFloat(doc.getElementsByTagName("health").item(0).getTextContent());
+        int fireRate = Integer.parseInt(doc.getElementsByTagName("fire_rate").item(0).getTextContent());
+        float speed = Float.parseFloat(doc.getElementsByTagName("speed").item(0).getTextContent());
+        boolean enableGravity = Boolean.parseBoolean(doc.getElementsByTagName("enableGravity").item(0).getTextContent());
+        float gravity = Float.parseFloat(doc.getElementsByTagName("gravity").item(0).getTextContent());
+        String levelName = doc.getElementsByTagName("level").item(0).getTextContent();
+        Level level = getLevelFromName(levelName, streamer);
+        Player player = new Player(level, (int) health, speed, fireRate);
+        player.enableGravity = enableGravity;
+        player.gravity = gravity;
+        return player;
+
+    }
+
+    public static void saveGame(String fileName, Player player) {
         Document dom;
 
         // instance of a DocumentBuilderFactory

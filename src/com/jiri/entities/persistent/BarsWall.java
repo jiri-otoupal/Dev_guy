@@ -3,6 +3,7 @@ package com.jiri.entities.persistent;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.effects.EffectPersistentImpact;
 import com.jiri.level.Level;
+import com.jiri.structures.ForceVector;
 
 import java.awt.*;
 
@@ -19,7 +20,7 @@ public class BarsWall extends Entity1D {
     }
 
     @Override
-    public boolean applyPhysicsImpulse(float mass) {
+    public boolean applyPhysicsImpulse(float mass, ForceVector vector) {
         return false;
     }
 

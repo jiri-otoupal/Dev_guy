@@ -14,6 +14,7 @@ public class PointExtended {
         this.parent = null;
     }
 
+
     public PointExtended(PointExtended point) {
         this.point = (Point) point.point.clone();
         this.parent = parent;

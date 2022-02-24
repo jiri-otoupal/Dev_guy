@@ -2,6 +2,7 @@ package com.jiri.entities;
 
 import com.jiri.entities.textrender.DialogText;
 import com.jiri.level.Level;
+import com.jiri.structures.ForceVector;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -86,10 +87,16 @@ public class AliveEntity extends Animated implements IAliveEntity {
                 vector = new Point2D.Float(0.2F, 0F);
             }
             if (!this.currentLevel.streamer.getInstanceAt(muzzlePoint).persistent)
-                new Projectile(this.currentLevel, 5, 1, true, false, muzzlePoint, vector);
+                new Projectile(this.currentLevel, 5, 1, true, true, muzzlePoint, vector);
         }
     }
 
+    @Override
+    public boolean applyPhysicsImpulse(float mass, ForceVector vector) {
+        ForceVector vectorOfImpact = vector.multiply(mass / 10);
+        addMovement(vectorOfImpact.x, vectorOfImpact.y);
+        return true;
+    }
 
     @Override
     public boolean applyDamage(float damage) {

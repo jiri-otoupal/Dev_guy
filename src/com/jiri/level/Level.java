@@ -1,11 +1,15 @@
 package com.jiri.level;
 
+import com.jiri.entities.Player;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.persistent.Ground;
+import com.jiri.entities.props.background.BackgroundProp;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Level implements ILevel {
@@ -17,6 +21,8 @@ public abstract class Level implements ILevel {
     protected String[] mapToTranslate;
     protected Map<Character, Entity1D> linker;
     protected boolean doGroundFilling = true;
+    public Player player = null;
+    public List<BackgroundProp> backgroundProps;
 
 
     public Level(String name, int width, int height, Streamer streamer) {
@@ -24,6 +30,7 @@ public abstract class Level implements ILevel {
         this.width = width;
         this.height = height;
         this.streamer = streamer;
+        this.backgroundProps = new ArrayList<>();
         this.init();
     }
 

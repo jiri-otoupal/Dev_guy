@@ -7,14 +7,13 @@ import com.jiri.entities.textrender.LogoText;
 import com.jiri.entities.textrender.MenuItemText;
 import com.jiri.menus.StartMenu;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainMenu extends Level {
+public class MainMenuLevel extends Level {
     public Menu menu;
 
-    public MainMenu(int width, int height, Streamer streamer) throws Level.InvalidTemplateMap {
+    public MainMenuLevel(int width, int height, Streamer streamer) throws Level.InvalidTemplateMap {
         super("Test Level", width, height, streamer);
         this.doGroundFilling = false;
         this.mapToTranslate = new String[]{
@@ -48,6 +47,7 @@ public class MainMenu extends Level {
     @Override
     public void initializeLinker() {
         Level level = this;
+
         menu = new StartMenu(level);
         List<MenuItemText> menuItemList = menu.getMenuItems();
 

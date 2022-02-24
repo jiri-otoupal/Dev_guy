@@ -2,6 +2,7 @@ package com.jiri.entities;
 
 import com.jiri.entities.items.Item;
 import com.jiri.level.Level;
+import com.jiri.structures.ForceVector;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
@@ -18,7 +19,7 @@ public interface IEntity {
 
     boolean applyDamage(float damage);
 
-    boolean applyPhysicsImpulse(float mass);
+    boolean applyPhysicsImpulse(float mass, ForceVector vector);
 
     float getLifeSpan();
 
@@ -35,4 +36,6 @@ public interface IEntity {
     boolean grab(Entity1D instigator) throws Level.InvalidTemplateMap;
 
     boolean insertItemToBackpack(Item item);
+
+    boolean canCollide();
 }

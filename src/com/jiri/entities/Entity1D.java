@@ -5,6 +5,7 @@ import com.jiri.entities.items.Item;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.textrender.Text;
 import com.jiri.level.Level;
+import com.jiri.structures.ForceVector;
 
 import java.awt.Point;
 import java.lang.reflect.InvocationTargetException;
@@ -72,7 +73,7 @@ public class Entity1D implements IEntity {
                 return;
             Entity1D scanned = this.currentLevel.streamer.getInstanceAt(scannedPt);
             try {
-                if (scanned.shadow_parent != this && scanned.getChar() != ' ' && (!scanned.shadow_parent.grab(this)))
+                if (scanned.shadow_parent != this && scanned.getChar() != ' ' && (!scanned.shadow_parent.grab(this)) && scanned.shadow_parent.canCollide())
                     collisionDirections.add(delta);
             } catch (Level.InvalidTemplateMap e) {
                 e.printStackTrace();
@@ -132,7 +133,7 @@ public class Entity1D implements IEntity {
     }
 
     @Override
-    public boolean applyPhysicsImpulse(float mass) {
+    public boolean applyPhysicsImpulse(float mass, ForceVector vector) {
         return false;
     }
 
@@ -163,6 +164,11 @@ public class Entity1D implements IEntity {
     @Override
     public boolean insertItemToBackpack(Item item) {
         return false;
+    }
+
+    @Override
+    public boolean canCollide() {
+        return true;
     }
 
     @Override

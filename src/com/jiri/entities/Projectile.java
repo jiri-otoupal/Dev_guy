@@ -1,10 +1,13 @@
 package com.jiri.entities;
 
 import com.jiri.level.Level;
+import com.jiri.structures.ForceVector;
+import com.jiri.structures.PointExtended;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Vector;
 
 public class Projectile extends Movable {
     public Point2D.Float vector;
@@ -25,14 +28,16 @@ public class Projectile extends Movable {
         this.mass = mass;
     }
 
-    public void applyProjectileMovement() throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public void applyProjectileMovement() {
+        if (vector == null || this.currentLevel.streamer == null)
+            return;
         if (!move(this.vector.x, this.vector.y)) {
             erase(); // Destroy Instance
             for (Point collidingDelta : this.collisionDirections) {
                 Point absCollisionPos = new Point(this.absPosition.x + (collidingDelta.x) * representMap[0].length, this.absPosition.y + collidingDelta.y);
                 Entity1D usedInstance = this.currentLevel.streamer.getInstanceAt(absCollisionPos).shadow_parent;
                 if (this.appliesPhysicsImpulse)
-                    usedInstance.applyPhysicsImpulse(this.mass);
+                    usedInstance.applyPhysicsImpulse(this.mass, new ForceVector(collidingDelta));
                 usedInstance.applyDamage(this.damage);
                 usedInstance.invokeImpactEffect(absPosition);
             }

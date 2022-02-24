@@ -2,8 +2,9 @@ package com.jiri.entities;
 
 import com.jiri.entities.effects.EffectHitPlayer;
 import com.jiri.entities.items.Item;
+import com.jiri.level.DeadMenuLevel;
 import com.jiri.level.Level;
-import com.jiri.saves.SaveOperator;
+import com.jiri.level.Streamer;
 
 import java.awt.*;
 
@@ -119,6 +120,16 @@ public class Player extends AliveEntity {
     }
 
     @Override
+    public void die() {
+        Streamer streamer = currentLevel.streamer;
+        try {
+            streamer.loadLevel(new DeadMenuLevel(streamer.width, streamer.height, streamer));
+        } catch (Level.InvalidTemplateMap e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public boolean insertItemToBackpack(Item item) {
         return this.backpack.insertItem(item);
     }
@@ -156,6 +167,7 @@ public class Player extends AliveEntity {
 
     @Override
     public void invokeImpactEffect(Point impactLocation) { //TODO from left and right
-        this.currentLevel.streamer.assignAt(impactLocation, new EffectHitPlayer(this.currentLevel, 40));
+        if (this.currentLevel.streamer != null)
+            this.currentLevel.streamer.assignAt(impactLocation, new EffectHitPlayer(this.currentLevel, 40));
     }
 }

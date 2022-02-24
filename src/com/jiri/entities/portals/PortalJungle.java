@@ -2,7 +2,7 @@ package com.jiri.entities.portals;
 
 import com.jiri.entities.items.Portal;
 import com.jiri.level.Level;
-import com.jiri.level.Jungle;
+import com.jiri.level.StreetFight;
 import com.jiri.level.Streamer;
 
 public class PortalJungle extends Portal {
@@ -150,8 +150,8 @@ public class PortalJungle extends Portal {
     @Override
     public boolean use() throws Level.InvalidTemplateMap {
         Streamer streamer = currentLevel.streamer;
-        Jungle jungle = new Jungle(streamer.width, streamer.height, streamer);
-        streamer.loadLevel(jungle);
+        StreetFight streetFight = new StreetFight(streamer.width, streamer.height, streamer);
+        streamer.loadLevel(streetFight);
         return true;
     }
 }

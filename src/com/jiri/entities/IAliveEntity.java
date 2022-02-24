@@ -1,17 +1,17 @@
 package com.jiri.entities;
 
 public interface IAliveEntity {
-    abstract void die();
+    void die();
 
-    abstract void Jump();
+    void Jump();
 
-    abstract void JumpVertical();
+    void JumpVertical();
 
-    abstract void Crouch();
+    void Crouch();
 
-    abstract void MoveLeft();
+    void MoveLeft();
 
-    abstract void MoveRight();
+    void MoveRight();
 
-    abstract void Shoot();
+    void Shoot();
 }

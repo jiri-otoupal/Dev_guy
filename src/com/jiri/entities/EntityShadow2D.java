@@ -7,11 +7,11 @@ import java.awt.Point;
 public class EntityShadow2D extends Entity1D {
 
 
-    public EntityShadow2D(Level currentLevel, char c, Entity1D entity_ptr) {
+    public EntityShadow2D(Level currentLevel, char c, Entity1D parent) {
         super(currentLevel);
         this.representingChar = c;
-        this.shadow_parent = entity_ptr;
-        this.persistent = entity_ptr.persistent;
+        this.shadow_parent = parent;
+        this.persistent = parent.persistent;
     }
 
 
