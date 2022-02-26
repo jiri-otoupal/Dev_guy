@@ -2,6 +2,7 @@ package com.jiri.level;
 
 import com.jiri.entities.*;
 import com.jiri.entities.enemies.Skeleton;
+import com.jiri.entities.enemies.SpawnPoint;
 import com.jiri.entities.items.Coffee;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.persistent.InvisibleWall;
@@ -19,28 +20,28 @@ public class CompanyFight extends Level {
     public CompanyFight(int width, int height, Streamer streamer) throws InvalidTemplateMap {
         super("Escape", width, height, streamer);
         this.mapToTranslate = new String[]{
-                "                                                                                ",
-                "                                                                                ",
-                "                                                                                ",
-                "                p                                                               ",
-                "                                                                                ",
-                "                                                                                ",
-                "                                                                                ",
-                "                                                               e                ",
-                "                                                                                ",
-                "                                                                                ",
-                "                                                                                ",
-                "                                                                                ",
-                "                                                                                ",
-                "                                                                                ",
-                "                                                                      l         ",
+                "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+                "i                                                                              i",
+                "i                                                                              i",
+                "i                                                                              i",
+                "i                                                                              i",
+                "i                                                                              i",
+                "i                                                                              i",
+                "i                                 s                                            i",
+                "i                                                                              i",
+                "i                                                                              i",
+                "i                                                                              i",
+                "i                                                                              i",
+                "iwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww       wwwwwwwwi",
+                "i                                                                              i",
+                "i                                                                     l        i",
                 "i     o                                              u                         i",
                 "i                                                                              i",
-                "iv                          c                                                  i",
-                "i                        k                                                     i",
+                "i             p         c                                           e          i",
+                "i                    k                                                         i",
                 "i                                             w                                i",
                 "i                                             w                                i",
-                "i                                             w                                i",
+                "iv                                            w                                i",
                 "i                                             w                                i",
                 "                                                                                ",
         };
@@ -64,7 +65,8 @@ public class CompanyFight extends Level {
             put('c', new Coffee(level));
             put('l', new PortalJungle(level, false, "Portal"));
             put('i', new InvisibleWall(level));
-            put('v', new SpawnVolume(level, 30, 5, "Spawn"));
+            put('v', new SpawnVolume(level, 30, 1, "Spawn"));
+            put('s', new SpawnPoint(level, 1000, 2));
         }};
 
     }

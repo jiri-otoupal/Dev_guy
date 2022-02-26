@@ -58,7 +58,7 @@ public class StreetFight extends Level {
             put('n', new Lamp(level));
             put('b', new Lamp(level));
             put('q', new City(level));
-            put('e', new SpawnPoint(level, 500));
+            put('e', new SpawnPoint(level, 500, 3));
             put('c', new Coffee(level));
             put('l', new PortalJungle(level, false, "Portal"));
             put('i', new InvisibleWall(level));

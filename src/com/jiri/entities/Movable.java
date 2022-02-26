@@ -60,6 +60,8 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         if (this.isColliding().contains(dl)) // here is colliding problem with jumps
             return false;
         Point delta = normalizeAndApplyDelta(deltaX, deltaY);
+        if (this.currentLevel.map[this.absPosition.y + delta.y][this.absPosition.x + delta.x].persistent)
+            return false;
         this.currentLevel.map[this.absPosition.y][this.absPosition.x] = new EmptySpace(this.currentLevel);
         this.currentLevel.map[this.absPosition.y + delta.y][this.absPosition.x + delta.x] = this;
         this.absPosition = new Point(this.absPosition.x + delta.x, this.absPosition.y + delta.y);
