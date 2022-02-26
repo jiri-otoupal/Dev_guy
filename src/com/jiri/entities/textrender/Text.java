@@ -2,6 +2,7 @@ package com.jiri.entities.textrender;
 
 import com.jiri.entities.Animated;
 import com.jiri.entities.Entity1D;
+import com.jiri.entities.EntityShadow2D;
 import com.jiri.entities.Player;
 import com.jiri.level.Level;
 
@@ -17,6 +18,13 @@ public abstract class Text extends Animated implements IText {
     public Text(Level currentLevel, boolean enableGravity, float lifeSpan, Entity1D owner) {
         super(currentLevel, enableGravity, lifeSpan);
         this.owner = owner;
+    }
+
+    @Override
+    public void iterationRenderFunction(Entity1D[][] map, Point cursor, int map_x, int map_y, int ent_x, int ent_y) {
+        char currentRenderedChar = representMap[ent_y][ent_x];
+        map[map_y][map_x] = new EntityShadow2D(this.currentLevel, currentRenderedChar, this);
+        bodyPositions.add(new Point(map_x, map_y));
     }
 
     public void spawnAtPlayer() {

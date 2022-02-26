@@ -9,6 +9,8 @@ import com.jiri.entities.persistent.Wall;
 import com.jiri.entities.portals.PortalJungle;
 import com.jiri.entities.props.background.Computer;
 import com.jiri.entities.props.background.Window;
+import com.jiri.quests.Quest;
+import com.jiri.quests.QuestCompany;
 import com.jiri.volumes.SpawnVolume;
 
 import java.util.HashMap;
@@ -42,6 +44,7 @@ public class CompanyFight extends Level {
                 "i                                             w                                i",
                 "                                                                                ",
         };
+        this.quest = new QuestCompany();
     }
 
 

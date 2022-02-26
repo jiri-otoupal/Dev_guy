@@ -32,6 +32,7 @@ public class Entity1D implements IEntity {
     protected char textRenderChar = 'T';
     public Text currentRenderedText;
     protected boolean markedForErase = false;
+    public boolean visible = true;
 
 
     public char[][] getRepresentMap() {
@@ -73,7 +74,7 @@ public class Entity1D implements IEntity {
                 return;
             Entity1D scanned = this.currentLevel.streamer.getInstanceAt(scannedPt);
             try {
-                if (scanned.shadow_parent != this && scanned.getChar() != ' ' && (!scanned.shadow_parent.grab(this)) && scanned.shadow_parent.canCollide())
+                if (scanned.shadow_parent != this && scanned.getChar() != ' ' && (!scanned.shadow_parent.grab(this)) && scanned.shadow_parent.canCollide() && scanned.shadow_parent.visible)
                     collisionDirections.add(delta);
             } catch (Level.InvalidTemplateMap e) {
                 e.printStackTrace();

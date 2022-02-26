@@ -162,7 +162,7 @@ public class Skeleton extends Enemy {
                 },
 
         };
-
+        this.quest_name = "skeleton";
         selectedAnimationFrames = animationState[0];
     }
 
@@ -180,15 +180,6 @@ public class Skeleton extends Enemy {
         return 0;
     }
 
-    @Override
-    public void die() {
-        this.frameDurationMs = 20;
-        this.loops = false;
-        lifeSpan = 200;
-        canGetOlder = true;
-        if (currentRenderedText != null)
-            currentRenderedText.erase();
-    }
 
     @Override
     public void invokeImpactEffect(Point impactLocation) {

@@ -6,6 +6,7 @@ import com.jiri.structures.PointExtended;
 
 public class Enemy extends AliveEntity implements IEnemy {
     AI enemyAI;
+    public String quest_name;
 
 
     public Enemy(Level currentLevel, int health, float speed, long fireRateMs, float jumpHeight, float gravity, int acceptableRadiusToPlayer) {
@@ -30,6 +31,18 @@ public class Enemy extends AliveEntity implements IEnemy {
     }
 
     @Override
+    public void die() {
+        this.frameDurationMs = 20;
+        this.loops = false;
+        lifeSpan = 200;
+        canGetOlder = true;
+        if (currentRenderedText != null)
+            currentRenderedText.erase();
+        if (currentLevel.quest != null)
+            this.currentLevel.quest.markProgress(this.quest_name);
+    }
+
+    @Override
     public void attackIfClose() {
         PointExtended side = this.enemyAI.pathToPlayer.get(0).minus(this.enemyAI.pathToPlayer.get(1));
         facingLeft = side.point.equals(Directions.Left.vector);
@@ -48,11 +61,11 @@ public class Enemy extends AliveEntity implements IEnemy {
         if (side.point.y == 0)
             side.point.y = this.enemyAI.pathToPlayer.get(pathSize - 3).minus(this.enemyAI.pathToPlayer.get(pathSize - 2)).y() * -1;
         if (side.x() == -1 && side.y() <= 0) {
-            if(collisionDirections.contains(Directions.Left.vector))
+            if (collisionDirections.contains(Directions.Left.vector))
                 Jump();
             MoveLeft();
         } else if (side.x() == 1 && side.y() <= 0) {
-            if(collisionDirections.contains(Directions.Right.vector))
+            if (collisionDirections.contains(Directions.Right.vector))
                 Jump();
             MoveRight();
         } else if (side.y() > 0 && side.x() == 0) {

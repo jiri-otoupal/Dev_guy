@@ -5,6 +5,7 @@ import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.persistent.Ground;
 import com.jiri.entities.props.background.BackgroundProp;
+import com.jiri.quests.Quest;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public abstract class Level implements ILevel {
     protected boolean doGroundFilling = true;
     public Player player = null;
     public List<BackgroundProp> backgroundProps;
+    public Quest quest;
 
 
     public Level(String name, int width, int height, Streamer streamer) {

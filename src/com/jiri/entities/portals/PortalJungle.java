@@ -144,7 +144,9 @@ public class PortalJungle extends Portal {
         }};
         this.selectedAnimationFrames = this.animationState[this.currentAnimationState];
         this.frameDurationMs = 20;
-
+        this.visible = false;
+        if (this.currentLevel.quest != null)
+            this.currentLevel.quest.watchedEntities.add(this);
     }
 
     @Override

@@ -127,10 +127,12 @@ public class Streamer {
                 Entity1D obj = this.map[line][column];
                 if (obj == null)
                     continue;
-                obj.useLight();
                 Point position = new Point(column, line);
                 if (obj.absPosition == null)
                     obj.absPosition = position;
+                if (!obj.visible)
+                    continue;
+                obj.useLight();
                 obj.render(this.map, position);
                 // Makes object translate itself to projection screen before being drawn
                 // Adds rendered body positions
@@ -142,7 +144,7 @@ public class Streamer {
 
         // Background Props need to be rendered again to compensate overwrites
         for (BackgroundProp prop : this.loadedLevel.backgroundProps)
-            if (prop.absPosition != null)
+            if (prop.absPosition != null && prop.visible)
                 prop.render(this.map, prop.absPosition);
 
 

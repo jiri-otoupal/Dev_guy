@@ -16,7 +16,6 @@ import org.xml.sax.*;
 import org.w3c.dom.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -105,7 +104,7 @@ public class SaveOperator {
                 Element itemElement = dom.createElement("item");
                 Element name = dom.createElement("name");
                 itemElement.appendChild(name);
-                name.appendChild(dom.createTextNode(item.name));
+                name.appendChild(dom.createTextNode(item.quest_name));
                 Element count = dom.createElement("count");
                 itemElement.appendChild(count);
                 count.appendChild(dom.createTextNode(String.valueOf(player.backpack.items.get(item))));
