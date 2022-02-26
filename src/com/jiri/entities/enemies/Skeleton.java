@@ -8,7 +8,7 @@ import java.awt.*;
 public class Skeleton extends Enemy {
     public Skeleton(Level currentLevel, int health, float speed, long fireRate, float jumpHeight, float gravity) {
         super(currentLevel, health, speed, fireRate, jumpHeight, gravity, 30);
-        damageReactions = new String[]{"Argh", "Bastard", "You Dead", "Errgh"};
+        damageReactions = new String[]{"Argh", "Bastard", "You Die", "Errgh", "Jabba"};
         animationState = new char[][][][]{
                 {//Idle
                         {

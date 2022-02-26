@@ -3,7 +3,7 @@ package com.jiri.entities.enemies;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.Player;
 import com.jiri.level.Streamer;
-import com.jiri.structures.PointExtended;
+import com.jiri.structure.PointExtended;
 
 import java.awt.*;
 import java.util.*;

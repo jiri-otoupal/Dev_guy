@@ -7,10 +7,9 @@ import com.jiri.entities.items.Coffee;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.persistent.InvisibleWall;
 import com.jiri.entities.persistent.Wall;
-import com.jiri.entities.portals.PortalJungle;
+import com.jiri.entities.portal.PortalToStreetFight;
 import com.jiri.entities.props.background.Computer;
 import com.jiri.entities.props.background.Window;
-import com.jiri.quests.Quest;
 import com.jiri.quests.QuestCompany;
 import com.jiri.volumes.SpawnVolume;
 
@@ -52,18 +51,20 @@ public class CompanyFight extends Level {
     @Override
     public void initializeLinker() {
         Level level = this;
-        if (player == null)
-            player = new Player(level, 100, 1F, 50);
+        if (streamer.player == null)
+            streamer.player = new Player(level, 100, 1F, 100);
+        else
+            streamer.player = new Player(level, streamer.player);
         this.linker = new HashMap<>() {{
             put(' ', new EmptySpace(level));
             put('w', new Wall(level));
             put('o', new Window(level));
             put('u', new Window(level));
             put('k', new Computer(level));
-            put('p', player);
+            put('p', streamer.player);
             put('e', new Skeleton(level, 50, 1F, 200, 6, 0.2F));
             put('c', new Coffee(level));
-            put('l', new PortalJungle(level, false, "Portal"));
+            put('l', new PortalToStreetFight(level, "Portal"));
             put('i', new InvisibleWall(level));
             put('v', new SpawnVolume(level, 30, 1, "Spawn"));
             put('s', new SpawnPoint(level, 1000, 2));

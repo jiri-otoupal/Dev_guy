@@ -49,7 +49,7 @@ public class StartMenu extends Menu {
                 if (player == null)
                     return;
                 this.level.streamer.controller = new PlayerPawnController();
-                this.level.player = player;
+                this.level.streamer.player = player;
                 this.level.streamer.loadLevel(player.currentLevel);
                 break;
             case "controls":

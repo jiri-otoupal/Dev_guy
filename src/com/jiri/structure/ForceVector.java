@@ -1,4 +1,4 @@
-package com.jiri.structures;
+package com.jiri.structure;
 
 import java.awt.*;
 
@@ -14,6 +14,11 @@ public class ForceVector {
     ForceVector(ForceVector forceVector) {
         this.x = forceVector.x;
         this.y = forceVector.y;
+    }
+
+    public ForceVector(float x, float y) {
+        this.x = x;
+        this.y = y;
     }
 
     public ForceVector multiplyThis(ForceVector other) {

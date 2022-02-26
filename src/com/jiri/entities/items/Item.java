@@ -7,14 +7,15 @@ import com.jiri.level.Level;
 
 
 public abstract class Item extends Animated implements IItem {
-    boolean instant; //Cannot be grabbed, its used immediately
-    public String quest_name; //Used for Quest id also
+    protected boolean instant; //Cannot be grabbed, its used immediately
+    public String itemName; //Used for Quest id also
 
-    public Item(Level currentLevel, boolean instant, String quest_name) {
+
+    public Item(Level currentLevel, boolean instant, String itemName) {
         super(currentLevel, false);
         this.loops = true;
         this.instant = instant;
-        this.quest_name = quest_name;
+        this.itemName = itemName;
     }
 
     @Override
@@ -26,18 +27,18 @@ public abstract class Item extends Animated implements IItem {
     public boolean grab(Entity1D instigator) throws Level.InvalidTemplateMap {
         if (instigator.canGrabItem()) {
             if (this.instant) {
-                this.use();
+                this.use(instigator);
                 this.erase();
-                new DialogText(currentLevel, "Used " + quest_name, false, 45, 200).spawnAtPlayer();
-                this.currentLevel.quest.markProgress(this.quest_name);
+                new DialogText(currentLevel, "Used " + itemName, false, 45, 100).spawnAtPlayer();
+                this.currentLevel.quest.markProgress(this.itemName);
                 return true;
             }
             if (!instigator.insertItemToBackpack(this))
                 return false;
             this.erase();
-            new DialogText(currentLevel, "Got " + quest_name + "+1", false, 45, 200).spawnAtPlayer();
+            new DialogText(currentLevel, "Got " + itemName + "+1", false, 45, 100).spawnAtPlayer();
             if (currentLevel.quest != null)
-                this.currentLevel.quest.markProgress(this.quest_name);
+                this.currentLevel.quest.markProgress(this.itemName);
             return true;
         }
         return false;

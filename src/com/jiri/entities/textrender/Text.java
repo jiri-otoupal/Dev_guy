@@ -22,6 +22,8 @@ public abstract class Text extends Animated implements IText {
 
     @Override
     public void iterationRenderFunction(Entity1D[][] map, Point cursor, int map_x, int map_y, int ent_x, int ent_y) {
+        if (map[map_y][map_x].persistent)
+            return;
         char currentRenderedChar = representMap[ent_y][ent_x];
         map[map_y][map_x] = new EntityShadow2D(this.currentLevel, currentRenderedChar, this);
         bodyPositions.add(new Point(map_x, map_y));

@@ -2,24 +2,31 @@ package com.jiri.entities;
 
 import com.jiri.entities.effects.EffectHitPlayer;
 import com.jiri.entities.items.Item;
-import com.jiri.entities.textrender.DialogText;
 import com.jiri.entities.textrender.StaticText;
 import com.jiri.level.DeadMenuLevel;
 import com.jiri.level.Level;
 import com.jiri.level.Streamer;
+import com.jiri.projectile.Cpp;
+import com.jiri.projectile.Csharp;
+import com.jiri.structure.ForceVector;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Player extends AliveEntity {
     public Backpack backpack;
     protected StaticText displayedHealth;
+    public Map<String, Long> activeItems;
 
     public Player(Level currentLevel, int health, float speed, long fireRateMs) {
         super(currentLevel, health, speed, fireRateMs, 6, 0.15F);
+        this.absPosition = null;
         this.backpack = new Backpack(10);
         this.currentLevel.streamer.controller.controlledAliveEntity = this;
         this.frameDurationMs = 50;
         this.loops = true;
+        activeItems = new HashMap<>();
         animationState = new char[][][][]{
                 {//Idle
                         {
@@ -122,6 +129,12 @@ public class Player extends AliveEntity {
 
     }
 
+    public Player(Level currentLevel, Player player) {
+        this(currentLevel, (int) player.health, player.speed, player.fireRate);
+        this.backpack = player.backpack;
+        this.activeItems = player.activeItems;
+    }
+
     @Override
     public void die() {
         Streamer streamer = currentLevel.streamer;
@@ -149,12 +162,35 @@ public class Player extends AliveEntity {
             if (displayedHealth != null)
                 displayedHealth.erase();
 
-            displayedHealth = new StaticText(this.currentLevel, "Health " + this.health);
+            displayedHealth = new StaticText(this.currentLevel, "Health " + this.health, 1000);
             displayedHealth.spawn(new Point(2, 2));
             return true;
         }
         die();
         return false;
+    }
+
+    @Override
+    public void decayEffectFromItems(long ticksMs) {
+        for (String itemKey : activeItems.keySet()) {
+            Long effectDuration = activeItems.get(itemKey);
+            if (effectDuration != null && effectDuration > 0) {
+                activeItems.replace(itemKey, effectDuration - ticksMs);
+            } else if (effectDuration != null) { // If duration is eq or less than 0 remove item from effects
+                activeItems.remove(itemKey);
+                this.fireRate = 100;
+                this.sayStatic("Deprecated " + itemKey);
+            }
+        }
+    }
+
+    @Override
+    public void spawnProjectile(Level currentLevel, float damage, float mass, boolean enableGravity, boolean applyPhysicsImpulse, Point spawnPoint, ForceVector vector) {
+        Long itemCoffee = activeItems.get("Coffee");
+        if (itemCoffee != null && itemCoffee > 0)
+            new Cpp(currentLevel, damage * 2, mass * 2, enableGravity, applyPhysicsImpulse, spawnPoint, vector.multiply(1.5F));
+        else
+            new Csharp(currentLevel, damage, mass, enableGravity, applyPhysicsImpulse, spawnPoint, vector);
     }
 
     @Override

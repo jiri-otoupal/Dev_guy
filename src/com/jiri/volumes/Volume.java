@@ -30,7 +30,7 @@ public abstract class Volume extends Item {
     @Override
     public boolean grab(Entity1D instigator) throws Level.InvalidTemplateMap {
         if (instigator.canGrabItem())
-            return this.use();
+            return this.use(instigator);
 
         return false;
     }

@@ -4,6 +4,7 @@ import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.jiri.control.Controller;
+import com.jiri.entities.Player;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.IEntity;
@@ -27,6 +28,7 @@ public class Streamer {
     public int width;
     public int height;
     public Entity1D[][] map;
+    public Player player = null;
 
     public Streamer(Controller controller, int target_fps) throws IOException {
         DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory(System.out, System.in,
@@ -98,8 +100,8 @@ public class Streamer {
         if (level.width != width || level.height != height) {
             System.out.printf("Inconsistent Level dimensions Width %s!=%s Height %s!=%s%n", level.width, width, level.height, height);
         }
-        if (level.player != null)
-            SaveOperator.saveGame("save.xml", level.player);
+        if (this.player != null)
+            SaveOperator.saveGame("save.xml", this.player);
         // Clear Streamer ref from previous level
         if (this.loadedLevel != null) {
             this.listeners.clear();

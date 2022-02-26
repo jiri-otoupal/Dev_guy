@@ -1,4 +1,4 @@
-package com.jiri.structures;
+package com.jiri.structure;
 
 
 import java.awt.Point;

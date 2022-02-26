@@ -57,7 +57,7 @@ public class Animated extends Movable {
 
     @Override
     public void setAnimationState(int state) {
-        if (this.currentAnimationState == state)
+        if (this.currentAnimationState == state || state > animationState.length - 1)
             return;
         this.currentAnimationState = state;
         this.selectedAnimationFrames = animationState[currentAnimationState];
@@ -66,7 +66,8 @@ public class Animated extends Movable {
 
     @Override
     public void removeConnections() {
-        this.currentLevel.streamer.removeListener(this);
+        if (this.currentLevel.streamer != null)
+            this.currentLevel.streamer.removeListener(this);
         this.animationListeners.remove(this);
     }
 

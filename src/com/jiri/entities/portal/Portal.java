@@ -1,12 +1,15 @@
-package com.jiri.entities.items;
+package com.jiri.entities.portal;
 
 import com.jiri.entities.Entity1D;
+import com.jiri.entities.items.Item;
 import com.jiri.level.Level;
 
 public abstract class Portal extends Item {
-    public Portal(Level currentLevel, boolean enableGravity, String name) {
+    public Portal(Level currentLevel, String name) {
         super(currentLevel, true, name);
         this.loops = true;
+        if (this.currentLevel.quest != null)
+            this.currentLevel.quest.watchedEntities.add(this);
         this.animationState = new char[][][][]{{
                 {
                         {' ', ' ', '_', '_', '_', '_', ' ', ' '},
@@ -139,6 +142,7 @@ public abstract class Portal extends Item {
                         {' ', ' ', '¯', '¯', '¯', '¯', ' ', ' '}
                 },
         }};
+
         this.selectedAnimationFrames = this.animationState[this.currentAnimationState];
         this.frameDurationMs = 10;
     }
@@ -148,7 +152,7 @@ public abstract class Portal extends Item {
     public boolean grab(Entity1D instigator) throws Level.InvalidTemplateMap {
         if (instigator.canGrabItem()) {
             if (this.instant) {
-                this.use();
+                this.use(instigator);
                 return true;
             }
         }

@@ -27,15 +27,20 @@ public class Backpack {
         return true;
     }
 
-    public boolean removeItem(Item item) {
-        if (this.items.containsKey(item)) {
-            Integer storedCount = this.items.get(item);
-            if (storedCount == 1)
-                this.items.remove(item);
-            this.items.put(item, storedCount - 1);
-            return true;
+    public Item removeItem(String itemName) {
+        if (!this.items.isEmpty()) {
+            for (Item item : items.keySet()) {
+                if (item.itemName.equals(itemName)) {
+                    Integer storedCount = this.items.get(item);
+                    if (storedCount <= 1)
+                        this.items.remove(item);
+                    else
+                        this.items.put(item, storedCount - 1);
+                    return item;
+                }
+            }
         }
-        return false;
+        return null;
     }
 
     public int getAmount(Item item) {

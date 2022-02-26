@@ -1,11 +1,12 @@
 package com.jiri.entities;
 
 import com.jiri.entities.textrender.DialogText;
+import com.jiri.entities.textrender.StaticText;
 import com.jiri.level.Level;
-import com.jiri.structures.ForceVector;
+import com.jiri.projectile.Projectile;
+import com.jiri.structure.ForceVector;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.util.Random;
 
 public class AliveEntity extends Animated implements IAliveEntity {
@@ -74,22 +75,37 @@ public class AliveEntity extends Animated implements IAliveEntity {
     public void Shoot() {
         if (timeToShoot <= 0 && this.muzzlePoints.size() > 0) {
             Point muzzlePoint;
-            Point2D.Float vector;
+            ForceVector vector;
             //this.shooting = true;
             this.timeToShoot = fireRate;
             if (this.facingLeft) {
                 Point muzzlePointLeft = this.muzzlePoints.get(0);
                 muzzlePoint = new Point(muzzlePointLeft.x - 1, muzzlePointLeft.y);
-                vector = new Point2D.Float(-0.2F, 0F);
+                vector = new ForceVector(-0.2F, 0F);
             } else {
                 Point muzzlePointRight = this.muzzlePoints.get(1);
                 muzzlePoint = new Point(muzzlePointRight.x + 1, muzzlePointRight.y);
-                vector = new Point2D.Float(0.2F, 0F);
+                vector = new ForceVector(0.2F, 0F);
             }
             if (!this.currentLevel.streamer.getInstanceAt(muzzlePoint).persistent)
-                new Projectile(this.currentLevel, 5, 1, true, true, muzzlePoint, vector);
+                spawnProjectile(this.currentLevel, 5, 1, true, true, muzzlePoint, vector);
         }
     }
+
+    public void spawnProjectile(Level currentLevel, float damage, float mass, boolean enableGravity, boolean applyPhysicsImpulse, Point spawnPoint, ForceVector vector) {
+        new Projectile(currentLevel, damage, mass, enableGravity, applyPhysicsImpulse, spawnPoint, vector);
+    }
+
+    @Override
+    public void sayDialog(String text) {
+        new DialogText(currentLevel, text, false, 100, 300, this).spawn(this.textRenderPoint);
+    }
+
+    @Override
+    public void sayStatic(String text) {
+        new StaticText(currentLevel, text, 100).spawnAtPlayer();
+    }
+
 
     @Override
     public boolean applyPhysicsImpulse(float mass, ForceVector vector) {
@@ -111,7 +127,7 @@ public class AliveEntity extends Animated implements IAliveEntity {
             if (index == -1)
                 return true;
             String usedWord = damageReactions[index];
-            new DialogText(currentLevel, usedWord, false, 45, 200, this).spawn(this.textRenderPoint);
+            sayDialog(usedWord);
         }
         return true;
     }

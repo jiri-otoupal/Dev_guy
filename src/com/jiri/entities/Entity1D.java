@@ -5,7 +5,7 @@ import com.jiri.entities.items.Item;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.textrender.Text;
 import com.jiri.level.Level;
-import com.jiri.structures.ForceVector;
+import com.jiri.structure.ForceVector;
 
 import java.awt.Point;
 import java.lang.reflect.InvocationTargetException;

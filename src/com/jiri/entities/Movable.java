@@ -48,10 +48,6 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         return new Point(deltaFlooredX, deltaFlooredY);
     }
 
-    protected boolean checkInBounds(Point delta) {
-        float nextY = (this.absPosition.y + delta.y), nextX = (this.absPosition.x + delta.x);
-        return nextY < this.currentLevel.height && nextY > 0 && nextX > 0 && nextX < this.currentLevel.width;
-    }
 
     public boolean move(float deltaX, float deltaY) {
         if (absPosition == null)
@@ -68,6 +64,11 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         return true;
     }
 
+    @Override
+    public void decayEffectFromItems(long ticksMs) {
+
+    }
+
 
     public void addMovement(float deltaX, float deltaY) {
         this.movements.add(new float[]{deltaX, deltaY});
@@ -80,7 +81,8 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
 
     @Override
     public void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-        this.timeToShoot -= elapsedMs + 1;
+        long correctedElapsed = elapsedMs == 0 ? 1 : elapsedMs;
+        this.timeToShoot -= correctedElapsed;
         if (currentLevel.streamer == null) {
             this.erase();
             return;
@@ -94,11 +96,13 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         } else {
             this.moving = false;
         }
-        for (int i = 0; i < animationListeners.size(); i++) { // Needs to be in this for because of removing during iterations
+
+        for (int i = 0; i < animationListeners.size(); i++) { // Needs to be used this type of iteration because of concurrent removal
             IAnimation listener = animationListeners.get(i);
             listener.updateAnimation(elapsedMs);
             listener.setAnimationState(resolveAnimationState());
         }
+        decayEffectFromItems(elapsedMs);
     }
 
     @Override

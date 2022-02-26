@@ -2,7 +2,7 @@ package com.jiri.entities.enemies;
 
 import com.jiri.entities.AliveEntity;
 import com.jiri.level.Level;
-import com.jiri.structures.PointExtended;
+import com.jiri.structure.PointExtended;
 
 public class Enemy extends AliveEntity implements IEnemy {
     AI enemyAI;

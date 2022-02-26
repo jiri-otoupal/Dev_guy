@@ -2,7 +2,7 @@ package com.jiri.entities;
 
 import com.jiri.entities.items.Item;
 import com.jiri.level.Level;
-import com.jiri.structures.ForceVector;
+import com.jiri.structure.ForceVector;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;

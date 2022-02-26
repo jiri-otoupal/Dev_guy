@@ -12,6 +12,11 @@ public class StaticText extends Text {
         init(textToDisplay);
     }
 
+    public StaticText(Level currentLevel, String textToDisplay, long lifeSpan) {
+        super(currentLevel, false, lifeSpan);
+        init(textToDisplay);
+    }
+
     public void init(String textToDisplay) {
         ArrayList<ArrayList<Character>> animationStateList = new ArrayList<>();
 

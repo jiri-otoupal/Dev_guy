@@ -1,5 +1,6 @@
 package com.jiri.volumes;
 
+import com.jiri.entities.Entity1D;
 import com.jiri.entities.textrender.BannerText;
 import com.jiri.level.Level;
 
@@ -12,7 +13,7 @@ public class SpawnVolume extends Volume {
 
 
     @Override
-    public boolean use() {
+    public boolean use(Entity1D instigator) {
         new BannerText(currentLevel, currentLevel.name, 300, new Point(8, 2));
         erase();
         return true;

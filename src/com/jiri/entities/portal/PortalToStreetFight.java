@@ -1,14 +1,14 @@
-package com.jiri.entities.portals;
+package com.jiri.entities.portal;
 
-import com.jiri.entities.items.Portal;
+import com.jiri.entities.Entity1D;
 import com.jiri.level.Level;
 import com.jiri.level.StreetFight;
 import com.jiri.level.Streamer;
 
-public class PortalJungle extends Portal {
+public class PortalToStreetFight extends Portal {
 
-    public PortalJungle(Level currentLevel, boolean enableGravity, String name) {
-        super(currentLevel, false, name);
+    public PortalToStreetFight(Level currentLevel, String name) {
+        super(currentLevel, name);
         this.loops = true;
         this.animationState = new char[][][][]{{
                 {
@@ -150,7 +150,7 @@ public class PortalJungle extends Portal {
     }
 
     @Override
-    public boolean use() throws Level.InvalidTemplateMap {
+    public boolean use(Entity1D instigator) throws Level.InvalidTemplateMap {
         Streamer streamer = currentLevel.streamer;
         StreetFight streetFight = new StreetFight(streamer.width, streamer.height, streamer);
         streamer.loadLevel(streetFight);

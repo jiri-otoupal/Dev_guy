@@ -3,7 +3,7 @@ package com.jiri.entities.persistent;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.effects.EffectPersistentImpact;
 import com.jiri.level.Level;
-import com.jiri.structures.ForceVector;
+import com.jiri.structure.ForceVector;
 
 import java.awt.*;
 
