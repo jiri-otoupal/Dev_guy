@@ -112,7 +112,7 @@ public class Entity1D implements IEntity {
     @Override
     public void iterationRenderFunction(Entity1D[][] map, Point cursor, int map_x, int map_y, int ent_x, int ent_y) {
         char currentRenderedChar = representMap[ent_y][ent_x];
-        if (currentRenderedChar == ' ')
+        if (currentRenderedChar == ' ' || (map[map_y][map_x].persistent && !this.persistent))
             return;
         else if (currentRenderedChar == muzzleChar)
             muzzlePoints.add(new Point(map_x, map_y));
