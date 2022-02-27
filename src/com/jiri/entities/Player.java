@@ -124,6 +124,38 @@ public class Player extends AliveEntity {
                                 {'(', ' ', ')'}
                         }
                 },
+                {//Pushing Right
+                        {
+                                {' ', 'T', ' '},
+                                {' ', ' ', '☺'},
+                                {' ', '|', 'c'},
+                                {' ', '*', 'c'},
+                                {' ', '/', '\\'}
+                        },
+                        {
+                                {' ', 'T', ' '},
+                                {' ', ' ', '☺'},
+                                {' ', '|', 'c'},
+                                {' ', '*', 'c'},
+                                {' ', '(', ')'}
+                        },
+                },
+                {//Pushing Left
+                        {
+                                {' ', 'T', ' '},
+                                {'☺', ' ', ' '},
+                                {'c', '|', ' '},
+                                {'c', '*', ' '},
+                                {'/', '\\', ' '}
+                        },
+                        {
+                                {' ', 'T', ' '},
+                                {' ', ' ', '☺'},
+                                {' ', '|', 'c'},
+                                {' ', '*', 'c'},
+                                {' ', '(', ')'}
+                        },
+                },
         };
         selectedAnimationFrames = animationState[0];
 
@@ -205,6 +237,10 @@ public class Player extends AliveEntity {
             return 4;
         } else if (moving && crouching) {
             return 5;
+        } else if (!facingLeft && pushing) {
+            return 6;
+        } else if (facingLeft && pushing) {
+            return 7;
         }
         //Idle State if none of previous
         return 0;

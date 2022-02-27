@@ -22,6 +22,7 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
     protected float nowDeltaY = 0;
     public Queue<float[]> movements;
     protected List<IAnimation> animationListeners;
+    boolean pushing = false;
 
     public Movable(Level currentLevel, boolean enableGravity) {
         super(currentLevel);
@@ -56,8 +57,10 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         Point dl = normalizeDelta(deltaX, deltaY);
         if (this.isColliding().containsKey(dl)) {
             Entity1D collidingEntity = this.isColliding().get(dl);
-            if (collidingEntity != null && !collidingEntity.persistent)
+            if (collidingEntity != null && !collidingEntity.persistent) {
                 collidingEntity.shadow_parent.applyPhysicsImpulse(0.5F, new ForceVector(dl));
+                this.pushing = true;
+            }
             return false;
         }
         Point delta = normalizeAndApplyDelta(deltaX, deltaY);
@@ -66,6 +69,7 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         this.currentLevel.map[this.absPosition.y][this.absPosition.x] = new EmptySpace(this.currentLevel);
         this.currentLevel.map[this.absPosition.y + delta.y][this.absPosition.x + delta.x] = this;
         this.absPosition = new Point(this.absPosition.x + delta.x, this.absPosition.y + delta.y);
+        this.pushing = false;
         return true;
     }
 
