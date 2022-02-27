@@ -32,7 +32,7 @@ public class Projectile extends Movable {
             return;
         if (!move(this.vector.x, this.vector.y)) {
             erase(); // Destroy Instance
-            for (Point collidingDelta : this.collisionDirections) {
+            for (Point collidingDelta : this.collisionDirections.keySet()) {
                 Point absCollisionPos = new Point(this.absPosition.x + (collidingDelta.x) * representMap[0].length, this.absPosition.y + collidingDelta.y);
                 if (!currentLevel.streamer.isValidLocation(absCollisionPos))
                     return;

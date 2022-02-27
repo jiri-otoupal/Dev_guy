@@ -42,9 +42,9 @@ public class AliveEntity extends Animated implements IAliveEntity {
             return;
         }
         float x = 0;
-        if (this.facingLeft && !this.collisionDirections.contains(new Point(-1, 0))) {
+        if (this.facingLeft && !this.collisionDirections.containsKey(Directions.Left.vector)) {
             x = this.speed / -2;
-        } else if (!this.facingLeft && !this.collisionDirections.contains(new Point(1, 0))) {
+        } else if (!this.facingLeft && !this.collisionDirections.containsKey(Directions.Right.vector)) {
             x = this.speed / 2;
         }
 
@@ -87,8 +87,11 @@ public class AliveEntity extends Animated implements IAliveEntity {
                 muzzlePoint = new Point(muzzlePointRight.x + 1, muzzlePointRight.y);
                 vector = new ForceVector(0.2F, 0F);
             }
-            if (!this.currentLevel.streamer.getInstanceAt(muzzlePoint).persistent)
+            Entity1D projectileSpawnPoint = this.currentLevel.streamer.getInstanceAt(muzzlePoint);
+            if (!projectileSpawnPoint.persistent && !projectileSpawnPoint.canCollide())
                 spawnProjectile(this.currentLevel, 5, 1, true, true, muzzlePoint, vector);
+            else if (!projectileSpawnPoint.persistent && projectileSpawnPoint.canCollide())
+                projectileSpawnPoint.shadow_parent.applyDamage(5);
         }
     }
 

@@ -23,11 +23,11 @@ public class CompanyFight extends Level {
                 "i                                                                              i",
                 "i                                                                              i",
                 "i                                                                              i",
+                "i     m                                              n                         i",
                 "i                                                                              i",
                 "i                                                                              i",
-                "i                                                                              i",
-                "i                                 s                                            i",
-                "i                                                                              i",
+                "i            b                    s                                            i",
+                "i          g         h                        f                                i",
                 "i                                                                              i",
                 "i                                                                              i",
                 "i                                                                              i",
@@ -60,10 +60,16 @@ public class CompanyFight extends Level {
             put('w', new Wall(level));
             put('o', new Window(level));
             put('u', new Window(level));
+            put('n', new Window(level));
+            put('m', new Window(level));
             put('k', new Computer(level));
+            put('f', new Computer(level));
+            put('g', new Computer(level));
+            put('h', new Computer(level));
             put('p', streamer.player);
             put('e', new Skeleton(level, 50, 1F, 200, 6, 0.2F));
             put('c', new Coffee(level));
+            put('b', new Coffee(level));
             put('l', new PortalToStreetFight(level, "Portal"));
             put('i', new InvisibleWall(level));
             put('v', new SpawnVolume(level, 30, 1, "Spawn"));

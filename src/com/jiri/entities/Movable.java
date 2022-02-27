@@ -2,6 +2,7 @@ package com.jiri.entities;
 
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.level.Level;
+import com.jiri.structure.ForceVector;
 
 import java.awt.Point;
 import java.lang.reflect.InvocationTargetException;
@@ -53,8 +54,12 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         if (absPosition == null)
             return false;
         Point dl = normalizeDelta(deltaX, deltaY);
-        if (this.isColliding().contains(dl)) // here is colliding problem with jumps
+        if (this.isColliding().containsKey(dl)) {
+            Entity1D collidingEntity = this.isColliding().get(dl);
+            if (!collidingEntity.persistent)
+                collidingEntity.shadow_parent.applyPhysicsImpulse(0.5F, new ForceVector(dl));
             return false;
+        }
         Point delta = normalizeAndApplyDelta(deltaX, deltaY);
         if (this.currentLevel.map[this.absPosition.y + delta.y][this.absPosition.x + delta.x].persistent)
             return false;

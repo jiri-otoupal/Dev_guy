@@ -6,7 +6,7 @@ import com.jiri.structure.ForceVector;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Set;
+import java.util.Map;
 
 public interface IEntity {
     void useLight(); // Erase Shadows from movement
@@ -27,7 +27,7 @@ public interface IEntity {
 
     void invokeImpactEffect(Point impactLocation) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException;
 
-    Set<Point> isColliding();
+    Map<Point, Entity1D> isColliding();
 
     void removeConnections();
 

@@ -61,11 +61,11 @@ public class Enemy extends AliveEntity implements IEnemy {
         if (side.point.y == 0)
             side.point.y = this.enemyAI.pathToPlayer.get(pathSize - 3).minus(this.enemyAI.pathToPlayer.get(pathSize - 2)).y() * -1;
         if (side.x() == -1 && side.y() <= 0) {
-            if (collisionDirections.contains(Directions.Left.vector))
+            if (collisionDirections.containsKey(Directions.Left.vector))
                 Jump();
             MoveLeft();
         } else if (side.x() == 1 && side.y() <= 0) {
-            if (collisionDirections.contains(Directions.Right.vector))
+            if (collisionDirections.containsKey(Directions.Right.vector))
                 Jump();
             MoveRight();
         } else if (side.y() > 0 && side.x() == 0) {

@@ -9,6 +9,7 @@ import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.IEntity;
 import com.jiri.entities.props.background.BackgroundProp;
+import com.jiri.entities.textrender.StaticText;
 import com.jiri.saves.SaveOperator;
 import org.jetbrains.annotations.NotNull;
 
@@ -83,6 +84,10 @@ public class Streamer {
         return false;
     }
 
+    public boolean isValidLocation(int x, int y) {
+        return x >= 0 && x < this.width && y >= 0 && y < this.height;
+    }
+
     public boolean isValidLocation(Point location) {
         return location != null && location.x >= 0 && location.x < this.width && location.y >= 0 && location.y < this.height;
     }
@@ -100,8 +105,7 @@ public class Streamer {
         if (level.width != width || level.height != height) {
             System.out.printf("Inconsistent Level dimensions Width %s!=%s Height %s!=%s%n", level.width, width, level.height, height);
         }
-        if (this.player != null)
-            SaveOperator.saveGame("save.xml", this.player);
+
         // Clear Streamer ref from previous level
         if (this.loadedLevel != null) {
             this.listeners.clear();
@@ -115,7 +119,10 @@ public class Streamer {
         } catch (Level.InvalidTemplateMap e) {
             e.printStackTrace();
         }
-
+        if (this.player != null && !level.name.equals("Escape")) {
+            SaveOperator.saveGame("save.xml", this.player);
+            new StaticText(level, "Saved Game", 200).spawn(new Point(1, 2));
+        }
         System.gc();
     }
 

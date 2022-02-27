@@ -17,7 +17,7 @@ public class Coffee extends ItemWithEffect {
         // Only player can use coffee this cast is safe
         Player player = (Player) instigator;
         player.activeItems.put(itemName, effectTicksMsLast);
-        player.sayStatic("Activated " + itemName);
+        player.sayStatic("Used " + itemName);
         player.fireRate = 75;
         return true;
     }

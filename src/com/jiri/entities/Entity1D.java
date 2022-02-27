@@ -9,10 +9,7 @@ import com.jiri.structure.ForceVector;
 
 import java.awt.Point;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Entity1D implements IEntity {
     protected char[][] representMap; // Characters representing entity on rendered map
@@ -20,8 +17,8 @@ public class Entity1D implements IEntity {
     public Point absPosition; // Absolute position on map before render
     public boolean persistent; // If True object is not passable by Entities
     public Level currentLevel;
-    public Entity1D shadow_parent = null;
-    public Set<Point> collisionDirections;
+    public Entity1D shadow_parent = this;
+    public Map<Point, Entity1D> collisionDirections;
     public boolean falling = true;
     public boolean facingLeft;
     public char muzzleChar = 'c';
@@ -56,7 +53,7 @@ public class Entity1D implements IEntity {
     public Entity1D(Level currentLevel) {
         bodyPositions = new HashSet<>();
         this.currentLevel = currentLevel;
-        this.collisionDirections = new HashSet<>();
+        this.collisionDirections = new HashMap<>();
         representMap = new char[][]{{' '}};
     }
 
@@ -75,7 +72,8 @@ public class Entity1D implements IEntity {
             Entity1D scanned = this.currentLevel.streamer.getInstanceAt(scannedPt);
             try {
                 if (scanned.shadow_parent != this && scanned.getChar() != ' ' && (!scanned.shadow_parent.grab(this)) && scanned.shadow_parent.canCollide() && scanned.shadow_parent.visible)
-                    collisionDirections.add(delta);
+                    collisionDirections.put(delta, scanned);
+
             } catch (Level.InvalidTemplateMap e) {
                 e.printStackTrace();
             }
@@ -84,13 +82,13 @@ public class Entity1D implements IEntity {
     }
 
     @Override
-    public Set<Point> isColliding() {
+    public Map<Point, Entity1D> isColliding() {
         collisionDirections.clear();
         if (currentLevel == null)
             return collisionDirections;
         for (Point position : bodyPositions)
             isBodyPartColliding(position);
-        this.falling = !collisionDirections.contains(Directions.Bottom.vector);
+        this.falling = !collisionDirections.containsKey(Directions.Bottom.vector);
         return collisionDirections;
     }
 

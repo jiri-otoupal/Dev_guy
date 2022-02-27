@@ -11,4 +11,8 @@ public class EmptySpace extends Entity1D {
         persistent = false;
     }
 
+    @Override
+    public boolean canCollide() {
+        return false;
+    }
 }
