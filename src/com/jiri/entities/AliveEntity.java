@@ -111,13 +111,6 @@ public class AliveEntity extends Animated implements IAliveEntity {
 
 
     @Override
-    public boolean applyPhysicsImpulse(float mass, ForceVector vector) {
-        ForceVector vectorOfImpact = vector.multiply(mass / 10);
-        addMovement(vectorOfImpact.x, vectorOfImpact.y);
-        return true;
-    }
-
-    @Override
     public boolean applyDamage(float damage) {
         this.health -= damage;
         if (this.health <= 0 && !dead) {

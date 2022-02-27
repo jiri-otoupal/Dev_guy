@@ -10,6 +10,7 @@ import com.jiri.entities.portal.PortalToJavaSwamp;
 import com.jiri.entities.portal.PortalToStreetFight;
 import com.jiri.entities.props.background.City;
 import com.jiri.entities.props.background.Lamp;
+import com.jiri.entities.props.interactible.Crate;
 import com.jiri.quests.QuestCompany;
 import com.jiri.quests.QuestStreetFight;
 import com.jiri.volumes.SpawnVolume;
@@ -38,7 +39,7 @@ public class StreetFight extends Level {
                 "i                                                                              i",
                 "i                                                                              i",
                 "i        p                                                                     i",
-                "i                                                                              i",
+                "i                                   s                                          i",
                 "i                                                                              i",
                 "i                              c                                               i",
                 "i  v                                                                           i",
@@ -63,6 +64,7 @@ public class StreetFight extends Level {
             put('n', new Lamp(level));
             put('b', new Lamp(level));
             put('q', new City(level));
+            put('s', new Crate(level));
             put('e', new SpawnPoint(level, 500, 3));
             put('c', new Coffee(level));
             put('l', new PortalToJavaSwamp(level, "Portal"));

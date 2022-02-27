@@ -56,7 +56,7 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         Point dl = normalizeDelta(deltaX, deltaY);
         if (this.isColliding().containsKey(dl)) {
             Entity1D collidingEntity = this.isColliding().get(dl);
-            if (!collidingEntity.persistent)
+            if (collidingEntity != null && !collidingEntity.persistent)
                 collidingEntity.shadow_parent.applyPhysicsImpulse(0.5F, new ForceVector(dl));
             return false;
         }
@@ -118,6 +118,13 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
     @Override
     public int resolveAnimationState() {
         return 0;
+    }
+
+    @Override
+    public boolean applyPhysicsImpulse(float mass, ForceVector vector) {
+        ForceVector vectorOfImpact = vector.multiply(mass / 10);
+        addMovement(vectorOfImpact.x, vectorOfImpact.y);
+        return true;
     }
 
     @Override
