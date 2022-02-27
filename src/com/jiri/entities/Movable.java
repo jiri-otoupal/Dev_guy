@@ -4,7 +4,7 @@ import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.level.Level;
 import com.jiri.structure.ForceVector;
 
-import java.awt.Point;
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         Point dl = normalizeDelta(deltaX, deltaY);
         if (this.isColliding().containsKey(dl)) {
             Entity1D collidingEntity = this.isColliding().get(dl);
-            if (collidingEntity != null && !collidingEntity.persistent) {
+            if (collidingEntity != null && !collidingEntity.persistent && !dl.equals(Directions.Bottom.vector) && !dl.equals(Directions.Top.vector)) {
                 collidingEntity.shadow_parent.applyPhysicsImpulse(0.5F, new ForceVector(dl));
                 this.pushing = true;
             }
