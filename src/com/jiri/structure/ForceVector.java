@@ -1,6 +1,7 @@
 package com.jiri.structure;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class ForceVector {
     public float x;
@@ -19,6 +20,19 @@ public class ForceVector {
     public ForceVector(float x, float y) {
         this.x = x;
         this.y = y;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ForceVector that = (ForceVector) o;
+        return Float.compare(that.x, x) == 0 && Float.compare(that.y, y) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 
     public ForceVector multiplyThis(ForceVector other) {
@@ -47,4 +61,7 @@ public class ForceVector {
         return forceVectorCopy;
     }
 
+    public float computeVelocity() {
+        return x + y;
+    }
 }
