@@ -1,10 +1,10 @@
 package com.jiri.level;
 
 import com.jiri.control.MenuController;
-import com.jiri.menus.Menu;
 import com.jiri.entities.persistent.EmptySpace;
-import com.jiri.entities.textrender.LogoText;
 import com.jiri.entities.textrender.MenuItemText;
+import com.jiri.entities.textrender.StaticText;
+import com.jiri.menus.Menu;
 import com.jiri.menus.StartMenu;
 
 import java.util.HashMap;
@@ -53,7 +53,7 @@ public class MainMenuLevel extends Level {
 
         this.linker = new HashMap<>() {{
             put(' ', new EmptySpace(level));
-            put('n', new LogoText(level));
+            put('n', new StaticText(level,"Checkers"));
             put('s', menuItemList.get(0));
             put('l', menuItemList.get(1));
             put('c', menuItemList.get(2));

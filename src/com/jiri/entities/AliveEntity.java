@@ -119,7 +119,7 @@ public class AliveEntity extends Animated implements IAliveEntity {
         } else if (!dead) {
             if (damageReactions == null || damageReactions.length == 0)
                 return true;
-            int index = new Random().nextInt(-1, damageReactions.length);
+            int index = new Random().nextInt( damageReactions.length);
             if (index == -1)
                 return true;
             String usedWord = damageReactions[index];

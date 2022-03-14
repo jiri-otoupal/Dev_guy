@@ -7,7 +7,6 @@ import com.jiri.entities.items.Coffee;
 import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.persistent.InvisibleWall;
 import com.jiri.entities.persistent.Wall;
-import com.jiri.entities.portal.PortalToStreetFight;
 import com.jiri.entities.props.background.Computer;
 import com.jiri.entities.props.background.Window;
 import com.jiri.quests.QuestCompany;
@@ -15,8 +14,8 @@ import com.jiri.volumes.SpawnVolume;
 
 import java.util.HashMap;
 
-public class CompanyFight extends Level {
-    public CompanyFight(int width, int height, Streamer streamer) throws InvalidTemplateMap {
+public class CheckerTable extends Level {
+    public CheckerTable(int width, int height, Streamer streamer) throws InvalidTemplateMap {
         super("Escape", width, height, streamer);
         this.mapToTranslate = new String[]{
                 "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
@@ -70,7 +69,6 @@ public class CompanyFight extends Level {
             put('e', new Skeleton(level, 50, 1F, 200, 6, 0.2F));
             put('c', new Coffee(level));
             put('b', new Coffee(level));
-            put('l', new PortalToStreetFight(level, "Portal"));
             put('i', new InvisibleWall(level));
             put('v', new SpawnVolume(level, 30, 1, "Spawn"));
             put('s', new SpawnPoint(level, 1000, 2));

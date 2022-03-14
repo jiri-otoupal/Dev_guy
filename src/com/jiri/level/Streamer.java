@@ -11,7 +11,6 @@ import com.jiri.entities.IEntity;
 import com.jiri.entities.props.background.BackgroundProp;
 import com.jiri.entities.textrender.StaticText;
 import com.jiri.saves.SaveOperator;
-import org.jetbrains.annotations.NotNull;
 
 
 import java.awt.Point;
@@ -92,7 +91,7 @@ public class Streamer {
         return location != null && location.x >= 0 && location.x < this.width && location.y >= 0 && location.y < this.height;
     }
 
-    public Entity1D getInstanceAt(@NotNull Point coords) {
+    public Entity1D getInstanceAt(Point coords) {
         return this.map[coords.y][coords.x];
     }
 
@@ -101,7 +100,7 @@ public class Streamer {
      *              <p>
      *              This method sets pointer of current level to streamer to NULL !
      */
-    public void loadLevel(@NotNull Level level) {
+    public void loadLevel( Level level) {
         if (level.width != width || level.height != height) {
             System.out.printf("Inconsistent Level dimensions Width %s!=%s Height %s!=%s%n", level.width, width, level.height, height);
         }

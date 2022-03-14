@@ -1,15 +1,9 @@
 package com.jiri.menus;
 
-import com.jiri.Main;
 import com.jiri.control.MenuController;
-import com.jiri.control.PlayerPawnController;
-import com.jiri.entities.Player;
 import com.jiri.entities.textrender.MenuItemText;
-import com.jiri.level.CompanyFight;
-import com.jiri.level.ControlsMenuLevel;
 import com.jiri.level.Level;
 import com.jiri.level.MainMenuLevel;
-import com.jiri.saves.SaveOperator;
 
 import java.util.ArrayList;
 import java.util.List;

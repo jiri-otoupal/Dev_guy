@@ -1,20 +1,24 @@
 package com.jiri.saves;
 
 
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.*;
-import javax.xml.transform.stream.*;
-
 import com.jiri.entities.Player;
 import com.jiri.entities.items.Item;
-import com.jiri.level.CompanyFight;
+import com.jiri.level.CheckerTable;
 import com.jiri.level.Level;
 import com.jiri.level.Streamer;
-import com.jiri.level.StreetFight;
-import org.xml.sax.*;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,10 +28,8 @@ public class SaveOperator {
     public static Level getLevelFromName(String levelName, Streamer streamer) {
         Level level = null;
         try {
-            switch (levelName) {
-                case "Escape" -> level = new CompanyFight(streamer.width, streamer.height, streamer);
-                case "Street Fight" -> level = new StreetFight(streamer.width, streamer.height, streamer);
-            }
+            if(levelName=="Escape")
+                level = new CheckerTable(streamer.width, streamer.height, streamer);
         } catch (Level.InvalidTemplateMap e) {
             e.printStackTrace();
         }

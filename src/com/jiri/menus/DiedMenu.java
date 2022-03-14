@@ -4,7 +4,7 @@ import com.jiri.Main;
 import com.jiri.control.PlayerPawnController;
 import com.jiri.entities.Player;
 import com.jiri.entities.textrender.MenuItemText;
-import com.jiri.level.CompanyFight;
+import com.jiri.level.CheckerTable;
 import com.jiri.level.Level;
 import com.jiri.saves.SaveOperator;
 
@@ -35,8 +35,8 @@ public class DiedMenu extends Menu {
             case "start":
                 try {
                     this.level.streamer.controller = new PlayerPawnController();
-                    CompanyFight levelCompanyFight = new CompanyFight(this.level.streamer.width, this.level.streamer.height, this.level.streamer);
-                    this.level.streamer.loadLevel(levelCompanyFight);
+                    CheckerTable levelCheckerTable = new CheckerTable(this.level.streamer.width, this.level.streamer.height, this.level.streamer);
+                    this.level.streamer.loadLevel(levelCheckerTable);
                 } catch (Level.InvalidTemplateMap e) {
                     e.printStackTrace();
                 }
