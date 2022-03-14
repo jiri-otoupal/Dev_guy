@@ -33,8 +33,6 @@ public abstract class Item extends Animated implements IItem {
                 this.currentLevel.quest.markProgress(this.itemName);
                 return true;
             }
-            if (!instigator.insertItemToBackpack(this))
-                return false;
             this.erase();
             new DialogText(currentLevel, "Got " + itemName + "+1", false, 45, 100).spawnAtPlayer();
             if (currentLevel.quest != null)

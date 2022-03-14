@@ -4,20 +4,20 @@ import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.jiri.control.Controller;
-import com.jiri.entities.Player;
-import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.IEntity;
+import com.jiri.entities.PlayerStone;
+import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.props.background.BackgroundProp;
-import com.jiri.entities.textrender.StaticText;
-import com.jiri.saves.SaveOperator;
 
-
-import java.awt.Point;
+import java.awt.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 public class Streamer {
     public Terminal terminal;
@@ -28,7 +28,7 @@ public class Streamer {
     public int width;
     public int height;
     public Entity1D[][] map;
-    public Player player = null;
+    public Set<PlayerStone> player_Player_stones = null;
 
     public Streamer(Controller controller, int target_fps) throws IOException {
         DefaultTerminalFactory defaultTerminalFactory = new DefaultTerminalFactory(System.out, System.in,
@@ -117,10 +117,6 @@ public class Streamer {
             this.loadedLevel.compileMap();
         } catch (Level.InvalidTemplateMap e) {
             e.printStackTrace();
-        }
-        if (this.player != null && !level.name.equals("Escape")) {
-            SaveOperator.saveGame("save.xml", this.player);
-            new StaticText(level, "Saved Game", 200).spawn(new Point(1, 2));
         }
         System.gc();
     }

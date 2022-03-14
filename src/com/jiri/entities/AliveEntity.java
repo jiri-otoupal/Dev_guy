@@ -3,7 +3,6 @@ package com.jiri.entities;
 import com.jiri.entities.textrender.DialogText;
 import com.jiri.entities.textrender.StaticText;
 import com.jiri.level.Level;
-import com.jiri.projectile.Projectile;
 import com.jiri.structure.ForceVector;
 
 import java.awt.*;
@@ -88,16 +87,9 @@ public class AliveEntity extends Animated implements IAliveEntity {
                 vector = new ForceVector(0.2F, 0F);
             }
             Entity1D projectileSpawnPoint = this.currentLevel.streamer.getInstanceAt(muzzlePoint);
-            if (!projectileSpawnPoint.persistent && !projectileSpawnPoint.canCollide())
-                spawnProjectile(this.currentLevel, 5, 1, true, true, muzzlePoint, vector);
-            else if (!projectileSpawnPoint.persistent && projectileSpawnPoint.canCollide())
-                projectileSpawnPoint.shadow_parent.applyDamage(5);
         }
     }
 
-    public void spawnProjectile(Level currentLevel, float damage, float mass, boolean enableGravity, boolean applyPhysicsImpulse, Point spawnPoint, ForceVector vector) {
-        new Projectile(currentLevel, damage, mass, enableGravity, applyPhysicsImpulse, spawnPoint, vector);
-    }
 
     @Override
     public void sayDialog(String text) {

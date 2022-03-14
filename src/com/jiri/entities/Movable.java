@@ -73,8 +73,7 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         return true;
     }
 
-    @Override
-    public void decayEffectFromItems(long ticksMs) {
+    private void decayEffectFromItems(long ticksMs) {
 
     }
 

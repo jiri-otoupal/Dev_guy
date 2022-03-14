@@ -1,7 +1,7 @@
 package com.jiri.entities.enemies;
 
 import com.jiri.entities.Entity1D;
-import com.jiri.entities.Player;
+import com.jiri.entities.PlayerStone;
 import com.jiri.level.Streamer;
 import com.jiri.structure.PointExtended;
 
@@ -15,15 +15,15 @@ public class AI {
     public boolean needToJumpInPath = false;
     long searchFrequency;
     private final Enemy owner;
-    private final Player player;
+    private final PlayerStone playerStone;
     int acceptableRadiusToPlayer;
     public List<PointExtended> pathToPlayer;
 
-    AI(Enemy owner, Player player, int acceptableRadiusToPlayer, long searchingFrequency) {
+    AI(Enemy owner, PlayerStone playerStone, int acceptableRadiusToPlayer, long searchingFrequency) {
         this.acceptableRadiusToPlayer = acceptableRadiusToPlayer;
         this.searchFrequency = searchingFrequency;
         this.visitedPoints = new HashSet<Point>();
-        this.player = player;
+        this.playerStone = playerStone;
         this.owner = owner;
         pathToPlayer = new ArrayList<PointExtended>();
         Thread thread = new Thread() {
@@ -37,7 +37,7 @@ public class AI {
 
     protected void periodicalSearch() {
         while (this.owner.health > 0) {
-            if ((!this.pathToPlayer.isEmpty() && !player.absPosition.equals(this.pathToPlayer.get(0)) || player.falling || this.owner.movements.isEmpty() || this.owner.falling) && owner.currentLevel.streamer != null) { // Run path finding only if someone is moving
+            if ((!this.pathToPlayer.isEmpty() && !playerStone.absPosition.equals(this.pathToPlayer.get(0)) || playerStone.falling || this.owner.movements.isEmpty() || this.owner.falling) && owner.currentLevel.streamer != null) { // Run path finding only if someone is moving
                 this.pathToPlayer = this.searchForPath(this.owner.currentLevel.streamer);
             }
             try {
@@ -50,7 +50,7 @@ public class AI {
 
 
     private boolean foundPlayer(Point location) {
-        return location.equals(this.player.absPosition);
+        return location.equals(this.playerStone.absPosition);
     }
 
 

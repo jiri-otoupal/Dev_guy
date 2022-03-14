@@ -1,7 +1,7 @@
 package com.jiri.entities.items;
 
 import com.jiri.entities.Entity1D;
-import com.jiri.entities.Player;
+import com.jiri.entities.PlayerStone;
 import com.jiri.level.Level;
 
 public class Coffee extends ItemWithEffect {
@@ -15,10 +15,9 @@ public class Coffee extends ItemWithEffect {
     @Override
     public boolean use(Entity1D instigator) {
         // Only player can use coffee this cast is safe
-        Player player = (Player) instigator;
-        player.activeItems.put(itemName, effectTicksMsLast);
-        player.sayStatic("Used " + itemName);
-        player.fireRate = 75;
+        PlayerStone playerStone = (PlayerStone) instigator;
+        playerStone.sayStatic("Used " + itemName);
+        playerStone.fireRate = 75;
         return true;
     }
 

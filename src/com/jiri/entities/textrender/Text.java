@@ -3,7 +3,7 @@ package com.jiri.entities.textrender;
 import com.jiri.entities.Animated;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.EntityShadow2D;
-import com.jiri.entities.Player;
+import com.jiri.entities.PlayerStone;
 import com.jiri.level.Level;
 
 import java.awt.Point;
@@ -30,11 +30,11 @@ public abstract class Text extends Animated implements IText {
     }
 
     public void spawnAtPlayer() {
-        Player player = currentLevel.streamer.controller.controlledAliveEntity;
-        Point renderPoint = player.textRenderPoint;
+        PlayerStone playerStone = currentLevel.streamer.controller.controlledAliveEntity;
+        Point renderPoint = playerStone.textRenderPoint;
         if (currentLevel.streamer.getInstanceAt(renderPoint).lifeSpan <= 0)
             currentLevel.streamer.assignAt(new Point(renderPoint.x, renderPoint.y - 1), this);
-        owner = player;
+        owner = playerStone;
         owner.currentRenderedText = this;
     }
 

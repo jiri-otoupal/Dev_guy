@@ -1,11 +1,10 @@
 package com.jiri.control;
 
-import com.googlecode.lanterna.input.KeyStroke;
-import com.jiri.entities.Player;
+import com.jiri.entities.PlayerStone;
 
 public abstract class Controller implements IController {
 
-    public Player controlledAliveEntity;
+    public PlayerStone controlledAliveEntity;
 
     public Controller() {
 

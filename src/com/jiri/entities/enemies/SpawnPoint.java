@@ -12,20 +12,20 @@ public class SpawnPoint extends Entity1D {
     private final int maxSpawnedAtOnce;
     long frequencyMs;
     long count = 0;
-    List<Skeleton> skeletonList;
+    List<BlackStone> blackStoneList;
 
     public SpawnPoint(Level currentLevel, long frequencyMs, int maxSpawnedAtOnce) {
         super(currentLevel);
         representMap = new char[][]{{' '}};
         this.frequencyMs = frequencyMs;
         this.count = frequencyMs;
-        skeletonList = new ArrayList<>();
+        blackStoneList = new ArrayList<>();
         this.currentLevel.streamer.addListener(this);
         this.maxSpawnedAtOnce = maxSpawnedAtOnce;
     }
 
     public void checkAndDeleteDead() {
-        skeletonList.removeIf(skeleton -> (skeleton.dead));
+        blackStoneList.removeIf(blackStone -> (blackStone.dead));
     }
 
     @Override
@@ -35,9 +35,9 @@ public class SpawnPoint extends Entity1D {
 
         if (count <= 0) {
             checkAndDeleteDead();
-            if (skeletonList.size() < maxSpawnedAtOnce) {
-                Skeleton enemy = new Skeleton(this.currentLevel, 50, 1F, 200, 6, 0.2F);
-                skeletonList.add(enemy);
+            if (blackStoneList.size() < maxSpawnedAtOnce) {
+                BlackStone enemy = new BlackStone(this.currentLevel);
+                blackStoneList.add(enemy);
                 currentLevel.streamer.assignAt(new Point(this.absPosition.x, this.absPosition.y - 1), enemy);
             }
             count = this.frequencyMs;

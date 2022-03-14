@@ -34,7 +34,7 @@ public class MainMenuLevel extends Level {
                 "                                                                                ",
                 "        s                                                                       ",
                 "                                                                                ",
-                "        l                                                                       ",
+                "                                                                                ",
                 "                                                                                ",
                 "        c                                                                       ",
                 "                                                                                ",
@@ -55,9 +55,8 @@ public class MainMenuLevel extends Level {
             put(' ', new EmptySpace(level));
             put('n', new StaticText(level,"Checkers"));
             put('s', menuItemList.get(0));
-            put('l', menuItemList.get(1));
-            put('c', menuItemList.get(2));
-            put('e', menuItemList.get(3));
+            put('c', menuItemList.get(1));
+            put('e', menuItemList.get(2));
         }};
         this.streamer.controller = new MenuController(menu);
     }
