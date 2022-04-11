@@ -5,8 +5,7 @@ import com.jiri.entities.Movable;
 import com.jiri.level.Level;
 import com.jiri.structure.ForceVector;
 
-import java.awt.Point;
-import java.lang.reflect.InvocationTargetException;
+import java.awt.*;
 
 public class Projectile extends Movable {
     public ForceVector vector;
@@ -48,7 +47,12 @@ public class Projectile extends Movable {
     }
 
     @Override
-    public void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public void decayEffectFromItems(long ticksMs) {
+
+    }
+
+    @Override
+    public void tickEvent(long elapsedMs) {
         if (currentLevel.streamer == null) {
             this.erase();
             return;
@@ -56,5 +60,15 @@ public class Projectile extends Movable {
         if (this.enableGravity)
             applyGravity();
         applyProjectileMovement();
+    }
+
+    @Override
+    public void updateAnimation(long elapsedMs) {
+
+    }
+
+    @Override
+    public void setAnimationState(int state) {
+
     }
 }

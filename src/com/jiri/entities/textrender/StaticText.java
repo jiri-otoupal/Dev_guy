@@ -40,5 +40,14 @@ public class StaticText extends Text {
 
     }
 
+    /**
+     * Decays item by milliseconds
+     *
+     * @param ticksMs milliseconds to decay from item
+     */
+    @Override
+    public void decayEffectFromItems(long ticksMs) {
+
+    }
 }
 

@@ -1,8 +1,8 @@
 package com.jiri.entities.items;
 
 import com.jiri.entities.Animated;
-import com.jiri.entities.textrender.DialogText;
 import com.jiri.entities.Entity1D;
+import com.jiri.entities.textrender.DialogText;
 import com.jiri.level.Level;
 
 
@@ -23,6 +23,13 @@ public abstract class Item extends Animated implements IItem {
         return false;
     }
 
+    /**
+     * This is called on grabbing of item
+     *
+     * @param instigator who grabbed item
+     * @return grab succeeded
+     * @throws Level.InvalidTemplateMap
+     */
     @Override
     public boolean grab(Entity1D instigator) throws Level.InvalidTemplateMap {
         if (instigator.canGrabItem()) {

@@ -6,8 +6,8 @@ import com.jiri.level.Streamer;
 import com.jiri.structure.PointExtended;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class AI {
     Set<Point> visitedPoints;
@@ -35,6 +35,9 @@ public class AI {
         thread.start();
     }
 
+    /**
+     * Does Search in Map for player
+     */
     protected void periodicalSearch() {
         while (this.owner.health > 0) {
             if ((!this.pathToPlayer.isEmpty() && !player.absPosition.equals(this.pathToPlayer.get(0)) || player.falling || this.owner.movements.isEmpty() || this.owner.falling) && owner.currentLevel.streamer != null) { // Run path finding only if someone is moving
@@ -49,11 +52,23 @@ public class AI {
     }
 
 
+    /**
+     * Check if player was found
+     *
+     * @param location of player
+     * @return True if player found at location
+     */
     private boolean foundPlayer(Point location) {
         return location.equals(this.player.absPosition);
     }
 
 
+    /**
+     * Search for Path to Player
+     *
+     * @param streamer to search in
+     * @return path to player
+     */
     public java.util.List<PointExtended> searchForPath(Streamer streamer) {
         if (this.owner.absPosition == null)
             return Collections.emptyList();
@@ -95,6 +110,12 @@ public class AI {
         return Collections.emptyList();
     }
 
+    /**
+     * Make route from location for forwarding
+     *
+     * @param location location to backtrack from
+     * @return backtracked path
+     */
     private java.util.List<PointExtended> backtrackPath(PointExtended location) {
         List<PointExtended> path = new ArrayList<>();
         PointExtended currentLocation = location;

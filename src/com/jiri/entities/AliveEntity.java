@@ -9,7 +9,7 @@ import com.jiri.structure.ForceVector;
 import java.awt.*;
 import java.util.Random;
 
-public class AliveEntity extends Animated implements IAliveEntity {
+public abstract class AliveEntity extends Animated implements IAliveEntity {
     protected boolean crouching = false;
     protected float jumpHeight;
     protected boolean shooting = false;
@@ -26,6 +26,9 @@ public class AliveEntity extends Animated implements IAliveEntity {
         this.jumpHeight = jumpHeight;
     }
 
+    /**
+     * Jumps vertically without side facing
+     */
     @Override
     public void JumpVertical() {
         float x = 0;
@@ -35,6 +38,9 @@ public class AliveEntity extends Animated implements IAliveEntity {
             addMovement(x, -1F);
     }
 
+    /**
+     * Adds Jump movement to the entity
+     */
     @Override
     public void Jump() {
         if (this.crouching) {
@@ -54,23 +60,37 @@ public class AliveEntity extends Animated implements IAliveEntity {
             addMovement(x, -1F);
     }
 
+    /**
+     * Crouches if possible
+     * needs to be implemented in animation frames to have crouching state
+     */
     @Override
     public void Crouch() {
         this.crouching = true;
     }
 
+
+    /**
+     * Moves left and switches facing direction
+     */
     @Override
     public void MoveLeft() {
         this.facingLeft = true;
         addMovement(this.speed * -1, 0);
     }
 
+    /**
+     * Moves right and switches facing direction
+     */
     @Override
     public void MoveRight() {
         this.facingLeft = false;
         addMovement(this.speed, 0);
     }
 
+    /**
+     * Shoot in direction which facing
+     */
     @Override
     public void Shoot() {
         if (timeToShoot <= 0 && this.muzzlePoints.size() > 0) {
@@ -95,27 +115,57 @@ public class AliveEntity extends Animated implements IAliveEntity {
         }
     }
 
+
+    /**
+     * Spawn projectile from parameters
+     *
+     * @param currentLevel        Level to spawn in
+     * @param damage              of projectile
+     * @param mass                of projectile
+     * @param enableGravity       for projectile
+     * @param applyPhysicsImpulse on hit to object
+     * @param spawnPoint          where to spawn projectile in streamer
+     * @param vector              to move in projectile
+     */
     public void spawnProjectile(Level currentLevel, float damage, float mass, boolean enableGravity, boolean applyPhysicsImpulse, Point spawnPoint, ForceVector vector) {
         new Projectile(currentLevel, damage, mass, enableGravity, applyPhysicsImpulse, spawnPoint, vector);
     }
 
+
+    /**
+     * Displays dialog to say, it is split by words to be rolled through
+     *
+     * @param text to display
+     */
     @Override
     public void sayDialog(String text) {
         new DialogText(currentLevel, text, false, 100, 300, this).spawn(this.textRenderPoint);
     }
 
+    /**
+     * Display static text that is not split by words on rolling
+     *
+     * @param text to display
+     */
     @Override
     public void sayStatic(String text) {
         new StaticText(currentLevel, text, 100).spawnAtPlayer();
     }
 
 
+    /**
+     * Applies damage to current object
+     *
+     * @param damage to apply
+     * @return
+     */
     @Override
     public boolean applyDamage(float damage) {
         this.health -= damage;
         if (this.health <= 0 && !dead) {
             this.dead = true;
             die();
+            return false;
         } else if (!dead) {
             if (damageReactions == null || damageReactions.length == 0)
                 return true;
@@ -128,8 +178,10 @@ public class AliveEntity extends Animated implements IAliveEntity {
         return true;
     }
 
+    /**
+     * Die and clean entity with special steps
+     */
     @Override
-    public void die() {
-    }
+    abstract public void die();
 
 }

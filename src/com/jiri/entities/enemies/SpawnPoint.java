@@ -3,7 +3,7 @@ package com.jiri.entities.enemies;
 import com.jiri.entities.Entity1D;
 import com.jiri.level.Level;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +24,18 @@ public class SpawnPoint extends Entity1D {
         this.maxSpawnedAtOnce = maxSpawnedAtOnce;
     }
 
+    /**
+     * Checks and delete dead skeleton, later garbage collected
+     */
     public void checkAndDeleteDead() {
         skeletonList.removeIf(skeleton -> (skeleton.dead));
     }
 
+    /**
+     * Event called every tick if object subscribed to ticks
+     *
+     * @param elapsedMs between events
+     */
     @Override
     public void tickEvent(long elapsedMs) {
         long correctedElapsed = elapsedMs == 0 ? 1 : elapsedMs;

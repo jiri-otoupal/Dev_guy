@@ -17,6 +17,16 @@ public class Enemy extends AliveEntity implements IEnemy {
     }
 
 
+    /**
+     * Decays item by milliseconds
+     *
+     * @param ticksMs milliseconds to decay from item
+     */
+    @Override
+    public void decayEffectFromItems(long ticksMs) {
+
+    }
+
     @Override
     public int resolveAnimationState() {
         if (falling) {

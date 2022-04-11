@@ -5,12 +5,11 @@ import com.jiri.level.Level;
 import com.jiri.structure.ForceVector;
 
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class Movable extends Entity1D implements IMovable, IAnimation {
+public abstract class Movable extends Entity1D implements IMovable, IAnimation {
     protected long timeToShoot = 0;
     public float health;
     public long fireRate;
@@ -34,6 +33,14 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         animationListeners = new LinkedList<>();
     }
 
+
+    /**
+     * Normalizes Vector of Force to movement and applies movement
+     *
+     * @param deltaX
+     * @param deltaY
+     * @return
+     */
     protected Point normalizeAndApplyDelta(float deltaX, float deltaY) {
         this.nowDeltaX += deltaX;
         this.nowDeltaY += deltaY;
@@ -44,6 +51,14 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         return new Point(deltaFlooredX, deltaFlooredY);
     }
 
+    /**
+     * Returns force vector added to current force vector of the object
+     * without applying it
+     *
+     * @param deltaX delta x
+     * @param deltaY delta y
+     * @return normalized delta with this delta
+     */
     protected Point normalizeDelta(float deltaX, float deltaY) {
         int deltaFlooredX = Math.round(this.nowDeltaX + deltaX);
         int deltaFlooredY = Math.round(this.nowDeltaY + deltaY);
@@ -51,6 +66,13 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
     }
 
 
+    /**
+     * Moves object relative to current movement vector
+     *
+     * @param deltaX
+     * @param deltaY
+     * @return
+     */
     public boolean move(float deltaX, float deltaY) {
         if (absPosition == null)
             return false;
@@ -73,23 +95,41 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         return true;
     }
 
+
+    /**
+     * Decays item by milliseconds
+     *
+     * @param ticksMs milliseconds to decay from item
+     */
     @Override
-    public void decayEffectFromItems(long ticksMs) {
-
-    }
+    abstract public void decayEffectFromItems(long ticksMs);
 
 
+    /**
+     * Adds movement to the movement list
+     *
+     * @param deltaX
+     * @param deltaY
+     */
     public void addMovement(float deltaX, float deltaY) {
         this.movements.add(new float[]{deltaX, deltaY});
     }
 
 
+    /**
+     * Apply Gravity
+     */
     public void applyGravity() {
         move(0, this.gravity);
     }
 
+    /**
+     * Event called every tick if object subscribed to ticks
+     *
+     * @param elapsedMs between events
+     */
     @Override
-    public void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+    public void tickEvent(long elapsedMs) {
         long correctedElapsed = elapsedMs == 0 ? 1 : elapsedMs;
         this.timeToShoot -= correctedElapsed;
         if (currentLevel.streamer == null) {
@@ -114,16 +154,33 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         decayEffectFromItems(elapsedMs);
     }
 
+    /**
+     * Update Animation on event if subscribed
+     *
+     * @param elapsedMs between updates
+     */
     @Override
-    public void updateAnimation(long elapsedMs) {
+    abstract public void updateAnimation(long elapsedMs);
 
-    }
 
+    /**
+     * Resolve animation state to be rendered
+     * such as jumping animation, shooting etc.
+     *
+     * @return current animation state to be animated
+     */
     @Override
     public int resolveAnimationState() {
         return 0;
     }
 
+    /**
+     * Applies physics impulse that was set from different object
+     *
+     * @param mass   mass of object that hit
+     * @param vector speed of object that hit in vector
+     * @return True if Force Applied (can be overridden)
+     */
     @Override
     public boolean applyPhysicsImpulse(float mass, ForceVector vector) {
         ForceVector vectorOfImpact = vector.multiply(mass / 10);
@@ -131,7 +188,13 @@ public class Movable extends Entity1D implements IMovable, IAnimation {
         return true;
     }
 
+
+    /**
+     * Set animation state to be animated such as shooting, jumping etc.
+     *
+     * @param state to be animated
+     */
     @Override
-    public void setAnimationState(int state) {
-    }
+    abstract public void setAnimationState(int state);
+
 }

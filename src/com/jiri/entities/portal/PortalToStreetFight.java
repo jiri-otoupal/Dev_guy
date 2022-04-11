@@ -2,8 +2,8 @@ package com.jiri.entities.portal;
 
 import com.jiri.entities.Entity1D;
 import com.jiri.level.Level;
-import com.jiri.level.StreetFight;
 import com.jiri.level.Streamer;
+import com.jiri.level.StreetFight;
 
 public class PortalToStreetFight extends Portal {
 
@@ -155,5 +155,15 @@ public class PortalToStreetFight extends Portal {
         StreetFight streetFight = new StreetFight(streamer.width, streamer.height, streamer);
         streamer.loadLevel(streetFight);
         return true;
+    }
+
+    /**
+     * Decays item by milliseconds
+     *
+     * @param ticksMs milliseconds to decay from item
+     */
+    @Override
+    public void decayEffectFromItems(long ticksMs) {
+
     }
 }

@@ -3,7 +3,7 @@ package com.jiri.entities;
 import com.jiri.level.Level;
 
 
-public class Animated extends Movable {
+abstract public class Animated extends Movable {
     protected long elapsedNow = 0;
     protected long frameDurationMs;
     public char[][][] selectedAnimationFrames;
@@ -38,11 +38,17 @@ public class Animated extends Movable {
         this.canGetOlder = this.lifeSpan != 0;
     }
 
+    /**
+     * Update particles of animated object to streamer
+     */
     public void updateParticles() {
         if (this.currentLevel.streamer != null)
             this.currentLevel.streamer.assignAt(this.absPosition, this);
     }
 
+    /**
+     * Animate Next frame
+     */
     public void nextFrame() {
         if (this.frameCounter < this.selectedAnimationFrames.length - 1) { // frame counter is in the index, because of that needs to be decremented
             this.frameCounter++;
@@ -55,6 +61,11 @@ public class Animated extends Movable {
         updateParticles();
     }
 
+    /**
+     * Set Animation state that will be animated
+     *
+     * @param state Animated state (shooting,jumping,...)
+     */
     @Override
     public void setAnimationState(int state) {
         if (this.currentAnimationState == state || state > animationState.length - 1)
@@ -64,6 +75,9 @@ public class Animated extends Movable {
         nextFrame();
     }
 
+    /**
+     * Disconnects from tick and animation update events
+     */
     @Override
     public void removeConnections() {
         if (this.currentLevel.streamer != null)
@@ -72,6 +86,11 @@ public class Animated extends Movable {
     }
 
 
+    /**
+     * Updates animation that on event
+     *
+     * @param elapsedMs milliseconds between previous event
+     */
     @Override
     public void updateAnimation(long elapsedMs) {
         long correctedElapsed = elapsedMs == 0 ? 1 : elapsedMs;//1 in case it takes 0ms to render frame

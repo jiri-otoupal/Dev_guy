@@ -166,6 +166,12 @@ public class Skeleton extends Enemy {
         selectedAnimationFrames = animationState[0];
     }
 
+    /**
+     * Resolve animation state to be rendered
+     * such as jumping animation, shooting etc.
+     *
+     * @return current animation state to be animated
+     */
     @Override
     public int resolveAnimationState() {
 
@@ -181,8 +187,13 @@ public class Skeleton extends Enemy {
     }
 
 
+    /**
+     * Invokes effect on projectile impact
+     *
+     * @param location location of impact
+     */
     @Override
-    public void invokeImpactEffect(Point impactLocation) {
-        this.currentLevel.streamer.assignAt(impactLocation, new EffectHitPlayer(this.currentLevel, 40));
+    public void invokeImpactEffect(Point location) {
+        this.currentLevel.streamer.assignAt(location, new EffectHitPlayer(this.currentLevel, 40));
     }
 }

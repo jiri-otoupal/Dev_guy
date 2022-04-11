@@ -18,4 +18,14 @@ public class PortalToWin extends Portal {
         streamer.loadLevel(level);
         return true;
     }
+
+    /**
+     * Decays item by milliseconds
+     *
+     * @param ticksMs milliseconds to decay from item
+     */
+    @Override
+    public void decayEffectFromItems(long ticksMs) {
+
+    }
 }

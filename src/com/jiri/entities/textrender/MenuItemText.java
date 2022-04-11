@@ -14,6 +14,11 @@ public class MenuItemText extends Text {
         init(textToDisplay);
     }
 
+    /**
+     * Inits text for display
+     *
+     * @param textToDisplay on screen
+     */
     public void init(String textToDisplay) {
         ArrayList<ArrayList<Character>> animationStateList = new ArrayList<>();
 
@@ -47,6 +52,22 @@ public class MenuItemText extends Text {
 
     }
 
+    /**
+     * Decays item by milliseconds
+     *
+     * @param ticksMs milliseconds to decay from item
+     */
+    @Override
+    public void decayEffectFromItems(long ticksMs) {
+
+    }
+
+    /**
+     * Resolve animation state to be rendered
+     * such as jumping animation, shooting etc.
+     *
+     * @return current animation state to be animated
+     */
     @Override
     public int resolveAnimationState() {
         return selected ? 1 : 0;

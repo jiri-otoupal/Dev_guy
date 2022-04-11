@@ -15,4 +15,8 @@ public class Effect extends Animated {
     }
 
 
+    @Override
+    public void decayEffectFromItems(long ticksMs) {
+
+    }
 }

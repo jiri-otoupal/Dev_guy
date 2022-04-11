@@ -18,4 +18,14 @@ public class SpawnVolume extends Volume {
         erase();
         return true;
     }
+
+    /**
+     * Decays item by milliseconds
+     *
+     * @param ticksMs milliseconds to decay from item
+     */
+    @Override
+    public void decayEffectFromItems(long ticksMs) {
+
+    }
 }

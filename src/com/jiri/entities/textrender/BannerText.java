@@ -3,7 +3,7 @@ package com.jiri.entities.textrender;
 import com.jiri.fonts.RegularFont;
 import com.jiri.level.Level;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class BannerText extends Text {
@@ -39,6 +39,16 @@ public class BannerText extends Text {
 
     @Override
     public void init(boolean loops, long wordIntervalMs, String textToDisplay) {
+
+    }
+
+    /**
+     * Decays item by milliseconds
+     *
+     * @param ticksMs milliseconds to decay from item
+     */
+    @Override
+    public void decayEffectFromItems(long ticksMs) {
 
     }
 }

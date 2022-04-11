@@ -12,6 +12,12 @@ public class Coffee extends ItemWithEffect {
         this.frameDurationMs = 25;
     }
 
+    /**
+     * What happens on use of item
+     *
+     * @param instigator who used item
+     * @return result use of item succeeded
+     */
     @Override
     public boolean use(Entity1D instigator) {
         // Only player can use coffee this cast is safe
@@ -22,4 +28,13 @@ public class Coffee extends ItemWithEffect {
         return true;
     }
 
+    /**
+     * Decays item by milliseconds
+     *
+     * @param ticksMs milliseconds to decay from item
+     */
+    @Override
+    public void decayEffectFromItems(long ticksMs) {
+
+    }
 }
