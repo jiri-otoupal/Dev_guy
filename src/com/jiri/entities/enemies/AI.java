@@ -22,10 +22,10 @@ public class AI {
     AI(Enemy owner, Player player, int acceptableRadiusToPlayer, long searchingFrequency) {
         this.acceptableRadiusToPlayer = acceptableRadiusToPlayer;
         this.searchFrequency = searchingFrequency;
-        this.visitedPoints = new HashSet<Point>();
+        this.visitedPoints = new HashSet<>();
         this.player = player;
         this.owner = owner;
-        pathToPlayer = new ArrayList<PointExtended>();
+        pathToPlayer = new ArrayList<>();
         Thread thread = new Thread() {
             public void run() {
                 periodicalSearch();
