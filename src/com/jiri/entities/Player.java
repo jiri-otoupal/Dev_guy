@@ -167,6 +167,9 @@ public class Player extends AliveEntity {
         this.activeItems = player.activeItems;
     }
 
+    /**
+     * Player to die
+     */
     @Override
     public void die() {
         Streamer streamer = currentLevel.streamer;
@@ -177,6 +180,10 @@ public class Player extends AliveEntity {
         }
     }
 
+    /**
+     * @param item to insert
+     * @return True on succeed
+     */
     @Override
     public boolean insertItemToBackpack(Item item) {
         return this.backpack.insertItem(item);
@@ -187,8 +194,13 @@ public class Player extends AliveEntity {
         return true;
     }
 
+    /**
+     * Applies Damage to player
+     *
+     * @param damage to apply
+     */
     @Override
-    public boolean applyDamage(float damage) {
+    public void applyDamage(float damage) {
         this.health -= damage;
         if (this.health > 0) {
             if (displayedHealth != null)
@@ -196,12 +208,14 @@ public class Player extends AliveEntity {
 
             displayedHealth = new StaticText(this.currentLevel, "Health " + this.health, 1000);
             displayedHealth.spawn(new Point(2, 2));
-            return true;
+            return;
         }
         die();
-        return false;
     }
 
+    /**
+     * @param ticksMs milliseconds to decay from item
+     */
     @Override
     public void decayEffectFromItems(long ticksMs) {
         for (String itemKey : activeItems.keySet()) {
@@ -216,6 +230,15 @@ public class Player extends AliveEntity {
         }
     }
 
+    /**
+     * @param currentLevel        Level to spawn in
+     * @param damage              of projectile
+     * @param mass                of projectile
+     * @param enableGravity       for projectile
+     * @param applyPhysicsImpulse on hit to object
+     * @param spawnPoint          where to spawn projectile in streamer
+     * @param vector              to move in projectile
+     */
     @Override
     public void spawnProjectile(Level currentLevel, float damage, float mass, boolean enableGravity, boolean applyPhysicsImpulse, Point spawnPoint, ForceVector vector) {
         Long itemCoffee = activeItems.get("Coffee");
@@ -225,6 +248,12 @@ public class Player extends AliveEntity {
             new Csharp(currentLevel, damage, mass, enableGravity, applyPhysicsImpulse, spawnPoint, vector);
     }
 
+    /**
+     * Resolve animation state to be rendered
+     * such as jumping animation, shooting etc.
+     *
+     * @return current animation state to be animated
+     */
     @Override
     public int resolveAnimationState() {
         if (falling) {

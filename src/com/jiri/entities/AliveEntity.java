@@ -134,7 +134,6 @@ public abstract class AliveEntity extends Animated implements IAliveEntity {
 
     /**
      * Displays dialog to say, it is split by words to be rolled through
-     *
      * @param text to display
      */
     @Override
@@ -144,7 +143,6 @@ public abstract class AliveEntity extends Animated implements IAliveEntity {
 
     /**
      * Display static text that is not split by words on rolling
-     *
      * @param text to display
      */
     @Override
@@ -157,25 +155,22 @@ public abstract class AliveEntity extends Animated implements IAliveEntity {
      * Applies damage to current object
      *
      * @param damage to apply
-     * @return
      */
     @Override
-    public boolean applyDamage(float damage) {
+    public void applyDamage(float damage) {
         this.health -= damage;
         if (this.health <= 0 && !dead) {
             this.dead = true;
             die();
-            return false;
         } else if (!dead) {
             if (damageReactions == null || damageReactions.length == 0)
-                return true;
+                return;
             int index = new Random().nextInt(-1, damageReactions.length);
             if (index == -1)
-                return true;
+                return;
             String usedWord = damageReactions[index];
             sayDialog(usedWord);
         }
-        return true;
     }
 
     /**

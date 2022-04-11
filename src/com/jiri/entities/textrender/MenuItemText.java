@@ -16,7 +16,6 @@ public class MenuItemText extends Text {
 
     /**
      * Inits text for display
-     *
      * @param textToDisplay on screen
      */
     public void init(String textToDisplay) {

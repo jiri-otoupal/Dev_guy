@@ -11,13 +11,13 @@ import java.util.Map;
 public interface IEntity {
     void useLight(); // Erase Shadows from movement
 
-    boolean render(Entity1D[][] map, Point cursor);
+    void render(Entity1D[][] map, Point cursor);
 
     void iterationRenderFunction(Entity1D[][] map, Point cursor, int map_x, int map_y, int ent_x, int ent_y);
 
     void tickEvent(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException;
 
-    boolean applyDamage(float damage);
+    void applyDamage(float damage);
 
     boolean applyPhysicsImpulse(float mass, ForceVector vector);
 

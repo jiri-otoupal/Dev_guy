@@ -26,6 +26,9 @@ public class Projectile extends Movable {
         this.mass = mass;
     }
 
+    /**
+     * Applies projectile movement from initialized force vector
+     */
     public void applyProjectileMovement() {
         if (vector == null || this.currentLevel.streamer == null)
             return;

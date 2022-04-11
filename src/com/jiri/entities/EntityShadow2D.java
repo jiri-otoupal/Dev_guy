@@ -2,7 +2,7 @@ package com.jiri.entities;
 
 import com.jiri.level.Level;
 
-import java.awt.Point;
+import java.awt.*;
 
 public class EntityShadow2D extends Entity1D {
 
@@ -21,8 +21,7 @@ public class EntityShadow2D extends Entity1D {
     }
 
     @Override
-    public boolean render(Entity1D[][] map, Point cursor) {
-        return false;
+    public void render(Entity1D[][] map, Point cursor) {
     }
 
 

@@ -156,7 +156,6 @@ public abstract class Movable extends Entity1D implements IMovable, IAnimation {
 
     /**
      * Update Animation on event if subscribed
-     *
      * @param elapsedMs between updates
      */
     @Override
@@ -191,7 +190,6 @@ public abstract class Movable extends Entity1D implements IMovable, IAnimation {
 
     /**
      * Set animation state to be animated such as shooting, jumping etc.
-     *
      * @param state to be animated
      */
     @Override

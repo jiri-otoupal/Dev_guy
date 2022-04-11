@@ -38,6 +38,11 @@ public class SaveOperator {
         return level;
     }
 
+    /**
+     * @param fileName file name
+     * @param streamer streamer to load to
+     * @return player
+     */
     public static Player loadSave(String fileName, Streamer streamer) {
         File fXmlFile = new File(fileName);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -70,6 +75,10 @@ public class SaveOperator {
 
     }
 
+    /**
+     * @param fileName file name
+     * @param player   player to save
+     */
     public static void saveGame(String fileName, Player player) {
         Document dom;
 

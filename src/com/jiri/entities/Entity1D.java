@@ -7,8 +7,9 @@ import com.jiri.entities.textrender.Text;
 import com.jiri.level.Level;
 import com.jiri.structure.ForceVector;
 
-import java.awt.Point;
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.*;
 
 public class Entity1D implements IEntity {
@@ -94,9 +95,9 @@ public class Entity1D implements IEntity {
 
 
     @Override
-    public boolean render(Entity1D[][] map, Point cursor) {
+    public void render(Entity1D[][] map, Point cursor) {
         if (markedForErase)
-            return false;
+            return;
         muzzlePoints.clear();
         bodyPositions.clear();
         for (int map_x = cursor.x, ent_x = 0; ent_x < representMap[0].length; map_x++, ent_x++) {
@@ -104,7 +105,6 @@ public class Entity1D implements IEntity {
                 iterationRenderFunction(map, cursor, map_x, map_y, ent_x, ent_y);
             }
         }
-        return true;
     }
 
     @Override
@@ -127,8 +127,7 @@ public class Entity1D implements IEntity {
     }
 
     @Override
-    public boolean applyDamage(float damage) {
-        return false;
+    public void applyDamage(float damage) {
     }
 
     @Override

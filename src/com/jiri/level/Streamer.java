@@ -4,21 +4,22 @@ import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.jiri.control.Controller;
-import com.jiri.entities.Player;
-import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.Entity1D;
 import com.jiri.entities.IEntity;
+import com.jiri.entities.Player;
+import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.props.background.BackgroundProp;
 import com.jiri.entities.textrender.StaticText;
 import com.jiri.saves.SaveOperator;
 import org.jetbrains.annotations.NotNull;
 
-
-import java.awt.Point;
+import java.awt.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Streamer {
     public Terminal terminal;
@@ -48,20 +49,43 @@ public class Streamer {
         System.out.println(terminalSize);
     }
 
+    /**
+     * Clear Streamer
+     */
     public void clear() {
         for (int line = 0; line < this.height; line++) {
             Arrays.fill(this.map[line], new EmptySpace(this.loadedLevel));
         }
     }
 
+    /**
+     * Subscribe listener to events broadcast
+     *
+     * @param toAdd entity to be called
+     */
     public void addListener(IEntity toAdd) {
         listeners.add(toAdd);
     }
 
+    /**
+     * UnSubscribe listener to events broadcast
+     *
+     * @param toRemove entity to be called
+     */
     public void removeListener(IEntity toRemove) {
         listeners.remove(toRemove);
     }
 
+    /**
+     * Broadcasts tick to listeners
+     *
+     * @param elapsedMs between events
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws NoSuchMethodException
+     */
     public void broadcastTick(long elapsedMs) throws ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         for (int i = 0; i < listeners.size(); i++) { // Needs to be in this for because of removing during iterations
             IEntity listener = listeners.get(i);
@@ -74,6 +98,11 @@ public class Streamer {
 
     }
 
+    /**
+     * @param coords location
+     * @param value  entity to assign
+     * @return True on success
+     */
     public boolean assignAt(Point coords, Entity1D value) {
         if (coords != null && isValidLocation(coords)) {
             this.map[coords.y][coords.x] = value;
@@ -92,6 +121,10 @@ public class Streamer {
         return location != null && location.x >= 0 && location.x < this.width && location.y >= 0 && location.y < this.height;
     }
 
+    /**
+     * @param coords Point
+     * @return Entity on location
+     */
     public Entity1D getInstanceAt(@NotNull Point coords) {
         return this.map[coords.y][coords.x];
     }
@@ -127,6 +160,17 @@ public class Streamer {
     }
 
 
+    /**
+     * Render loaded level with all objects and signals called
+     *
+     * @throws IOException               on terminal output
+     * @throws InterruptedException
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws InstantiationException
+     * @throws IllegalAccessException    if failed to access
+     * @throws NoSuchMethodException
+     */
     public void render() throws IOException, InterruptedException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
         long frame_start = System.currentTimeMillis();
         terminal.clearScreen();

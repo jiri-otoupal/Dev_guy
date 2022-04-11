@@ -25,8 +25,7 @@ public class BarsWall extends Entity1D {
     }
 
     @Override
-    public boolean applyDamage(float damage) {
-        return false;
+    public void applyDamage(float damage) {
     }
 
 }

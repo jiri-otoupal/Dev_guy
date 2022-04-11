@@ -1,14 +1,11 @@
 package com.jiri.level;
 
-import com.jiri.entities.Player;
-import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.Entity1D;
+import com.jiri.entities.persistent.EmptySpace;
 import com.jiri.entities.persistent.Ground;
 import com.jiri.entities.props.background.BackgroundProp;
 import com.jiri.quests.Quest;
 
-
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +35,9 @@ public abstract class Level implements ILevel {
     }
 
 
+    /**
+     * Inits level
+     */
     public void init() {
         this.map = new Entity1D[this.height][this.width];
         for (int line = 0; line < this.height; line++) {
@@ -45,16 +45,19 @@ public abstract class Level implements ILevel {
         }
     }
 
+    /**
+     * Fill Bottom with Ground entity to not fall through
+     */
     protected void fillGround() {
         Arrays.fill(this.map[height - 2], new Ground(this));
     }
 
-    public Object createInstanceOfClass(String className, Object... args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        Class<?> classTemp = Class.forName(className);
-        return classTemp.getDeclaredConstructor(Level.class, float.class).newInstance(args);
-    }
 
-
+    /**
+     * Compiles map from linked objects
+     *
+     * @throws InvalidTemplateMap on bad linkage or other error
+     */
     void compileMap() throws InvalidTemplateMap {
         initializeLinker();
         if (this.map.length != this.mapToTranslate.length || this.map[0].length != this.mapToTranslate[0].toCharArray().length)
