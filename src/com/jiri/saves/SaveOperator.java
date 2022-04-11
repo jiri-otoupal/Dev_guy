@@ -1,20 +1,24 @@
 package com.jiri.saves;
 
 
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.*;
-import javax.xml.transform.stream.*;
-
 import com.jiri.entities.Player;
-import com.jiri.entities.items.Item;
 import com.jiri.level.CompanyFight;
 import com.jiri.level.Level;
 import com.jiri.level.Streamer;
 import com.jiri.level.StreetFight;
-import org.xml.sax.*;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -100,11 +104,11 @@ public class SaveOperator {
             level.appendChild(dom.createTextNode(player.currentLevel.name));
             playerElement.appendChild(level);
             Element backpack = dom.createElement("backpack");
-            for (Item item : player.backpack.items.keySet()) {
+            for (String item : player.backpack.items.keySet()) {
                 Element itemElement = dom.createElement("item");
                 Element name = dom.createElement("name");
                 itemElement.appendChild(name);
-                name.appendChild(dom.createTextNode(item.itemName));
+                name.appendChild(dom.createTextNode(player.backpack.items.get(item).first.itemName));
                 Element count = dom.createElement("count");
                 itemElement.appendChild(count);
                 count.appendChild(dom.createTextNode(String.valueOf(player.backpack.items.get(item))));

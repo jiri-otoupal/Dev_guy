@@ -3,6 +3,8 @@ package com.jiri.control;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.jiri.entities.items.Item;
 import com.jiri.level.Level;
+import com.jiri.structure.Pair;
+import org.jetbrains.annotations.Nullable;
 
 public class PlayerPawnController extends Controller {
     @Override
@@ -19,9 +21,9 @@ public class PlayerPawnController extends Controller {
             controlledAliveEntity.Shoot();
         } else if (key.getCharacter() != null && key.getCharacter() == '+') {
             try {
-                Item item = controlledAliveEntity.backpack.removeItem("Coffee");
+                @Nullable Pair<Item, Integer> item = controlledAliveEntity.backpack.removeItem("Coffee");
                 if (item != null)
-                    item.use(this.controlledAliveEntity);
+                    item.first.use(this.controlledAliveEntity);
 
             } catch (Level.InvalidTemplateMap e) {
                 e.printStackTrace();

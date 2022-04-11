@@ -5,7 +5,7 @@ import com.jiri.entities.Entity1D;
 public class QuestStreetFight extends Quest {
     public QuestStreetFight() {
         super();
-        goalList.put("skeleton", 10);
+        goalList.put("skeleton", 5);
     }
 
     @Override

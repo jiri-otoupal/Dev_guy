@@ -1,12 +1,12 @@
 package com.jiri.entities.portal;
 
 import com.jiri.entities.Entity1D;
-import com.jiri.level.JavaSwamp;
 import com.jiri.level.Level;
 import com.jiri.level.Streamer;
+import com.jiri.level.WinMenuLevel;
 
-public class PortalToJavaSwamp extends Portal {
-    public PortalToJavaSwamp(Level currentLevel, String name) {
+public class PortalToWin extends Portal {
+    public PortalToWin(Level currentLevel, String name) {
         super(currentLevel, name);
         this.visible = false;
     }
@@ -14,7 +14,7 @@ public class PortalToJavaSwamp extends Portal {
     @Override
     public boolean use(Entity1D instigator) throws Level.InvalidTemplateMap {
         Streamer streamer = currentLevel.streamer;
-        JavaSwamp level = new JavaSwamp(streamer.width, streamer.height, streamer);
+        WinMenuLevel level = new WinMenuLevel(streamer.width, streamer.height, streamer);
         streamer.loadLevel(level);
         return true;
     }
